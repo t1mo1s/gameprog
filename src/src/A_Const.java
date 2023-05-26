@@ -5,8 +5,8 @@
 final class A_Const 
 {
   // size of the world
-  static final int WORLD_WIDTH      = 5000;
-  static final int WORLD_HEIGHT     = 4000;
+  static final int WORLD_WIDTH      = 4000;
+  static final int WORLD_HEIGHT     = 100;
   // size of the displayed part of the world
   static final int WORLDPART_WIDTH  = 1920;
   static final int WORLDPART_HEIGHT = 1080;

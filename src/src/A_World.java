@@ -108,7 +108,7 @@ abstract class A_World
 	  graphicSystem.redraw();
 	  	  
 	  // create new objects if needed
-	  createNewObjects(millisDiff/1000.0);
+	  //createNewObjects(millisDiff/1000.0);
 	}
   }
   

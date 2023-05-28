@@ -97,8 +97,10 @@ class Gam20_World extends A_World
 	//
 	if(userInput.isKeyEvent)
 	{
-	  if(userInput.keyPressed==' ')
-	  { throwGrenade(userInput.mouseMovedX+worldPartX,userInput.mouseMovedY+worldPartY);
+	  if(userInput.keyPressed=='w')
+	  { if (!avatar.isMoving) {
+          avatar.jump(60);
+        }
 	  }
 	  else if(userInput.keyPressed==(char)27)
 	  { System.exit(0);

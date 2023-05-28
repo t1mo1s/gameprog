@@ -13,6 +13,7 @@ abstract class A_GameObject
   protected double  speed = 0;
   protected int     radius = 7;
   protected Color   color;
+  protected boolean isJumping = false;
   
   // if the object is existing, moving etc
   protected boolean isLiving = true;
@@ -55,6 +56,10 @@ abstract class A_GameObject
 	  double diffY = Math.abs(y-destY);
 	  if(diffX<3 && diffY<3)
 	  { isMoving = false;
+          if (isJumping==true){
+              setDestination(x,y+60);
+              isJumping=false;
+          }
 	    return;
 	  }
 	}    
@@ -113,6 +118,10 @@ abstract class A_GameObject
   
   // move back to the position BEFORE the move Method was called
   protected void moveBack() { x=xOld; y=yOld; }
+    public void jump(int height){
+          isJumping = true;
+          setDestination(x, y - height);
+    }
   
   
   abstract int type();

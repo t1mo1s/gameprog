@@ -5,8 +5,10 @@
 final class A_Const 
 {
   // size of the world
-  static final int WORLD_WIDTH      = 4000;
-  static final int WORLD_HEIGHT     = 100;
+  static final int WORLD_WIDTH      = 1500;
+  static final int WORLD_HEIGHT     = 300;
+  //ground height
+  static final int GROUND_HEIGHT = 250;
   // size of the displayed part of the world
   static final int WORLDPART_WIDTH  = 1920;
   static final int WORLDPART_HEIGHT = 1080;
@@ -23,4 +25,5 @@ final class A_Const
   static final int TYPE_ZOMBIE  = 4;
   static final int TYPE_SHOT    = 5;
   static final int TYPE_GRENADE = 6;
+  static final int TYPE_GROUND = 7;
 }

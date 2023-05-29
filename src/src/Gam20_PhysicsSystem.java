@@ -26,12 +26,12 @@ class Gam20_PhysicsSystem extends A_PhysicsSystem
       if(obj2==object) continue;
       
       // check if they touch each other
-      double dist = object.radius+obj2.radius;
+      double dist = object.width+obj2.width;
       double dx   = object.x-obj2.x;
       double dy   = object.y-obj2.y;
       
-      if(dx*dx+dy*dy < dist*dist)
-      { result.add(obj2);
+      if(dx*dx+dy*dy < dist*dist) {
+        result.add(obj2);
       }
     }
     

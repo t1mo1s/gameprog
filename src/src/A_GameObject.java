@@ -11,7 +11,8 @@ abstract class A_GameObject
   protected double  x,y;
   protected double  alfa  = 0;
   protected double  speed = 0;
-  protected int     radius = 7;
+  //protected int     radius = 7;
+    protected int height,width;
   protected Color   color;
   
   // if the object is existing, moving etc
@@ -22,6 +23,8 @@ abstract class A_GameObject
   // old position etc
   private double  destX, destY;
   private boolean hasDestination = false;
+
+  private boolean isJumping = false; //um avatar dann wieder fallsen zu lassen muss überprüft werden ob der gerade hüpft und wenn max. Sprunghöhe erreicht muss er fallen
   private double  xOld,  yOld;
   
       
@@ -32,12 +35,13 @@ abstract class A_GameObject
   // construct GameObject
   public A_GameObject(double x_, double y_, 
 		              double a_, double s_, 
-		              int radius_, Color color_)
+		              int width_,int heigth_, Color color_)
   { 
 	x=x_;    y=y_; 
     xOld=x;  yOld=y;
     alfa=a_; speed=s_;
-    radius=radius_;
+    width = width_;
+    height = heigth_;
     color = color_;
   }
   
@@ -48,6 +52,7 @@ abstract class A_GameObject
     if(!isMoving) return;	  
 	  
     // move if object has a destination
+      /* brauchen des mit destination nich da der avatar mit der tastatur bewegt werden soll
 	if(hasDestination)
 	{
 	  // stop if destination is reached	
@@ -57,7 +62,9 @@ abstract class A_GameObject
 	  { isMoving = false;
 	    return;
 	  }
-	}    
+	}
+
+       */
     
     // remember old position
 	xOld=x; yOld=y; 
@@ -66,10 +73,22 @@ abstract class A_GameObject
     x += Math.cos(alfa)*speed*diffSeconds;
     y += Math.sin(alfa)*speed*diffSeconds;   	  
   }
+
+  public void moveLeft(double diffSeconds){
+    x -= 3 *speed*diffSeconds;
+  }
+
+  public void moveRight(double diffSeconds){
+    x += 3*speed*diffSeconds;
+  }
+
+  public void jump(double diffSeconds){
+    y -= 4*speed*diffSeconds;
+  }
   
   
   // test and reflect on Window Borders
-  protected void reflectOnBorders()
+  /*protected void reflectOnBorders()
   {
 	double rad = radius;
 	double PI  = Math.PI;
@@ -91,6 +110,8 @@ abstract class A_GameObject
 	if(alfa<0)    alfa += PI*2;
 	if(alfa>PI*2) alfa -= PI*2;	
   }
+
+   */
   
   
   // set a point in the world as destination

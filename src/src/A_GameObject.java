@@ -15,6 +15,7 @@ abstract class A_GameObject
     protected int height,width;
   protected Color   color;
   protected boolean isJumping = false;
+    protected boolean isFalling = false;
   
   // if the object is existing, moving etc
   protected boolean isLiving = true;
@@ -79,11 +80,11 @@ abstract class A_GameObject
   }
 
   public void moveLeft(double diffSeconds){
-    x -= 3 *speed*diffSeconds;
+    x -= 2 *speed*diffSeconds;
   }
 
   public void moveRight(double diffSeconds){
-    x += 3*speed*diffSeconds;
+    x += 2*speed*diffSeconds;
   }
 
   public void jump(double diffSeconds){
@@ -139,8 +140,7 @@ abstract class A_GameObject
   // move back to the position BEFORE the move Method was called
   protected void moveBack() { x=xOld; y=yOld; }
     public void jump(int height){
-          isJumping = true;
-          setDestination(x, y - height);
+        y -= height;
     }
   
   

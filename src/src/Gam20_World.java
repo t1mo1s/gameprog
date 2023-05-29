@@ -80,12 +80,13 @@ class Gam20_World extends A_World
           }
       }
       if(userInput.isKeyEvent){
-          if(userInput.keyPressed == 'a'){
+          if (userInput.keyPressed == 'a') {
               avatar.moveLeft(diffSeconds);
-          }else if(userInput.keyPressed == 'd'){
+          } else if (userInput.keyPressed == 'd') {
               avatar.moveRight(diffSeconds);
-          }else if(userInput.keyPressed == ' '){
-              avatar.jump(diffSeconds);
+          } else if (userInput.keyPressed == ' ') {
+              avatar.isJumping = true;
+              this.yOld = avatar.y;
           }
       }
 

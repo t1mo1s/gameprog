@@ -12,13 +12,15 @@ class B_Frame extends JFrame implements A_Frame
   private B_Panel panel = null;	
 
   public B_Frame()
-  { this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-	this.setSize(A_Const.WORLDPART_WIDTH+2,A_Const.WORLDPART_HEIGHT+2);
+  {
+      this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	//this.setSize(A_Const.WORLDPART_WIDTH+2,A_Const.WORLDPART_HEIGHT+2);
+      this.setSize(A_Const.WORLD_WIDTH, A_Const.WORLD_HEIGHT);
 	
 	this.setAlwaysOnTop(true);
 	this.setUndecorated(true);
 	
-	this.setResizable(false);
+	this.setResizable(true);
 	
 	panel = new B_Panel();
 	
@@ -29,7 +31,16 @@ class B_Frame extends JFrame implements A_Frame
 	this.setContentPane(panel);
   }
   
-  public void displayOnScreen() { validate(); setVisible(true); }
+  public void displayOnScreen() {
+      validate();
+      /*
+      pack();
+
+       */
+      //sets the screen into the middle
+      setLocationRelativeTo(null);
+      setVisible(true);
+  }
   
   public A_GraphicSystem getGraphicSystem() { return panel; }
   public A_InputSystem   getInputSystem()   { return panel.getInputSystem(); }

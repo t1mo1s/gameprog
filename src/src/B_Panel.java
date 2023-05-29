@@ -28,28 +28,36 @@ class B_Panel extends JPanel implements A_GraphicSystem
 
   
 	
-  public B_Panel()
-  { 
-	this.setSize(A_Const.WORLDPART_WIDTH,A_Const.WORLDPART_HEIGHT);  
+  public B_Panel(){
+
+
+
+	//this.setSize(A_Const.WORLDPART_WIDTH,A_Const.WORLDPART_HEIGHT);
+      this.setSize(A_Const.WORLD_WIDTH, A_Const.WORLD_HEIGHT);
+
+
 	imageBuffer = graphicsConf.createCompatibleImage(
-			        this.getWidth(), this.getHeight());	 
-	graphics = imageBuffer.getGraphics();
+			        this.getWidth(), this.getHeight());
+
+
+      graphics = imageBuffer.getGraphics();
 	
 	// initialize Listeners
-	this.addMouseListener(inputSystem);
-	this.addMouseMotionListener(inputSystem);
-	this.addKeyListener(inputSystem);
+      this.addMouseListener(inputSystem);
+      this.addMouseMotionListener(inputSystem);
+      this.addKeyListener(inputSystem);
   }
   
   public void clear()
   { graphics.setColor(Color.LIGHT_GRAY);
-    graphics.fillRect(
-               0, 0,A_Const.WORLDPART_WIDTH,A_Const.WORLDPART_HEIGHT);
+    //graphics.fillRect(40, 100,A_Const.WORLDPART_WIDTH,A_Const.WORLDPART_HEIGHT);
+    graphics.fillRect(0,0,A_Const.WORLD_WIDTH,A_Const.WORLD_HEIGHT);
   }
   
   
-  public final void draw(A_GameObject dot)
-  {	  
+  public final void draw(A_GameObject rect)
+  {
+    /*
 	int x = (int)(dot.x-dot.radius-world.worldPartX);
 	int y = (int)(dot.y-dot.radius-world.worldPartY);
 	int d = (int)(dot.radius*2);
@@ -58,8 +66,15 @@ class B_Panel extends JPanel implements A_GraphicSystem
 	graphics.fillOval(x, y, d, d);
 	graphics.setColor(Color.DARK_GRAY);
 	graphics.drawOval(x,y,d,d);
+
+     */
+    int x = (int) rect.x;
+    int y = (int) rect.y;
+    graphics.setColor(rect.color);
+    graphics.fillRect(x,y, rect.width, rect.height);
+    graphics.drawRect(x,y, rect.width, rect.height);
   }
-  
+
   public final void draw(A_TextObject text)
   {	  
     graphics.setFont(font);

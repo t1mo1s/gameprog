@@ -46,7 +46,7 @@ abstract class A_World
 	  long currentTick = System.currentTimeMillis();
 	  long millisDiff  = currentTick-lastTick;
 	  
-	  // don´t run faster then MINIMUM_DIFF_SECONDS per frame
+	  // donï¿½t run faster then MINIMUM_DIFF_SECONDS per frame
 	  //
 	  if(millisDiff<FRAME_MINIMUM_MILLIS)
 	  {
@@ -90,7 +90,7 @@ abstract class A_World
 	  
       
       // adjust displayed pane of the world
-      this.adjustWorldPart();
+      //this.adjustWorldPart();
       
       // draw all Objects
       graphicSystem.clear();
@@ -115,7 +115,7 @@ abstract class A_World
   
   // adjust the displayed pane of the world according to Avatar and Bounds
   //
-  private final void adjustWorldPart()
+  /*private final void adjustWorldPart()
   {
     final int RIGHT_END  = A_Const.WORLD_WIDTH-A_Const.WORLDPART_WIDTH;
     final int BOTTOM_END = A_Const.WORLD_HEIGHT-A_Const.WORLDPART_HEIGHT;
@@ -159,6 +159,8 @@ abstract class A_World
     }    
     
   }
+
+   */
   
     
   protected void setGraphicSystem(A_GraphicSystem p) { graphicSystem = p; }
@@ -169,6 +171,6 @@ abstract class A_World
   
   protected abstract void init();
   protected abstract void processUserInput(A_UserInput input, double diffSec);
-  protected abstract void createNewObjects(double diffSeconds);
+  //protected abstract void createNewObjects(double diffSeconds);
   
 }

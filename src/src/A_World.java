@@ -20,6 +20,7 @@ abstract class A_World
   
   // if game is over
   boolean gameOver = false;
+  double yOld = 0;
   
   // all objects in the game, including the Avatar
   A_GameObjectList        gameObjects = new A_GameObjectList();
@@ -73,8 +74,25 @@ abstract class A_World
         A_GameObject obj = gameObjects.get(i);
         if(obj.isLiving)  obj.move(millisDiff/1000.0);
 	  }
-	  
-	  
+
+        Thread moveRightThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (avatar.isJumping) {
+                    avatar.jump(1);
+                    if (avatar.y == yOld - 50) {
+                        avatar.isJumping = false;
+                        avatar.isFalling = true;
+                    }
+                } else if (avatar.isFalling) {
+                    avatar.jump(-1);
+                    if (avatar.y == yOld) {
+                        avatar.isFalling = false;
+                    }
+                }
+            }
+        });
+        moveRightThread.start();
       // delete all Objects which are not living anymore
       int num=0;
       while(num<gameSize)

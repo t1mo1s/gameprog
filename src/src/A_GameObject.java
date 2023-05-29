@@ -25,7 +25,6 @@ abstract class A_GameObject
   private double  destX, destY;
   private boolean hasDestination = false;
 
-  private boolean isJumping = false; //um avatar dann wieder fallsen zu lassen muss überprüft werden ob der gerade hüpft und wenn max. Sprunghöhe erreicht muss er fallen
   private double  xOld,  yOld;
   
       

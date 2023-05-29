@@ -4,8 +4,7 @@
 
 import java.awt.event.*;
 
-class B_InputSystem 
-  implements A_InputSystem, KeyListener, MouseListener, MouseMotionListener
+class B_InputSystem implements A_InputSystem, KeyListener, MouseListener, MouseMotionListener
 {
 	  
   // UserInput variables
@@ -53,5 +52,10 @@ class B_InputSystem
   
   public A_UserInput getUserInput()
   { return userInput;
-  }  
+  }
+
+  @Override
+  public void command(Gam20_Avatar userDot, A_UserInput userInput) {
+
+  }
 }

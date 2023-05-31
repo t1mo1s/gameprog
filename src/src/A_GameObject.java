@@ -3,6 +3,8 @@
 
 
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 abstract class A_GameObject 
 {
@@ -24,8 +26,13 @@ abstract class A_GameObject
   private double  destX, destY;
   private boolean hasDestination = false;
 
-  private boolean isJumping = false; //um avatar dann wieder fallsen zu lassen muss überprüft werden ob der gerade hüpft und wenn max. Sprunghöhe erreicht muss er fallen
+  protected boolean isJumping = false; //um avatar dann wieder fallsen zu lassen muss überprüft werden ob der gerade hüpft und wenn max. Sprunghöhe erreicht muss er fallen
   private double  xOld,  yOld;
+  //vertivcal Speed
+  private double vSpeed = 100;
+
+  //max jump height kommt später in A_Const
+  private double maxJumpHeight = A_Const.WORLD_HEIGHT/2;
   
       
   // GameObjects sometimes call physics methods
@@ -75,16 +82,65 @@ abstract class A_GameObject
   }
 
   public void moveLeft(double diffSeconds){
-    x -= 3 *speed*diffSeconds;
+    x -= 5 *speed*diffSeconds;
   }
 
   public void moveRight(double diffSeconds){
-    x += 3*speed*diffSeconds;
+    x += 5*speed*diffSeconds;
   }
 
-  public void jump(double diffSeconds){
-    y -= 4*speed*diffSeconds;
+  public void jump(double diffSeconds) {
+    class JumpHelper extends TimerTask{
+
+      @Override
+      public void run() {
+        if(y >= maxJumpHeight){
+          y -= 5*vSpeed*diffSeconds;
+        }else{
+          cancel();
+          fall(diffSeconds);
+        }
+
+      }
+    }
+
+    Timer timer = new Timer();
+    TimerTask jumpsTask = new JumpHelper();
+    timer.schedule(jumpsTask, 0,25);
+
+    /*
+    if(!isJumping){
+      fall(diffSeconds);
+    }
+
+     */
+
+
+
   }
+
+
+  public void fall(double diffSeconds){
+    class FallHelper extends TimerTask{
+
+      @Override
+      public void run() {
+        if(y <= A_Const.WORLD_HEIGHT-70-25){
+          y += 5*vSpeed*diffSeconds;
+        }else{
+          isJumping = false;
+          cancel();
+        }
+      }
+    }
+
+    Timer timer = new Timer();
+    TimerTask fallTask = new FallHelper();
+    timer.schedule(fallTask, 0,20);
+
+  }
+
+
   
   
   // test and reflect on Window Borders

@@ -19,7 +19,7 @@ class Gam20_World extends A_World
   protected void init()
   {
         // add the Avatar
-        //A_Const.WORLD_Height-70-25 um avatarauf boden zu setzen => -70 wegen ground height und -25 wegen avatar height
+        //A_Const.WORLD_Height-70-25 um avatar auf boden zu setzen => -70 wegen ground height und -25 wegen avatar height
 	    avatar = new Gam20_Avatar(30,A_Const.WORLD_HEIGHT-70-25);
         gameObjects.add(avatar);
 	
@@ -84,8 +84,10 @@ class Gam20_World extends A_World
               avatar.moveLeft(diffSeconds);
           }else if(userInput.keyPressed == 'd'){
               avatar.moveRight(diffSeconds);
-          }else if(userInput.keyPressed == ' '){
+          }else if(userInput.keyPressed == ' ' && !avatar.isJumping){
+              avatar.isJumping = true;
               avatar.jump(diffSeconds);
+              //avatar.fall(diffSeconds);
           }
       }
 

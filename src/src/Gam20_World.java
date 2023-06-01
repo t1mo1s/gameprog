@@ -53,11 +53,10 @@ class Gam20_World extends A_World
           inputs.add(userInput.keyPressed);
       }
 
-      while(!inputs.isEmpty() && !userInput.isKeyEvent){
+      if(!inputs.isEmpty()){
           for(int i = 0; i < inputs.size(); i++){
               if(inputs.get(i) == 'a'){
                   avatar.moveLeft(diffSeconds);
-                  inputs.remove(i);
               }else if(inputs.get(i) == 'd'){
                   avatar.moveRight(diffSeconds);
               }else if(inputs.get(i) == ' ' && !avatar.isJumping){

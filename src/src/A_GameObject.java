@@ -90,6 +90,7 @@ abstract class A_GameObject
   }
 
   public void jump(double diffSeconds) {
+
     class JumpHelper extends TimerTask{
 
       @Override
@@ -99,6 +100,7 @@ abstract class A_GameObject
         }else{
           cancel();
           fall(diffSeconds);
+
         }
 
       }
@@ -108,15 +110,6 @@ abstract class A_GameObject
     TimerTask jumpsTask = new JumpHelper();
     timer.schedule(jumpsTask, 0,25);
 
-    /*
-    if(!isJumping){
-      fall(diffSeconds);
-    }
-
-     */
-
-
-
   }
 
 
@@ -125,7 +118,7 @@ abstract class A_GameObject
 
       @Override
       public void run() {
-        if(y <= A_Const.WORLD_HEIGHT-70-25){
+        if(y <= A_Const.WORLD_HEIGHT-70-25-1){
           y += 5*vSpeed*diffSeconds;
         }else{
           isJumping = false;

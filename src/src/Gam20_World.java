@@ -2,7 +2,9 @@
 // (c) Thorsten Hasbargen
 
 
-class Gam20_World extends A_World 
+import java.util.ArrayList;
+
+class Gam20_World extends A_World
 {
   private double timePassed = 0;
   private double timeSinceLastShot = 0;
@@ -28,57 +30,45 @@ class Gam20_World extends A_World
 	    worldPartY = 1500;
 	
       //add ground
-      gameObjects.add(new Gam20_Ground(0,A_Const.WORLD_HEIGHT-70,A_Const.WORLD_WIDTH, 70));
+      gameObjects.add(new Gam20_Ground(0,A_Const.WORLD_HEIGHT-70-1,A_Const.WORLD_WIDTH, 70));
       //add roof
       gameObjects.add(new Gam20_Ground(0,0,A_Const.WORLD_WIDTH,70));
       //
-	/* forrest muss weg
-	for(int x=0; x<5000; x+=1000)
-	{
 
-	  for(int y=0; y<4000; y+=800)
-	  {
-        gameObjects.add(new Gam20_Tree(x+300,y+200,80));
-        gameObjects.add(new Gam20_Tree(x+600,y+370,50));
-        gameObjects.add(new Gam20_Tree(x+200,y+600,50));
-        gameObjects.add(new Gam20_Tree(x+500,y+800,40));
-        gameObjects.add(new Gam20_Tree(x+900,y+500,100));
-        gameObjects.add(new Gam20_Tree(x+760,y+160,40));
-	  }
-	}
 
 
 
     // add one zombie
-    gameObjects.add(new Gam20_ZombieAI(100,100));
-    
-    
-    counterZ = new Gam20_Counter(20,40);
-    counterG = new Gam20_CounterGrenades(770,40);
-    helpText = new Gam20_HelpText(100,400);
 
-    counterG.setNumber(grenades);
-    textObjects.add(counterZ);
-    textObjects.add(counterG);
-    textObjects.add(helpText);
 
-	 */
+
   }
 	
   protected void processUserInput(A_UserInput userInput, double diffSeconds) {
       // distinguish if Avatar shall move or shoots
-      int button = userInput.mouseButton;
 
-      //
-      // Mouse events
-      //
-      if (userInput.isMouseEvent) {
-          // move
-          if (button == 1) {
-              avatar.setDestination(userInput.mousePressedX + worldPartX,
-                      userInput.mousePressedY + worldPartY);
+      //n-key rollover => geht aber noch nich so wie gewünscht
+      ArrayList<Character> inputs = new ArrayList<>();
+      if(userInput.isKeyEvent){
+          inputs.add(userInput.keyPressed);
+      }
+
+      while(!inputs.isEmpty() && !userInput.isKeyEvent){
+          for(int i = 0; i < inputs.size(); i++){
+              if(inputs.get(i) == 'a'){
+                  avatar.moveLeft(diffSeconds);
+                  inputs.remove(i);
+              }else if(inputs.get(i) == 'd'){
+                  avatar.moveRight(diffSeconds);
+              }else if(inputs.get(i) == ' ' && !avatar.isJumping){
+                  avatar.isJumping = true;
+                  avatar.jump(diffSeconds);
+              }
           }
       }
+      //
+      //handle key events
+      /*
       if(userInput.isKeyEvent){
           if(userInput.keyPressed == 'a'){
               avatar.moveLeft(diffSeconds);
@@ -90,6 +80,8 @@ class Gam20_World extends A_World
               //avatar.fall(diffSeconds);
           }
       }
+
+       */
 
       //
       // Mouse still pressed?

@@ -1,8 +1,4 @@
-
-// (c) Thorsten Hasbargen
-
-
-interface A_Frame 
+interface A_Frame
 {
   // appear on Screen
   void displayOnScreen();

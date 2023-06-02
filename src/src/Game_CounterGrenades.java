@@ -1,14 +1,10 @@
-
-// (c) Thorsten Hasbargen
-
-
 import java.awt.*;
 
-class Gam20_CounterGrenades extends A_TextObject
+class Game_CounterGrenades extends A_TextObject
 {
   private int number = 1;
 	
-  public Gam20_CounterGrenades(int x, int y)
+  public Game_CounterGrenades(int x, int y)
   { super(x,y, new Color(255,255,0,210));
   }
   

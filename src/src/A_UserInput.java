@@ -22,7 +22,7 @@ final class A_UserInput
   {
     keyMap.put('a', false);
     keyMap.put('d', false);
-    keyMap.put('w', false);this.clear();
+    keyMap.put(' ', false);this.clear();
   }
   
   final void clear()

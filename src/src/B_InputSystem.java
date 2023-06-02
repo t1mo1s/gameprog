@@ -41,13 +41,18 @@ class B_InputSystem
   public void keyPressed(KeyEvent evt)
   { userInput.isKeyEvent = true;
     userInput.keyPressed = evt.getKeyChar();
+    userInput.keyMap.put(evt.getKeyChar(),true);
   }	
 	
   
   public void mouseEntered(MouseEvent evt){}
   public void mouseExited(MouseEvent evt){}
   public void mouseClicked(MouseEvent evt){}
-  public void keyReleased(KeyEvent evt){}
+  public void keyReleased(KeyEvent evt){
+    userInput.isKeyEvent = false;
+    userInput.keyPressed = evt.getKeyChar();
+    userInput.keyMap.put(evt.getKeyChar(),false);
+  }
   public void keyTyped(KeyEvent evt){}	
   
   

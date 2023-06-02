@@ -6,7 +6,8 @@ import java.awt.*;
 
 class Gam20_Avatar extends A_GameObject
 {
-	
+
+
   public Gam20_Avatar(double x, double y) 
   { super(x,y,0,200,15,25, new Color(96,96,255));
     this.isMoving = false;

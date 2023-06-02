@@ -32,7 +32,7 @@ abstract class A_GameObject
   private double vSpeed = 100;
 
   //max jump height kommt später in A_Const
-  private double maxJumpHeight = A_Const.WORLD_HEIGHT/2;
+  private double maxJumpHeight = 120;
   
       
   // GameObjects sometimes call physics methods
@@ -119,7 +119,7 @@ abstract class A_GameObject
       @Override
       public void run() {
         if(y <= A_Const.WORLD_HEIGHT-70-25-1){
-          y += 5*vSpeed*diffSeconds;
+          y += 4*vSpeed*diffSeconds;
         }else{
           isJumping = false;
           cancel();

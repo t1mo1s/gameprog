@@ -1,37 +1,34 @@
-
 // (c) Thorsten Hasbargen
 
 
-class Gam20_World extends A_World 
-{
-  private double timePassed = 0;
-  private double timeSinceLastShot = 0;
-  
-  // for grenades
-  private int grenades = 5;
-  private Gam20_CounterGrenades counterG;
-  private Gam20_Counter         counterZ;
-  private Gam20_HelpText        helpText;
-  private double spawnGrenade = 0;
-  
-  private double lifeHelpText = 10.0;
-	
-  protected void init()
-  {
+class Gam20_World extends A_World {
+    private double timePassed = 0;
+    private double timeSinceLastShot = 0;
+
+    // for grenades
+    private int grenades = 5;
+    private Gam20_CounterGrenades counterG;
+    private Gam20_Counter counterZ;
+    private Gam20_HelpText helpText;
+    private double spawnGrenade = 0;
+
+    private double lifeHelpText = 10.0;
+
+    protected void init() {
         // add the Avatar
         //A_Const.WORLD_Height-70-25 um avatarauf boden zu setzen => -70 wegen ground height und -25 wegen avatar height
-	    avatar = new Gam20_Avatar(30,A_Const.WORLD_HEIGHT-70-25);
+        avatar = new Gam20_Avatar(30, A_Const.WORLD_HEIGHT - 70 - 25);
         gameObjects.add(avatar);
-	
-	    // set WorldPart position
-	    worldPartX = 1500;
-	    worldPartY = 1500;
-	
-      //add ground
-      gameObjects.add(new Gam20_Ground(0,A_Const.WORLD_HEIGHT-70,A_Const.WORLD_WIDTH, 70));
-      //add roof
-      gameObjects.add(new Gam20_Ground(0,0,A_Const.WORLD_WIDTH,70));
-      //
+
+        // set WorldPart position
+        worldPartX = 1500;
+        worldPartY = 1500;
+
+        //add ground
+        gameObjects.add(new Gam20_Ground(0, A_Const.WORLD_HEIGHT - 70, A_Const.WORLD_WIDTH, 70));
+        //add roof
+        gameObjects.add(new Gam20_Ground(0, 0, A_Const.WORLD_WIDTH, 70));
+        //
 	/* forrest muss weg
 	for(int x=0; x<5000; x+=1000)
 	{
@@ -63,34 +60,33 @@ class Gam20_World extends A_World
     textObjects.add(helpText);
 
 	 */
-  }
-	
-  protected void processUserInput(A_UserInput userInput, double diffSeconds) {
-      // distinguish if Avatar shall move or shoots
-      int button = userInput.mouseButton;
+    }
 
-      //
-      // Mouse events
-      //
-      if (userInput.isMouseEvent) {
-          // move
-          if (button == 1) {
-              avatar.setDestination(userInput.mousePressedX + worldPartX,
-                      userInput.mousePressedY + worldPartY);
-          }
-      }
+    protected void processUserInput(A_UserInput userInput, double diffSeconds) {
+        // distinguish if Avatar shall move or shoots
+        int button = userInput.mouseButton;
+
+        //
+        // Mouse events
+        //
+        if (userInput.isMouseEvent) {
+            // move
+            if (button == 1) {
+                avatar.setDestination(userInput.mousePressedX + worldPartX, userInput.mousePressedY + worldPartY);
+            }
+        }
 
 
-      if(userInput.keyMap.get('a') == true){
-          avatar.moveLeft(diffSeconds);
-      }
-      if(userInput.keyMap.get('d') == true){
-          avatar.moveRight(diffSeconds);
-      }
-      if(userInput.keyMap.get(' ')==true && !avatar.isJumping){
-          avatar.isJumping = true;
-          avatar.jump(diffSeconds);
-      }
+        if (userInput.keyMap.get('a') == true) {
+            avatar.moveLeft(diffSeconds);
+        }
+        if (userInput.keyMap.get('d') == true) {
+            avatar.moveRight(diffSeconds);
+        }
+        if (userInput.keyMap.get(' ') == true && !avatar.isJumping) {
+            avatar.isJumping = true;
+            avatar.jump(diffSeconds);
+        }
 
       /*
       if(userInput.isKeyEvent){
@@ -106,9 +102,9 @@ class Gam20_World extends A_World
 
        */
 
-      //
-      // Mouse still pressed?
-      //
+        //
+        // Mouse still pressed?
+        //
       /*
 	if(userInput.isMousePressed && button==3)
 	{
@@ -281,5 +277,5 @@ class Gam20_World extends A_World
   }
 
    */
-  }
+    }
 }

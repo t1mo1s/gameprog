@@ -1,10 +1,10 @@
 import java.awt.*;
 
-public class Gam20_Ground extends A_GameObject{
+public class Gam20_Ground extends A_GameObject {
 
 
     public Gam20_Ground(double x, double y, int width_, int heigth_) {
-        super(x, y, 0, 0, width_, heigth_, new Color(100,0,0));
+        super(x, y, 0, 0, width_, heigth_, new Color(100, 0, 0));
     }
 
     @Override

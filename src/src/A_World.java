@@ -58,12 +58,12 @@ abstract class A_World
 	  
 	  lastTick = currentTick;
 
-	  
 	  // process User Input
 	  userInput = inputSystem.getUserInput();
 	  processUserInput(userInput,millisDiff/1000.0);
 	  userInput.clear();
-
+        //print keyMap
+        System.out.println(userInput.keyMap);
 	  // no actions if game is over
 	  if(gameOver) { continue;}
 	  

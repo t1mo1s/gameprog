@@ -79,6 +79,20 @@ class Gam20_World extends A_World
                       userInput.mousePressedY + worldPartY);
           }
       }
+
+
+           if (userInput.keyMap.get('w') == true) {
+              avatar.isJumping = true;
+              this.yOld = avatar.y;
+          }  if (userInput.keyMap.get('a') == true) {
+          avatar.moveLeft(diffSeconds);
+      }
+
+           if (userInput.keyMap.get('d') == true) {
+          avatar.moveRight(diffSeconds);
+      }
+
+      /*
       if(userInput.isKeyEvent){
           if (userInput.keyPressed == 'a') {
               avatar.moveLeft(diffSeconds);
@@ -89,6 +103,8 @@ class Gam20_World extends A_World
               this.yOld = avatar.y;
           }
       }
+
+       */
 
       //
       // Mouse still pressed?

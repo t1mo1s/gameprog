@@ -23,11 +23,13 @@ class Gam20_World extends A_World {
         // set WorldPart position
         worldPartX = 1500;
         worldPartY = 1500;
-
+        //add roof
+        //gameObjects.add(new Gam20_Ground(0, 0, A_Const.WORLD_WIDTH, 70));
         //add ground
         gameObjects.add(new Gam20_Ground(0, A_Const.WORLD_HEIGHT - 70, A_Const.WORLD_WIDTH, 70));
-        //add roof
-        gameObjects.add(new Gam20_Ground(0, 0, A_Const.WORLD_WIDTH, 70));
+
+
+
         //
 	/* forrest muss weg
 	for(int x=0; x<5000; x+=1000)
@@ -66,16 +68,6 @@ class Gam20_World extends A_World {
         // distinguish if Avatar shall move or shoots
         int button = userInput.mouseButton;
 
-        //
-        // Mouse events
-        //
-        if (userInput.isMouseEvent) {
-            // move
-            if (button == 1) {
-                avatar.setDestination(userInput.mousePressedX + worldPartX, userInput.mousePressedY + worldPartY);
-            }
-        }
-
 
         if (userInput.keyMap.get('a') == true) {
             avatar.moveLeft(diffSeconds);
@@ -87,6 +79,7 @@ class Gam20_World extends A_World {
             avatar.isJumping = true;
             avatar.jump(diffSeconds);
         }
+
 
       /*
       if(userInput.isKeyEvent){

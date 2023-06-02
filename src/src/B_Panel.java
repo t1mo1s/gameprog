@@ -75,7 +75,6 @@ class B_Panel extends JPanel implements A_GraphicSystem {
         graphics.drawString(text.toString(), (int) text.x, (int) text.y);
     }
 
-
     public void redraw() {
         this.getGraphics().drawImage(imageBuffer, 0, 0, this);
     }

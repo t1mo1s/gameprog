@@ -1,6 +1,8 @@
 // (c) Thorsten Hasbargen
 
 
+import java.awt.event.KeyEvent;
+
 class Gam20_World extends A_World {
     private double timePassed = 0;
     private double timeSinceLastShot = 0;
@@ -69,16 +71,19 @@ class Gam20_World extends A_World {
         int button = userInput.mouseButton;
 
 
-        if (userInput.keyMap.get('a') == true) {
+        if (userInput.keyMap.get('a')) {
             avatar.moveLeft(diffSeconds);
         }
-        if (userInput.keyMap.get('d') == true) {
+        if (userInput.keyMap.get('d')) {
             avatar.moveRight(diffSeconds);
         }
-        if (userInput.keyMap.get(' ') == true && !avatar.isJumping) {
+        if ((userInput.keyMap.get(' ') && !avatar.isJumping) || (userInput.keyMap.get('w') != null && userInput.keyMap.get('w') && !avatar.isJumping)) {
             avatar.isJumping = true;
             avatar.jump(diffSeconds);
         }
+
+
+
 
 
       /*

@@ -30,7 +30,7 @@ abstract class A_GameObject {
     private double vSpeed = 100;
 
     //max jump height kommt später in A_Const
-    private final double maxJumpHeight =  y + A_Const.WORLD_HEIGHT - 225;
+    private final double maxJumpHeight =  y + 225;
 
 
     // GameObjects sometimes call physics methods

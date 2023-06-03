@@ -41,12 +41,13 @@ class Gam20_World extends A_World {
     /**
      * Object(posX, posY, width, Height)
      * Position from Right, Pos from TOp, Till Left, Till Bottom *
+     * player kann nur 225pxl hoch springen, platform MUSS max 222pxl hoch sein! *
      **/
     private void map1() {
         gameObjects.add(new Gam20_Ground(200, A_Const.WORLD_HEIGHT - 100, A_Const.WORLD_WIDTH, 100, new Color(108, 103, 103)));
 
         //Test Platform
-        gameObjects.add(new Gam20_Platform(300, A_Const.WORLD_HEIGHT - 75));
+        gameObjects.add(new Gam20_Platform(300, 100));
         // gameObjects.add(new Gam20_Goal(A_Const.WORLD_WIDTH-100, ));
     }
 
@@ -70,6 +71,7 @@ class Gam20_World extends A_World {
             avatar.isJumping = true;
             avatar.jump(diffSeconds);
         }
-
     }
+
+
 }

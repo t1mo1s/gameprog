@@ -1,138 +1,98 @@
-// (c) Thorsten Hasbargen
-
 
 import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
 abstract class A_GameObject {
-    // yes, public  :(
-    //
-    protected double x, y;
-    protected double alfa = 0;
-    protected double speed = 0;
-    //protected int     radius = 7;
-    protected int height, width;
-    protected Color color;
+  protected double  x,y;
+  protected double  alfa  = 0;
+  protected double  speed = 0;
+  protected int height,width;
+  protected Color   color;
+  protected boolean isLiving = true;
+  protected boolean isMoving = true;
 
-    // if the object is existing, moving etc
-    protected boolean isLiving = true;
-    protected boolean isMoving = true;
+  // destination the object shall move to,
+  // old position etc
+  private double  destX, destY;
+  private boolean hasDestination = false;
 
-    // destination the object shall move to,
-    // old position etc
-    private double destX, destY;
-    private boolean hasDestination = false;
+  protected boolean isJumping = false;
+  private double  xOld,  yOld;
+  //vertivcal Speed
+  private double vSpeed = 100;
 
-    protected boolean isJumping = false; //um avatar dann wieder fallen zu lassen muss überprüft werden ob der gerade hüpft und wenn max. Sprunghöhe erreicht muss er fallen
-    private double xOld, yOld;
-    //vertivcal Speed
-    private double vSpeed = 100;
+  //max jump height kommt später in A_Const
+  private double maxJumpHeight = 120;
+  
+      
+  // GameObjects sometimes call physics methods
+  protected static A_World         world;
+  // construct GameObject
+  public A_GameObject(double x_, double y_, 
+		              double a_, double s_, 
+		              int width_,int heigth_, Color color_)
+  { 
+	x=x_;    y=y_; 
+    xOld=x;  yOld=y;
+    alfa=a_; speed=s_;
+    width = width_;
+    height = heigth_;
+    color = color_;
+  }
 
-    //max jump height kommt später in A_Const
-    private final double maxJumpHeight =  y + 225;
+  public void moveLeft(double diffSeconds){
+    x -= 2 *speed*diffSeconds;
+  }
 
+  public void moveRight(double diffSeconds){
+    x += 2*speed*diffSeconds;
+  }
 
-    // GameObjects sometimes call physics methods
-    protected static A_World world;
+  public void jump(double diffSeconds) {
 
-    // construct GameObject
-    public A_GameObject(double x_, double y_, double a_, double s_, int width_, int height_, Color color_) {
-        x = x_;
-        y = y_;
-        xOld = x;
-        yOld = y;
-        alfa = a_;
-        speed = s_;
-        width = width_;
-        height = height_;
-        color = color_;
-    }
+    class JumpHelper extends TimerTask{
 
-    // move one step to direction <alfa>
-    public void move(double diffSeconds) {
-        if (!isMoving) return;
+      @Override
+      public void run() {
+        if(y >= maxJumpHeight){
+          y -= 4*vSpeed*diffSeconds;
+        }else{
+          cancel();
+          fall(diffSeconds);
 
-        // remember old position
-        xOld = x;
-        yOld = y;
-
-        // move one step
-        x += Math.cos(alfa) * speed * diffSeconds;
-        y += Math.sin(alfa) * speed * diffSeconds;
-    }
-
-    public void moveLeft(double diffSeconds) {
-        x -= 2 * speed * diffSeconds;
-    }
-
-    public void moveRight(double diffSeconds) {
-        x += 2 * speed * diffSeconds;
-    }
-
-    public void jump(double diffSeconds) {
-
-        class JumpHelper extends TimerTask {
-
-            @Override
-            public void run() {
-                if (y >= maxJumpHeight) {
-                    y -= 10 * vSpeed * diffSeconds;
-                } else {
-                    cancel();
-                    fall(diffSeconds);
-                }
-            }
         }
 
-        Timer timer = new Timer();
-        TimerTask jumpsTask = new JumpHelper();
-        timer.schedule(jumpsTask, 0, 25);
+      }
     }
 
-    public void fall(double diffSeconds) {
-        class FallHelper extends TimerTask {
+    Timer timer = new Timer();
+    TimerTask jumpsTask = new JumpHelper();
+    timer.schedule(jumpsTask, 0,25);
 
-            @Override
-            public void run() {
-                if (y <= A_Const.WORLD_HEIGHT - 70 - 25 - 1) {
-                    y += 4 * vSpeed * diffSeconds;
-                } else {
-                    isJumping = false;
-                    cancel();
-                }
-            }
+  }
+
+
+  public void fall(double diffSeconds){
+    class FallHelper extends TimerTask{
+
+      @Override
+      public void run() {
+        if(y <= A_Const.WORLD_HEIGHT-70-25-1){
+          y += 4*vSpeed*diffSeconds;
+        }else{
+          isJumping = false;
+          cancel();
         }
-
-        Timer timer = new Timer();
-        TimerTask fallTask = new FallHelper();
-        timer.schedule(fallTask, 0, 20);
+      }
     }
 
-    // set a point in the world as destination
-    public final void setDestination(double dx, double dy) {
-        isMoving = true;
-        hasDestination = true;
-        destX = dx;
-        destY = dy;
+    Timer timer = new Timer();
+    TimerTask fallTask = new FallHelper();
+    timer.schedule(fallTask, 0,20);
 
-        alfa = Math.atan2(dy - y, dx - x);
-    }
-
-    // set the LOCATION of an object as destination
-    public void setDestination(A_GameObject obj) {
-        setDestination(obj.x, obj.y);
-    }
-
-    // move back to the position BEFORE the move Method was called
-    protected void moveBack() {
-        x = xOld;
-        y = yOld;
-    }
-
-    abstract int type();
-
-    static void setWorld(A_World w) {
-        world = w;
-    }
+  }
+  abstract int type();
+  static void setWorld(A_World w) {world=w;}
+  
 }

@@ -46,7 +46,7 @@ abstract class A_GameObject {
     }
 
     public void moveRight(double diffSeconds) {
-        x += 20 * speed * diffSeconds;
+        x += 2 * speed * diffSeconds;
     }
 
     public void jump(double diffSeconds) {

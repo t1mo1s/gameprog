@@ -10,7 +10,8 @@ class Gam20_World extends A_World {
     private Gam20_Counter counterZ;
     private Gam20_HelpText helpText;
     public int lvl = 1;
-    private double ground = A_Const.WORLD_HEIGHT - 70 - 25;
+    private double ground = A_Const.WORLD_HEIGHT - 70;
+    private double playerFeet = ground - 25;
 
     protected void init() {
         // set WorldPart position
@@ -19,7 +20,7 @@ class Gam20_World extends A_World {
         //add roof
         //gameObjects.add(new Gam20_Ground(0, 0, A_Const.WORLD_WIDTH, 70));
         //add ground
-        gameObjects.add(new Gam20_Ground(0, A_Const.WORLD_HEIGHT - 70, 100, 70, new Color(100, 0, 0)));
+        gameObjects.add(new Gam20_Ground(0, getGround(0), 100, 70, new Color(100, 0, 0)));
 
 
         if (lvl == 1) {
@@ -33,9 +34,14 @@ class Gam20_World extends A_World {
         }
 
         // add the Avatar
-        //A_Const.WORLD_Height-70-25 um avatar auf boden zu setzen => -70 wegen ground height und -25 wegen avatar height
-        avatar = new Gam20_Avatar(30, ground);
+        avatar = new Gam20_Avatar(30, playerFeet);
         gameObjects.add(avatar);
+    }
+
+    //From Spawn height adjustable
+    public double getGround(int diff) {
+        ground = ground - diff;
+        return ground;
     }
 
     /**
@@ -44,10 +50,11 @@ class Gam20_World extends A_World {
      * player kann nur 225pxl hoch springen, platform MUSS max 222pxl hoch sein! *
      **/
     private void map1() {
-        gameObjects.add(new Gam20_Ground(200, A_Const.WORLD_HEIGHT - 100, A_Const.WORLD_WIDTH, 100, new Color(108, 103, 103)));
+        gameObjects.add(new Gam20_Ground(200, getGround(30), A_Const.WORLD_WIDTH, 100, new Color(108, 103, 103)));
+
 
         //Test Platform
-        gameObjects.add(new Gam20_Platform(300, 100));
+        gameObjects.add(new Gam20_Platform(300, getGround(220)));
         // gameObjects.add(new Gam20_Goal(A_Const.WORLD_WIDTH-100, ));
     }
 

@@ -2,6 +2,7 @@
 
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.Serial;
 
 class B_Frame extends JFrame implements A_Frame {
@@ -16,10 +17,20 @@ class B_Frame extends JFrame implements A_Frame {
         //this.setSize(A_Const.WORLD_PART_WIDTH+2,A_Const.WORLD_PART_HEIGHT+2);
         this.setSize(A_Const.WORLD_WIDTH, A_Const.WORLD_HEIGHT);
 
-        this.setAlwaysOnTop(true);
-        this.setUndecorated(true);
+        this.setTitle("DaringDash");
 
-        this.setResizable(true);
+        ImageIcon icon = new ImageIcon("src/img/LOGO.png");
+        this.setIconImage(icon.getImage());
+
+
+        /*
+          FUCKT NUR AB!
+          //this.setAlwaysOnTop(true);
+          //this.setUndecorated(true);
+         */
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
         panel = new B_Panel();
 

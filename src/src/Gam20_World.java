@@ -10,13 +10,9 @@ class Gam20_World extends A_World {
     private Gam20_Counter counterZ;
     private Gam20_HelpText helpText;
     public int lvl = 1;
+    private double ground = A_Const.WORLD_HEIGHT - 70 - 25;
 
     protected void init() {
-        // add the Avatar
-        //A_Const.WORLD_Height-70-25 um avatarauf boden zu setzen => -70 wegen ground height und -25 wegen avatar height
-        avatar = new Gam20_Avatar(30, A_Const.WORLD_HEIGHT - 70 - 25);
-        gameObjects.add(avatar);
-
         // set WorldPart position
         worldPartX = 1500;
         worldPartY = 1500;
@@ -35,6 +31,11 @@ class Gam20_World extends A_World {
         if (lvl == 3) {
             map3();
         }
+
+        // add the Avatar
+        //A_Const.WORLD_Height-70-25 um avatar auf boden zu setzen => -70 wegen ground height und -25 wegen avatar height
+        avatar = new Gam20_Avatar(30, ground);
+        gameObjects.add(avatar);
     }
 
     /**

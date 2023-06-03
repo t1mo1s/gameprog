@@ -11,7 +11,7 @@ class B_Frame extends JFrame implements A_Frame
   {
       this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	//this.setSize(A_Const.WORLDPART_WIDTH+2,A_Const.WORLDPART_HEIGHT+2);
-      this.setSize(A_Const.WORLD_WIDTH, A_Const.WORLD_HEIGHT);
+      this.setSize(A_Const.WORLDPART_WIDTH+2, A_Const.WORLD_HEIGHT);
 	
 	this.setAlwaysOnTop(true);
 	this.setUndecorated(true);

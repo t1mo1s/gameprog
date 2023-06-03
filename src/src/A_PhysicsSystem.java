@@ -1,8 +1,4 @@
-
-// (c) Thorsten Hasbargen
-
-
-abstract class A_PhysicsSystem 
+abstract class A_PhysicsSystem
 {
   protected A_World world;
   

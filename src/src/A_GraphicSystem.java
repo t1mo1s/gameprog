@@ -1,7 +1,4 @@
 
-// (c) Thorsten Hasbargen
-
-
 interface A_GraphicSystem 
 {
   // prepare to draw a new Screen

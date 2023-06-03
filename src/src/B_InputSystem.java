@@ -1,7 +1,3 @@
-
-// (c) Thorsten Hasbargen
-
-
 import java.awt.event.*;
 
 class B_InputSystem implements A_InputSystem, KeyListener, MouseListener, MouseMotionListener

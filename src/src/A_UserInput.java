@@ -1,7 +1,4 @@
 
-// (c) Thorsten Hasbargen
-
-
 import java.util.HashMap;
 
 final class A_UserInput

@@ -1,11 +1,7 @@
-
-// (c) Thorsten Hasbargen
-
-
-class Gam20_PhysicsSystem extends A_PhysicsSystem
+class Game_PhysicsSystem extends A_PhysicsSystem
 {
 	
-  Gam20_PhysicsSystem(A_World w)
+  Game_PhysicsSystem(A_World w)
   { super(w);
   }
   

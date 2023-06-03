@@ -1,14 +1,10 @@
-
-// (c) Thorsten Hasbargen
-
-
 import java.awt.*;
 
-class Gam20_Counter extends A_TextObject
+class Game_Counter extends A_TextObject
 {
   private int number = 1;
 	
-  public Gam20_Counter(int x, int y)
+  public Game_Counter(int x, int y)
   { super(x,y, new Color(255,255,0,210));
   }
   

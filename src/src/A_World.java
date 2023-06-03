@@ -1,7 +1,3 @@
-
-// (c) Thorsten Hasbargen
-
-
 import java.util.ArrayList;
 
 abstract class A_World
@@ -29,7 +25,7 @@ abstract class A_World
     
   
   A_World()
-  { physicsSystem = new Gam20_PhysicsSystem(this);
+  { physicsSystem = new Game_PhysicsSystem(this);
   }
   
   
@@ -62,34 +58,11 @@ abstract class A_World
 	  userInput = inputSystem.getUserInput();
 	  processUserInput(userInput,millisDiff/1000.0);
 	  userInput.clear();
-        //print keyMap
-        System.out.println(userInput.keyMap);
 	  // no actions if game is over
 	  if(gameOver) { continue;}
-	  
-	  // move all Objects, maybe collide them etc...
+
 	  int gameSize = gameObjects.size();
-	  for(int i=0; i<gameSize; i++)
-	  { 
-        A_GameObject obj = gameObjects.get(i);
-        if(obj.isLiving)  obj.move(millisDiff/1000.0);
-	  }
 
-
-      // delete all Objects which are not living anymore
-      int num=0;
-      while(num<gameSize)
-      {
-        if(gameObjects.get(num).isLiving==false)
-        { gameObjects.remove(num);
-          gameSize--;
-        }
-        else
-        { num++;
-        }
-      }	  
-	  
-      
       // adjust displayed pane of the world
       //this.adjustWorldPart();
       
@@ -107,9 +80,6 @@ abstract class A_World
 	  
 	  // redraw everything
 	  graphicSystem.redraw();
-	  	  
-	  // create new objects if needed
-	  //createNewObjects(millisDiff/1000.0);
 	}
   }
   
@@ -172,6 +142,4 @@ abstract class A_World
   
   protected abstract void init();
   protected abstract void processUserInput(A_UserInput input, double diffSec);
-  //protected abstract void createNewObjects(double diffSeconds);
-  
 }

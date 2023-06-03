@@ -1,12 +1,8 @@
-
-// (c) Thorsten Hasbargen
-
-
 import java.awt.*;
 
-class Gam20_HelpText extends A_TextObject
+class Game_HelpText extends A_TextObject
 {
-  public Gam20_HelpText(int x, int y)
+  public Game_HelpText(int x, int y)
   { super(x,y, new Color(0,120,255,60));
   }
   

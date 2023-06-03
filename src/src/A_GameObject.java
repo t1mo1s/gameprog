@@ -1,4 +1,3 @@
-
 // (c) Thorsten Hasbargen
 
 
@@ -31,16 +30,14 @@ abstract class A_GameObject {
     private double vSpeed = 100;
 
     //max jump height kommt später in A_Const
-    private double maxJumpHeight = 120;
+    private final double maxJumpHeight =  y + A_Const.WORLD_HEIGHT - 225;
 
 
     // GameObjects sometimes call physics methods
     protected static A_World world;
 
     // construct GameObject
-    public A_GameObject(double x_, double y_,
-                        double a_, double s_,
-                        int width_, int heigth_, Color color_) {
+    public A_GameObject(double x_, double y_, double a_, double s_, int width_, int height_, Color color_) {
         x = x_;
         y = y_;
         xOld = x;
@@ -48,28 +45,13 @@ abstract class A_GameObject {
         alfa = a_;
         speed = s_;
         width = width_;
-        height = heigth_;
+        height = height_;
         color = color_;
     }
 
     // move one step to direction <alfa>
     public void move(double diffSeconds) {
         if (!isMoving) return;
-
-        // move if object has a destination
-      /* brauchen des mit destination nich da der avatar mit der tastatur bewegt werden soll
-	if(hasDestination)
-	{
-	  // stop if destination is reached	
-	  double diffX = Math.abs(x-destX);
-	  double diffY = Math.abs(y-destY);
-	  if(diffX<3 && diffY<3)
-	  { isMoving = false;
-	    return;
-	  }
-	}
-
-       */
 
         // remember old position
         xOld = x;
@@ -95,22 +77,18 @@ abstract class A_GameObject {
             @Override
             public void run() {
                 if (y >= maxJumpHeight) {
-                    y -= 4 * vSpeed * diffSeconds;
+                    y -= 10 * vSpeed * diffSeconds;
                 } else {
                     cancel();
                     fall(diffSeconds);
-
                 }
-
             }
         }
 
         Timer timer = new Timer();
         TimerTask jumpsTask = new JumpHelper();
         timer.schedule(jumpsTask, 0, 25);
-
     }
-
 
     public void fall(double diffSeconds) {
         class FallHelper extends TimerTask {
@@ -129,36 +107,7 @@ abstract class A_GameObject {
         Timer timer = new Timer();
         TimerTask fallTask = new FallHelper();
         timer.schedule(fallTask, 0, 20);
-
     }
-
-
-    // test and reflect on Window Borders
-  /*protected void reflectOnBorders()
-  {
-	double rad = radius;
-	double PI  = Math.PI;
-	
-    if(x<rad && (alfa>PI/2 && alfa<PI*3/2))
-	{ alfa = Math.PI-alfa;
-	}
-    if(y<rad && alfa>PI)
-	{ alfa = PI*2-alfa; 
-	}
-    if(x>A_Const.WORLD_WIDTH-rad)
-	{ alfa = Math.PI-alfa;
-	}
-    if(y>A_Const.WORLD_HEIGHT-rad)
-	{ alfa = PI*2-alfa;
-    }
-
-	
-	if(alfa<0)    alfa += PI*2;
-	if(alfa>PI*2) alfa -= PI*2;	
-  }
-
-   */
-
 
     // set a point in the world as destination
     public final void setDestination(double dx, double dy) {
@@ -170,12 +119,10 @@ abstract class A_GameObject {
         alfa = Math.atan2(dy - y, dx - x);
     }
 
-
     // set the LOCATION of an object as destination
     public void setDestination(A_GameObject obj) {
         setDestination(obj.x, obj.y);
     }
-
 
     // move back to the position BEFORE the move Method was called
     protected void moveBack() {
@@ -183,11 +130,9 @@ abstract class A_GameObject {
         y = yOld;
     }
 
-
     abstract int type();
 
     static void setWorld(A_World w) {
         world = w;
     }
-
 }

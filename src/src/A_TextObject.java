@@ -2,7 +2,6 @@
 
 import java.awt.*;
 
-
 abstract class A_TextObject {
     protected static A_World world;
 

@@ -10,9 +10,8 @@ class Gam20_HelpText extends A_TextObject {
     }
 
     public String toString() {
-        String display = "MOVE:Mouse left      SHOOT:Mouse right      " +
+        return "MOVE:Mouse left      SHOOT:Mouse right      " +
                 "Grenade:Space bar     END: Escape";
-        return display;
     }
 
 }

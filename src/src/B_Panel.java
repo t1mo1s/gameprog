@@ -4,15 +4,17 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.Serial;
 
 class B_Panel extends JPanel implements A_GraphicSystem {
     // constants
+    @Serial
     private static final long serialVersionUID = 1L;
     private static final Font font = new Font("Arial", Font.PLAIN, 24);
 
 
     // InputSystem is an external instance
-    private B_InputSystem inputSystem = new B_InputSystem();
+    private final B_InputSystem inputSystem = new B_InputSystem();
     private A_World world = null;
 
 
@@ -26,7 +28,7 @@ class B_Panel extends JPanel implements A_GraphicSystem {
     public B_Panel() {
 
 
-        //this.setSize(A_Const.WORLDPART_WIDTH,A_Const.WORLDPART_HEIGHT);
+        //this.setSize(A_Const.WORLD_PART_WIDTH,A_Const.WORLD_PART_HEIGHT);
         this.setSize(A_Const.WORLD_WIDTH, A_Const.WORLD_HEIGHT);
 
 
@@ -43,7 +45,7 @@ class B_Panel extends JPanel implements A_GraphicSystem {
 
     public void clear() {
         graphics.setColor(Color.LIGHT_GRAY);
-        //graphics.fillRect(40, 100,A_Const.WORLDPART_WIDTH,A_Const.WORLDPART_HEIGHT);
+        //graphics.fillRect(40, 100,A_Const.WORLD_PART_WIDTH,A_Const.WORLD_PART_HEIGHT);
         graphics.fillRect(0, 0, A_Const.WORLD_WIDTH, A_Const.WORLD_HEIGHT);
     }
 

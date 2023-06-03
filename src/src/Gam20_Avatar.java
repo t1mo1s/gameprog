@@ -17,9 +17,7 @@ class Gam20_Avatar extends A_GameObject {
 
         // calculate all collisions with other Objects
         A_GameObjectList collisions = world.getPhysicsSystem().getCollisions(this);
-        for (int i = 0; i < collisions.size(); i++) {
-            A_GameObject obj = collisions.get(i);
-
+        for (A_GameObject obj : collisions) {
             // if Object is a tree, move back one step
             if (obj.type() == A_Const.TYPE_TREE) {
                 this.moveBack();

@@ -5,9 +5,8 @@ import java.util.ArrayList;
 
 abstract class A_World {
     private A_GraphicSystem graphicSystem;
-    private A_PhysicsSystem physicsSystem;
+    private final A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
-    private A_UserInput userInput;
 
     // top left corner of the displayed pane of the world
     double worldPartX = 0;
@@ -18,7 +17,6 @@ abstract class A_World {
 
     // if game is over
     boolean gameOver = false;
-    double yOld = 0;
 
     // all objects in the game, including the Avatar
     A_GameObjectList gameObjects = new A_GameObjectList();
@@ -29,7 +27,6 @@ abstract class A_World {
     A_World() {
         physicsSystem = new Gam20_PhysicsSystem(this);
     }
-
 
     //
     // the main GAME LOOP
@@ -48,7 +45,7 @@ abstract class A_World {
             if (millisDiff < FRAME_MINIMUM_MILLIS) {
                 try {
                     Thread.sleep(FRAME_MINIMUM_MILLIS - millisDiff);
-                } catch (Exception ex) {
+                } catch (Exception ignore) {
                 }
                 currentTick = System.currentTimeMillis();
                 millisDiff = currentTick - lastTick;
@@ -57,11 +54,11 @@ abstract class A_World {
             lastTick = currentTick;
 
             // process User Input
-            userInput = inputSystem.getUserInput();
+            A_UserInput userInput = inputSystem.getUserInput();
             processUserInput(userInput, millisDiff / 1000.0);
             userInput.clear();
-            //print keyMap
-            System.out.println(userInput.keyMap);
+            /** print keyMap **/
+            // System.out.println(userInput.keyMap);
             // no actions if game is over
             if (gameOver) {
                 continue;
@@ -78,14 +75,13 @@ abstract class A_World {
             // delete all Objects which are not living anymore
             int num = 0;
             while (num < gameSize) {
-                if (gameObjects.get(num).isLiving == false) {
+                if (!gameObjects.get(num).isLiving) {
                     gameObjects.remove(num);
                     gameSize--;
                 } else {
                     num++;
                 }
             }
-
 
             // adjust displayed pane of the world
             //this.adjustWorldPart();
@@ -96,10 +92,9 @@ abstract class A_World {
                 graphicSystem.draw(gameObjects.get(i));
             }
 
-
             // draw all TextObjects
-            for (int i = 0; i < textObjects.size(); i++) {
-                graphicSystem.draw(textObjects.get(i));
+            for (A_TextObject textObject : textObjects) {
+                graphicSystem.draw(textObject);
             }
 
             // redraw everything

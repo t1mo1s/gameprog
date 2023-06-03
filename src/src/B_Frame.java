@@ -2,16 +2,18 @@
 
 
 import javax.swing.*;
+import java.io.Serial;
 
 class B_Frame extends JFrame implements A_Frame {
     // ...ok...
+    @Serial
     private static final long serialVersionUID = 2L;
 
     private B_Panel panel = null;
 
     public B_Frame() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //this.setSize(A_Const.WORLDPART_WIDTH+2,A_Const.WORLDPART_HEIGHT+2);
+        //this.setSize(A_Const.WORLD_PART_WIDTH+2,A_Const.WORLD_PART_HEIGHT+2);
         this.setSize(A_Const.WORLD_WIDTH, A_Const.WORLD_HEIGHT);
 
         this.setAlwaysOnTop(true);

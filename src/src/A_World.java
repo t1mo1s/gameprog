@@ -34,6 +34,7 @@ abstract class A_World
   //
   final void run()
   {
+
 	long lastTick =  System.currentTimeMillis();
 	
 	while(true)

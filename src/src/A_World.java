@@ -9,14 +9,14 @@ abstract class A_World
   
   // top left corner of the displayed pane of the world
   double worldPartX = 0;
-  double worldPartY = 0;
+
   
   // defines maximum frame rate
   private static final int FRAME_MINIMUM_MILLIS = 10;
   
   // if game is over
   boolean gameOver = false;
-  double yOld = 0;
+
   
   // all objects in the game, including the Avatar
   A_GameObjectList        gameObjects = new A_GameObjectList();
@@ -34,10 +34,12 @@ abstract class A_World
   //
   final void run()
   {
+
 	long lastTick =  System.currentTimeMillis();
 	
 	while(true)
 	{
+
 	  // calculate elapsed time
 	  //
 	  long currentTick = System.currentTimeMillis();
@@ -64,7 +66,7 @@ abstract class A_World
 	  int gameSize = gameObjects.size();
 
       // adjust displayed pane of the world
-      //this.adjustWorldPart();
+      this.adjustWorldPart();
       
       // draw all Objects
       graphicSystem.clear();
@@ -86,52 +88,37 @@ abstract class A_World
   
   // adjust the displayed pane of the world according to Avatar and Bounds
   //
-  /*private final void adjustWorldPart()
+  private final void adjustWorldPart()
   {
     final int RIGHT_END  = A_Const.WORLD_WIDTH-A_Const.WORLDPART_WIDTH;
-    final int BOTTOM_END = A_Const.WORLD_HEIGHT-A_Const.WORLDPART_HEIGHT;
-	  	  
-    
+
 	// if avatar is too much right in display ...
-    if(avatar.x > worldPartX+A_Const.WORLDPART_WIDTH-A_Const.SCROLL_BOUNDS)
+    if(avatar.x > worldPartX+A_Const.WORLDPART_WIDTH -A_Const.SCROLL_BOUNDS)
     {
       // ... adjust display
       worldPartX = avatar.x+A_Const.SCROLL_BOUNDS-A_Const.WORLDPART_WIDTH;
       if(worldPartX >= RIGHT_END)
-      { worldPartX = RIGHT_END;
+      {
+          worldPartX = RIGHT_END;
       }
     }
     
     // same left
+
     else if(avatar.x < worldPartX+A_Const.SCROLL_BOUNDS)
     {
       worldPartX = avatar.x-A_Const.SCROLL_BOUNDS;	
       if(worldPartX <=0)
-      { worldPartX = 0;
+      {
+          worldPartX = 0;
       }
     }
-    
-    // same bottom
-    if(avatar.y > worldPartY+A_Const.WORLDPART_HEIGHT-A_Const.SCROLL_BOUNDS)
-    {
-        worldPartY = avatar.y+A_Const.SCROLL_BOUNDS-A_Const.WORLDPART_HEIGHT;
-        if(worldPartY >= BOTTOM_END)
-        { worldPartY = BOTTOM_END;
-        }   	
-    }
-    
-    // same top
-    else if(avatar.y < worldPartY+A_Const.SCROLL_BOUNDS)
-    {
-      worldPartY = avatar.y-A_Const.SCROLL_BOUNDS;
-      if(worldPartY <=0)
-      { worldPartY = 0;
-      }
-    }    
-    
+
+
+
   }
 
-   */
+
   
     
   protected void setGraphicSystem(A_GraphicSystem p) { graphicSystem = p; }

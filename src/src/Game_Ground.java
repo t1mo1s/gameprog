@@ -3,9 +3,11 @@ import java.awt.*;
 public class Game_Ground extends A_GameObject{
 
 
-    public Game_Ground(double x, double y, int width_, int heigth_) {
-        super(x, y, 0, 0, width_, heigth_, new Color(100,0,0));
+    public Game_Ground(double x, double y, int width_, int height_, Color color) {
+        super(x, y, 0, 0, width_, height_, color);
     }
+
+
 
     @Override
     int type() {

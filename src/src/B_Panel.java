@@ -29,7 +29,7 @@ class B_Panel extends JPanel implements A_GraphicSystem
 
 
 	//this.setSize(A_Const.WORLDPART_WIDTH,A_Const.WORLDPART_HEIGHT);
-      this.setSize(A_Const.WORLD_WIDTH, A_Const.WORLD_HEIGHT);
+      this.setSize(A_Const.WORLDPART_WIDTH, A_Const.WORLD_HEIGHT);
 
 
 	imageBuffer = graphicsConf.createCompatibleImage(
@@ -47,7 +47,7 @@ class B_Panel extends JPanel implements A_GraphicSystem
   public void clear()
   { graphics.setColor(Color.LIGHT_GRAY);
     //graphics.fillRect(40, 100,A_Const.WORLDPART_WIDTH,A_Const.WORLDPART_HEIGHT);
-    graphics.fillRect(0,0,A_Const.WORLD_WIDTH,A_Const.WORLD_HEIGHT);
+    graphics.fillRect(0,0,A_Const.WORLDPART_WIDTH,A_Const.WORLD_HEIGHT);
   }
   
   
@@ -64,7 +64,7 @@ class B_Panel extends JPanel implements A_GraphicSystem
 	graphics.drawOval(x,y,d,d);
 
      */
-    int x = (int) rect.x;
+    int x = (int) (rect.x - world.worldPartX);
     int y = (int) rect.y;
     graphics.setColor(rect.color);
     graphics.fillRect(x,y, rect.width, rect.height);

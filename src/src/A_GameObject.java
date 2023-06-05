@@ -22,7 +22,7 @@ abstract class A_GameObject {
     private double vSpeed = 100;
 
     //max jump height kommt später in A_Const
-    private double maxJumpHeight = y + 250;
+    private double maxJumpHeight = y + 150;
 
 
     // GameObjects sometimes call physics methods
@@ -50,27 +50,56 @@ abstract class A_GameObject {
     }
 
     public void jump(double diffSeconds) {
+        // Define the control points of the Bézier curve
+        double[] controlPoints = { y, maxJumpHeight, maxJumpHeight, y };
 
         class JumpHelper extends TimerTask {
+            private double t = 0.0;
 
             @Override
             public void run() {
-                if (y >= maxJumpHeight) {
-                    y -= 4 * vSpeed * diffSeconds;
+                if (t <= 1.0) {
+                    // Calculate the y-coordinate using the Bézier curve formula
+                    double yBezier = calculateBezierPoint(t, controlPoints);
+
+                    // Update the y-coordinate
+                    y = yBezier;
+
+                    t += 0.01; // Increase the parameter value for each iteration
                 } else {
                     cancel();
                     fall(diffSeconds);
-
                 }
-
             }
         }
 
         Timer timer = new Timer();
         TimerTask jumpsTask = new JumpHelper();
-        timer.schedule(jumpsTask, 0, 25);
-
+        timer.schedule(jumpsTask, 0, 5);
     }
+
+    // Helper method to calculate the y-coordinate on a Bézier curve for a given parameter value t
+    private double calculateBezierPoint(double t, double[] controlPoints) {
+        int n = controlPoints.length - 1;
+        double yBezier = 0.0;
+
+        for (int i = 0; i <= n; i++) {
+            double coefficient = binomialCoefficient(n, i) * Math.pow(1 - t, n - i) * Math.pow(t, i);
+            yBezier += coefficient * controlPoints[i];
+        }
+
+        return yBezier;
+    }
+
+    // Helper method to calculate the binomial coefficient (n choose k)
+    private int binomialCoefficient(int n, int k) {
+        if (k == 0 || k == n) {
+            return 1;
+        } else {
+            return binomialCoefficient(n - 1, k - 1) + binomialCoefficient(n - 1, k);
+        }
+    }
+
 
 
     public void fall(double diffSeconds) {
@@ -78,8 +107,8 @@ abstract class A_GameObject {
 
             @Override
             public void run() {
-                if (y <= A_Const.WORLD_HEIGHT - 70 - 25 - 1) {
-                    y += 4 * vSpeed * diffSeconds;
+                if (y < A_Const.WORLD_HEIGHT - 70 - 25 - 1) {
+                    y += 2 * vSpeed * diffSeconds;
                 } else {
                     isJumping = false;
                     cancel();

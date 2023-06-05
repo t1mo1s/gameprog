@@ -56,7 +56,7 @@ class B_InputSystem implements A_InputSystem, KeyListener, MouseListener, MouseM
   }
 
   @Override
-  public void command(Gam20_Avatar userDot, A_UserInput userInput) {
+  public void command(Game_Avatar userDot, A_UserInput userInput) {
 
   }
 }

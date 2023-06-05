@@ -64,16 +64,18 @@ class Game_World extends A_World {
         int smallJump = 800, bigJump = smallJump + 400;
         int holes = 0;
 
+        //platformSTART = 100, holes = 500; Graue ebene
         placeGround(platformSTART, holes = platformEND);
         placeDoublePlatform(platformEND, 80);
 
+        //platformSTART = 1300, holes = 2050;
         System.out.println("Start: " + platformSTART + " END: " + holes);
         placeGround(platformSTART = holes + smallJump, holes = platformEND + 250);
         placeTriplePlatform(platformEND = platformSTART + holes, 75);
 
         System.out.println("Start: " + platformSTART + " END: " + platformEND);
 
-
+        //platformSTART = 3250, holes = 2050;
         placeGround(platformSTART = A_Const.WORLD_WIDTH - 750, A_Const.WORLD_WIDTH - 300);
 
         System.out.println("Start: " + platformSTART + " END: " + platformEND);
@@ -113,6 +115,4 @@ class Game_World extends A_World {
             avatar.jump(diffSeconds);
         }
     }
-
-
 }

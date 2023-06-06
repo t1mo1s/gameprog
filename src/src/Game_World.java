@@ -1,33 +1,19 @@
 import java.awt.*;
 
 class Game_World extends A_World {
-    public int lvl = 1;
+
     final double spawnGround = 70;
-    private final int smallPlatform = 75, longPlatform = 125;
     private double ground = A_Const.WORLD_HEIGHT - spawnGround;
-    private double playerFeet = ground - 25;    //25 -> Player-height
+    private final int smallPlatform = 75, longPlatform = 125;
 
-
-    public Game_World(A_World w) {
-        A_World world = w;
-    }
 
     protected void init() {
         // add the Avatar
-        avatar = new Game_Avatar(30, playerFeet);
+        avatar = new Game_Avatar(3400, ground - 25);
         // set WorldPart position
         worldPartX = 1500;
         //add ground
         gameObjects.add(new Game_Ground(0, setGround(0), 100, 70, new Color(100, 0, 0)));
-
-
-        //Check LVLs
-
-        if (lvl == 1) map1();
-        else if (lvl == 2) map2();
-        else map3();
-
-
         gameObjects.add(avatar);
     }
 
@@ -68,29 +54,25 @@ class Game_World extends A_World {
     }
 
     /**
-     * MAP_DESIGNS
+     * MAP-Build area *
      **/
+    //im falle von mehr maps, A_World muss man die Lvls anpassen!
     void map1() {
         int platformSTART = 100, platformEND;
 
         platformEND = placeGround(platformSTART, 400);
-        System.out.println("ground 1: " + platformSTART + " | " + platformEND);
         platformSTART = 175 + placeDoublePlatform(platformEND, 70);
 
-        //TODO: 2 spikes at x: 1475!
+        //TODO: 1 game_mob at x: 1475 walks 50pxl and back!
+
 
         //start == 1000;
         platformEND = placeGround(platformSTART, 650);
-        System.out.println(platformSTART + " | " + platformEND);
-
         platformSTART = 150 + placeQuadPlatform(platformEND, 65);
-
-        System.out.println("QUAD: " + platformEND + " -> " + platformSTART);
         placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
 
-        //TODO:  4 Spikes at x: 3322!
+        //TODO:  1 Game_mob at x: 3322, walks 100pxl and back!
         goal();
-
     }
 
 
@@ -107,15 +89,6 @@ class Game_World extends A_World {
     /**
      * GOAL METHODS
      **/
-    public int getLvl() {
-        return lvl;
-    }
-
-    public void setLvl(int i) {
-        if (i > 3) this.lvl = 1;
-        else this.lvl = i;
-    }
-
     //No entry -> on ground-level
     private void goal() {
         goal(0);

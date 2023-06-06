@@ -5,11 +5,18 @@ abstract class A_World {
     private A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
     private A_UserInput userInput;
-    //private Game_World  gameWorld;
+
+
+    abstract void map1();
+
+    abstract void map2();
+
+    abstract void map3();
+
+    public int lvl = 1;
 
     // top left corner of the displayed pane of the world
     double worldPartX = 0;
-
 
     // defines maximum frame rate
     private static final int FRAME_MINIMUM_MILLIS = 10;
@@ -63,20 +70,46 @@ abstract class A_World {
                 System.out.println("PlayPOS   X: " + (int) avatar.x + " | Y: " + (int) avatar.y);
             userInput.clear();
 
-            //Load Maps and CheckGoals
+
+            // Check LVLs
+            switch (lvl) {
+                case 1:
+                    map1();
+                    break;
+                case 2:
+                    map2();
+                    break;
+                case 3:
+                    map3();
+                    break;
+                default:
+                    //falls mehr maps kommen
+                    map1();
+            }
+
+            System.out.println(lvl);
+
+            //CheckGoals
             if (avatar.x >= A_Const.WORLD_WIDTH - 200) {
 
                 try {
                     Thread.sleep(1000);
-
-                    avatar.x = 30;
+                    avatar.x = 3200;
                     avatar.y = A_Const.WORLD_HEIGHT - (70 + 25);
+                    lvl++;
 
-                  //  gameWorld.lvl++;
+                    if (lvl > 3) {
+                        lvl = 1;
+                    }
+
+                    System.out.println(lvl);
+
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
+
+
 
 
             /*

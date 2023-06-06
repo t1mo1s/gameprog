@@ -1,6 +1,7 @@
 abstract class A_PhysicsSystem
 {
   protected A_World world;
+  public A_GameObject object;
   
   public A_PhysicsSystem(A_World w)
   { world = w;
@@ -34,5 +35,7 @@ abstract class A_PhysicsSystem
       if(collisions.size()==0) break;
     }
   }
+  public abstract void checkCollision();
+
   
 }

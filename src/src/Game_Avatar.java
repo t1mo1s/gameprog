@@ -1,13 +1,16 @@
 import java.awt.*;
 
 class Game_Avatar extends A_GameObject {
+
+    Game_PhysicsSystem physicsSystem;
+
   public Game_Avatar(double x, double y)
   { super(x,y,0,200,15,25, new Color(96,96,255));
     this.isMoving = false;
   }
   public void moveLeft(double diffSeconds){
       super.moveLeft(diffSeconds);
-      checkCollisionWithObstacles();
+      checkCollision();
       //hier dann noch collision detections berechnen
       //und bestimmen was passiert wenn collision
       //z.B. moveBack(); de
@@ -15,12 +18,12 @@ class Game_Avatar extends A_GameObject {
   }
   public void moveRight(double diffSeconds){
       super.moveRight(diffSeconds);
-      checkCollisionWithObstacles();
+      checkCollision();
 
   }
   public void jump(double diffSeconds){
       super.jump(diffSeconds);
-      checkCollisionWithObstacles();
+      checkCollision();
   }
 
   public void currentCoordinate(){
@@ -29,7 +32,7 @@ class Game_Avatar extends A_GameObject {
 
   public int type() { return A_Const.TYPE_AVATAR; }
 
-    public void checkCollisionWithObstacles() {
+    public void checkCollision() {
         // Double Platform
         int doublePlatformX1 = 650;
         int doublePlatformY1 = 380 - 100;
@@ -58,9 +61,10 @@ class Game_Avatar extends A_GameObject {
         int triplePlatformHeight3 = 70;
 
         // Check collision with Double Platform
-        if (super.x + width >= doublePlatformX1 && super.x <= doublePlatformX1 + doublePlatformWidth1 &&
+        if (super.x + super.width >= doublePlatformX1 && super.x <= doublePlatformX1 + doublePlatformWidth1 &&
                 super.y + height >= doublePlatformY1 && super.y <= doublePlatformY1 + doublePlatformHeight1) {
             System.out.println("Kollision1");
+            //passiert wenn kollision gibt
         }
 
         if (super.x + width >= doublePlatformX2 && super.x <= doublePlatformX2 + doublePlatformWidth2 &&

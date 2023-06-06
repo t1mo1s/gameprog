@@ -13,7 +13,7 @@ abstract class A_World {
 
     abstract void map3();
 
-    public int lvl = 1;
+    public int lvl = 2;
 
     // top left corner of the displayed pane of the world
     double worldPartX = 0;
@@ -74,17 +74,18 @@ abstract class A_World {
             // Check LVLs
             switch (lvl) {
                 case 1:
-                    map1();
+                    //map1();
+                    map2();
                     break;
                 case 2:
                     map2();
                     break;
                 case 3:
-                    map3();
+                    map2();
                     break;
                 default:
                     //falls mehr maps kommen
-                    map1();
+                    //map1();
             }
 
             System.out.println(lvl);
@@ -94,7 +95,7 @@ abstract class A_World {
 
                 try {
                     Thread.sleep(1000);
-                    avatar.x = 3200;
+                    avatar.x = 30;
                     avatar.y = A_Const.WORLD_HEIGHT - (70 + 25);
                     lvl++;
 
@@ -108,20 +109,6 @@ abstract class A_World {
                     throw new RuntimeException(e);
                 }
             }
-
-
-
-
-            /*
-            //Changes Level manually
-            if (userInput.keyMap.get('n') && gameWorld.lvl > 1) {
-                gameWorld.lvl--;
-                System.out.println(gameWorld.lvl);
-            }
-            if (userInput.keyMap.get('m') && gameWorld.lvl < 3) {
-                gameWorld.lvl++;
-                System.out.println(gameWorld.lvl);
-            }*/
 
             /*****************************************************/
 

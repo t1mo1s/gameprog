@@ -22,10 +22,6 @@ final class A_UserInput {
         //only for position testing//
         keyMap.put('p', false);
 
-        //Change level manually, since goal hit box does not exist as of now
-        keyMap.put('n', false);
-        keyMap.put('m', false);
-
         this.clear();
     }
 

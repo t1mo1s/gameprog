@@ -87,7 +87,6 @@ abstract class A_GameObject {
             double coefficient = binomialCoefficient(n, i) * Math.pow(1 - t, n - i) * Math.pow(t, i);
             yBezier += coefficient * controlPoints[i];
         }
-
         return yBezier;
     }
 

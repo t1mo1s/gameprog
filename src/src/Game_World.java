@@ -9,7 +9,7 @@ class Game_World extends A_World {
 
     protected void init() {
         // add the Avatar
-        avatar = new Game_Avatar(3400, ground - 25);
+        avatar = new Game_Avatar(30, ground - 25);
         // set WorldPart position
         worldPartX = 1500;
         //add ground
@@ -57,13 +57,13 @@ class Game_World extends A_World {
      * MAP-Build area *
      **/
     //im falle von mehr maps, A_World muss man die Lvls anpassen!
-    void map1() {
+    public void map1() {
         int platformSTART = 100, platformEND;
 
         platformEND = placeGround(platformSTART, 400);
         platformSTART = 175 + placeDoublePlatform(platformEND, 70);
 
-        //TODO: 1 game_mob at x: 1475 walks 50pxl and back!
+        //TODO: 1 game_mob at x: 1475 walks 50pxl and back! (optional)
 
 
         //start == 1000;
@@ -71,17 +71,32 @@ class Game_World extends A_World {
         platformSTART = 150 + placeQuadPlatform(platformEND, 65);
         placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
 
-        //TODO:  1 Game_mob at x: 3322, walks 100pxl and back!
+        //TODO:  1 Game_mob at x: 3322, walks 100pxl and back and faster!(optional)
+
         goal();
     }
 
 
-    void map2() {
-        //TODO: Kommt noch
-        goal();
+    public void map2() {
+        int platformSTART = 100, platformEND;
+
+        platformEND = placeGround(platformSTART, 100);
+        platformEND = placeGround(platformEND, 200, 100);
+
+        platformSTART = 175 + placeDoublePlatform(platformEND, 70);
+
+        //TODO: 1 game_mob at x: 1475 walks 50pxl and back! (optional)
+
+
+        //start == 1000;
+        platformEND = placeGround(platformSTART, 650);
+        platformSTART = 150 + placeQuadPlatform(platformEND, 65);
+        placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
+
+        goal(10);
     }
 
-    void map3() {
+    public void map3() {
         //TODO: Kommt noch
         goal(5);
     }

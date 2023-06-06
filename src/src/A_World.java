@@ -5,6 +5,7 @@ abstract class A_World {
     private A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
     private A_UserInput userInput;
+    //private Game_World  gameWorld;
 
     // top left corner of the displayed pane of the world
     double worldPartX = 0;
@@ -37,10 +38,7 @@ abstract class A_World {
 
         while (true) {
 
-        //System.out.println("X: " + (int) avatar.x +" | Y: " + (int) avatar.y);
-
             // calculate elapsed time
-
             long currentTick = System.currentTimeMillis();
             long millisDiff = currentTick - lastTick;
 
@@ -58,9 +56,42 @@ abstract class A_World {
             lastTick = currentTick;
 
             // process User Input
+            //TODO: REMOVE FROM END GAME!!! //
             userInput = inputSystem.getUserInput();
             processUserInput(userInput, millisDiff / 1000.0);
+            if (userInput.keyMap.get('p'))
+                System.out.println("PlayPOS   X: " + (int) avatar.x + " | Y: " + (int) avatar.y);
             userInput.clear();
+
+            //Load Maps and CheckGoals
+            if (avatar.x >= A_Const.WORLD_WIDTH - 200) {
+
+                try {
+                    Thread.sleep(1000);
+
+                    avatar.x = 30;
+                    avatar.y = A_Const.WORLD_HEIGHT - (70 + 25);
+
+                  //  gameWorld.lvl++;
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+
+            /*
+            //Changes Level manually
+            if (userInput.keyMap.get('n') && gameWorld.lvl > 1) {
+                gameWorld.lvl--;
+                System.out.println(gameWorld.lvl);
+            }
+            if (userInput.keyMap.get('m') && gameWorld.lvl < 3) {
+                gameWorld.lvl++;
+                System.out.println(gameWorld.lvl);
+            }*/
+
+            /*****************************************************/
+
             // no actions if game is over
             if (gameOver) {
                 continue;

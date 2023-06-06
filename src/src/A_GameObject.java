@@ -51,7 +51,7 @@ abstract class A_GameObject {
 
     public void jump(double diffSeconds) {
         // Define the control points of the Bézier curve
-        double[] controlPoints = { y, maxJumpHeight, maxJumpHeight, y };
+        double[] controlPoints = {y, maxJumpHeight, maxJumpHeight, y};
 
         class JumpHelper extends TimerTask {
             private double t = 0.0;
@@ -99,7 +99,6 @@ abstract class A_GameObject {
             return binomialCoefficient(n - 1, k - 1) + binomialCoefficient(n - 1, k);
         }
     }
-
 
 
     public void fall(double diffSeconds) {

@@ -21,8 +21,16 @@ abstract class A_GameObject {
     //vertivcal Speed
     private double vSpeed = 100;
 
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
     //max jump height kommt später in A_Const
-    private double maxJumpHeight = y + 150;
+    private double maxJumpHeight = y + 250;
 
 
     // GameObjects sometimes call physics methods
@@ -50,6 +58,9 @@ abstract class A_GameObject {
     }
 
     public void jump(double diffSeconds) {
+        if (!isJumping) {
+            return;
+        }
         // Define the control points of the Bézier curve
         double[] controlPoints = { y, maxJumpHeight, maxJumpHeight, y };
 

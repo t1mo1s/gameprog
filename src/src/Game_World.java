@@ -54,8 +54,12 @@ class Game_World extends A_World {
 
     /****MOBS*****/
     private void spawnMobs(int x, int wd) {
+        spawnMobs(x, ground, wd);
+    }
+
+    private void spawnMobs(int x, double y, int wd) {
         //wd => Walking Distance
-        gameObjects.add(new Game_Mob(x, ground));
+        gameObjects.add(new Game_Mob(x, y));
         //TODO: walking animation
     }
 

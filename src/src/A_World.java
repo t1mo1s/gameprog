@@ -57,6 +57,8 @@ abstract class A_World {
 
             lastTick = currentTick;
 
+            this.getPhysicsSystem().getCollisions(avatar);
+
             // process User Input
             userInput = inputSystem.getUserInput();
             processUserInput(userInput, millisDiff / 1000.0);

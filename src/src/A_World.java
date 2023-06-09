@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 
 abstract class A_World {
@@ -6,14 +7,14 @@ abstract class A_World {
     private A_InputSystem inputSystem;
     private A_UserInput userInput;
 
-
     abstract void map1();
 
     abstract void map2();
 
     abstract void map3();
 
-    public int lvl = 2;
+    public int lvl = 1;
+
 
     // top left corner of the displayed pane of the world
     double worldPartX = 0;
@@ -36,9 +37,7 @@ abstract class A_World {
     }
 
 
-    //
     // the main GAME LOOP
-    //
     final void run() {
 
         long lastTick = System.currentTimeMillis();
@@ -54,7 +53,8 @@ abstract class A_World {
             if (millisDiff < FRAME_MINIMUM_MILLIS) {
                 try {
                     Thread.sleep(FRAME_MINIMUM_MILLIS - millisDiff);
-                } catch (Exception ex) {
+                } catch (Exception e) {
+                    e.getStackTrace();
                 }
                 currentTick = System.currentTimeMillis();
                 millisDiff = currentTick - lastTick;
@@ -73,19 +73,21 @@ abstract class A_World {
 
             // Check LVLs
             switch (lvl) {
-                case 1:
-                    //map1();
+                case 1 -> {
+                    map1();
+                }
+                case 2 -> {
                     map2();
-                    break;
-                case 2:
-                    map2();
-                    break;
-                case 3:
-                    map2();
-                    break;
-                default:
-                    //falls mehr maps kommen
-                    //map1();
+                }
+                case 3 -> {
+                    map3();
+                }
+                default -> {
+                    lvl = 1;
+                    map1();
+                }
+                //falls mehr maps kommen
+
             }
 
             System.out.println(lvl);
@@ -95,16 +97,15 @@ abstract class A_World {
 
                 try {
                     Thread.sleep(1000);
+                    lvl++;
+                    if (lvl > 3) lvl = 1;
+
+                    graphicSystem.clear();
+
                     avatar.x = 30;
                     avatar.y = A_Const.WORLD_HEIGHT - (70 + 25);
-                    lvl++;
-
-                    if (lvl > 3) {
-                        lvl = 1;
-                    }
 
                     System.out.println(lvl);
-
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

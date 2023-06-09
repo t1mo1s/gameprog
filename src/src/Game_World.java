@@ -3,7 +3,7 @@ import java.awt.*;
 class Game_World extends A_World {
 
     final double spawnGround = 70;
-    private double ground = A_Const.WORLD_HEIGHT - spawnGround;
+    private final double ground = A_Const.WORLD_HEIGHT - spawnGround;
     private final int smallPlatform = 75, longPlatform = 125;
 
 
@@ -53,6 +53,13 @@ class Game_World extends A_World {
         return x + longPlatform;
     }
 
+    /****MOBS*****/
+    private void spawnMobs(int x, int wd) {
+        //wd => Walking Distance
+        gameObjects.add(new Game_Mob(x, ground));
+       //TODO: walking animation
+    }
+
     /**
      * MAP-Build area *
      **/
@@ -63,42 +70,45 @@ class Game_World extends A_World {
         platformEND = placeGround(platformSTART, 400);
         platformSTART = 175 + placeDoublePlatform(platformEND, 70);
 
-        //TODO: 1 game_mob at x: 1475 walks 50pxl and back! (optional)
+        //TODO: 1 game_mob at x: 1475 walks 100pxl and back!
+        spawnMobs(1475, 100);
 
-
-        //start == 1000;
         platformEND = placeGround(platformSTART, 650);
         platformSTART = 150 + placeQuadPlatform(platformEND, 65);
+        //System.out.println(platformSTART);
         placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
+        //TODO:  1 Game_mob at x: 3322, walks 150pxl and back and faster!
+        spawnMobs(3322, 150);
 
-        //TODO:  1 Game_mob at x: 3322, walks 100pxl and back and faster!(optional)
+        goal();
+    }
+
+    public void map2() {
+        int platformSTART = 100, platformEND;
+
+        platformEND = placeGround(platformSTART, 300);
+        platformSTART = 150 + placeQuadPlatform(platformEND, 70);
+
+        //TODO: 1 Game_mob at x = 1790, walks 100pxl
+        spawnMobs(1790, 100);
+
+        platformEND = placeGround(platformSTART, 700);
+        platformSTART = 25 + placeQuadPlatform(platformEND, 65);
+
+        platformSTART = 150 + placeDoublePlatform(platformSTART, 100);
+
+        placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
 
         goal();
     }
 
 
-    public void map2() {
+    public void map3() {
         int platformSTART = 100, platformEND;
 
-        platformEND = placeGround(platformSTART, 100);
-        platformEND = placeGround(platformEND, 200, 100);
+        platformEND = placeGround(platformSTART, A_Const.WORLD_WIDTH);
 
-        platformSTART = 175 + placeDoublePlatform(platformEND, 70);
-
-        //TODO: 1 game_mob at x: 1475 walks 50pxl and back! (optional)
-
-
-        //start == 1000;
-        platformEND = placeGround(platformSTART, 650);
-        platformSTART = 150 + placeQuadPlatform(platformEND, 65);
-        placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
-
-        goal(10);
-    }
-
-    public void map3() {
-        //TODO: Kommt noch
-        goal(5);
+        goal(50);
     }
 
     /**
@@ -110,10 +120,9 @@ class Game_World extends A_World {
     }
 
     private void goal(int y) {
-        placeGround(A_Const.WORLD_WIDTH - 300, A_Const.WORLD_WIDTH);
+        placeGround(A_Const.WORLD_WIDTH - 300, A_Const.WORLD_WIDTH, y);
         gameObjects.add(new Game_Goal((int) (spawnGround + y)));
     }
-
 
     protected void processUserInput(A_UserInput userInput, double diffSeconds) {
         if (userInput.keyMap.get('a') && avatar.x >= 0) avatar.moveLeft(diffSeconds);
@@ -124,7 +133,5 @@ class Game_World extends A_World {
             avatar.isJumping = true;
             avatar.jump(diffSeconds);
         }
-
-
     }
 }

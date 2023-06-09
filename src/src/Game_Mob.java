@@ -2,8 +2,8 @@ import java.awt.*;
 
 public class Game_Mob extends A_GameObject {
 
-    public Game_Mob(double x, double y, int width_, int heigth_) {
-        super(x, y, 0, 0, width_, heigth_, new Color(164, 109, 12));
+    public Game_Mob(double x, double y) {
+        super(x, y - 20, 0, 0, 15, 20, new Color(164, 109, 12));
     }
 
     @Override

@@ -62,6 +62,8 @@ abstract class A_World {
 
             lastTick = currentTick;
 
+            this.getPhysicsSystem().getCollisions(avatar);
+
             // process User Input
             //TODO: REMOVE FROM END GAME!!! //
             userInput = inputSystem.getUserInput();

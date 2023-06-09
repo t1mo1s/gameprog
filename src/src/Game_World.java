@@ -54,7 +54,7 @@ class Game_World extends A_World {
 
     /****MOBS*****/
     private void spawnMobs(int x, int wd) {
-        spawnMobs(x, ground, wd);
+        spawnMobs(x, setGround(0), wd);
     }
 
     private void spawnMobs(int x, double y, int wd) {
@@ -63,10 +63,7 @@ class Game_World extends A_World {
         //TODO: walking animation
     }
 
-    /**
-     * MAP-Build area *
-     **/
-    //im falle von mehr maps, A_World muss man die Lvls anpassen!
+    /*** MAP-Build area ***/
     public void map1() {
         int platformSTART = 100, platformEND;
 
@@ -99,17 +96,31 @@ class Game_World extends A_World {
         platformSTART = 25 + placeQuadPlatform(platformEND, 65);
 
         platformSTART = 150 + placeDoublePlatform(platformSTART, 100);
-
         placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
 
         goal();
     }
 
-
     public void map3() {
         int platformSTART = 100, platformEND;
 
-        platformEND = placeGround(platformSTART, A_Const.WORLD_WIDTH);
+        platformEND = placeGround(platformSTART, 100);
+        platformSTART = 150 + placeQuadPlatform(platformEND, 70);
+        gameObjects.add(new Game_Platform(platformSTART, setGround(70 + 115), longPlatform * 3));
+
+        //TODO: 1 Game_mob at x = 1790, walks 500pxl
+        spawnMobs(platformSTART + 50, setGround(70 + 115), 250);
+        spawnMobs(platformSTART + 300, setGround(70 + 115), -250);
+
+        platformSTART += longPlatform * 3;
+
+        platformEND = placeGround(platformSTART += 150, 700);
+
+        spawnMobs(platformSTART + 150, 500);
+        //spawnMobs(platformSTART+150, 100);
+        platformSTART = 25 + placeQuadPlatform(platformEND, 65);
+
+        placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
 
         goal(50);
     }

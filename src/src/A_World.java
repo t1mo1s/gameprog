@@ -13,7 +13,7 @@ abstract class A_World {
 
     abstract void map3();
 
-    public int lvl = 1;
+    public int lvl = 3;
 
 
     // top left corner of the displayed pane of the world
@@ -108,8 +108,6 @@ abstract class A_World {
                     Thread.sleep(1000);
                     lvl++;
                     if (lvl > 3) lvl = 1;
-
-                    graphicSystem.clear();
 
                     avatar.x = 30;
                     avatar.y = A_Const.WORLD_HEIGHT - (70 + 25);

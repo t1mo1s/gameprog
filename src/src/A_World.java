@@ -95,6 +95,13 @@ abstract class A_World {
             //CheckGoals
             if (avatar.x >= A_Const.WORLD_WIDTH - 200) {
 
+                for(int i = 0; i < gameObjects.size(); i++){
+
+                    if(gameObjects.get(i).type() != A_Const.TYPE_AVATAR) {
+                        gameObjects.get(i).isLiving = false;
+                    }
+                }
+
                 try {
                     Thread.sleep(1000);
                     lvl++;
@@ -111,6 +118,19 @@ abstract class A_World {
                 }
             }
 
+            int num=0;
+            int gameSize = gameObjects.size();
+            while(num<gameSize)
+            {
+                if(!gameObjects.get(num).isLiving)
+                { gameObjects.remove(num);
+                    gameSize--;
+                }
+                else
+                { num++;
+                }
+            }
+
             /*****************************************************/
 
             // no actions if game is over
@@ -118,7 +138,7 @@ abstract class A_World {
                 continue;
             }
 
-            int gameSize = gameObjects.size();
+            //int gameSize = gameObjects.size();
 
             // adjust displayed pane of the world
             this.adjustWorldPart();
@@ -138,6 +158,8 @@ abstract class A_World {
             // redraw everything
             graphicSystem.redraw();
         }
+
+
     }
 
 

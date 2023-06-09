@@ -90,14 +90,14 @@ abstract class A_World {
 
             }
 
-            System.out.println(lvl);
+            //System.out.println("level: " + lvl);
 
             //CheckGoals
             if (avatar.x >= A_Const.WORLD_WIDTH - 200) {
 
-                for(int i = 0; i < gameObjects.size(); i++){
+                for (int i = 0; i < gameObjects.size(); i++) {
 
-                    if(gameObjects.get(i).type() != A_Const.TYPE_AVATAR) {
+                    if (gameObjects.get(i).type() != A_Const.TYPE_AVATAR) {
                         gameObjects.get(i).isLiving = false;
                     }
                 }
@@ -118,16 +118,14 @@ abstract class A_World {
                 }
             }
 
-            int num=0;
+            int num = 0;
             int gameSize = gameObjects.size();
-            while(num<gameSize)
-            {
-                if(!gameObjects.get(num).isLiving)
-                { gameObjects.remove(num);
+            while (num < gameSize) {
+                if (!gameObjects.get(num).isLiving) {
+                    gameObjects.remove(num);
                     gameSize--;
-                }
-                else
-                { num++;
+                } else {
+                    num++;
                 }
             }
 

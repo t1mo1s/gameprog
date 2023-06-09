@@ -12,8 +12,7 @@ class Game_World extends A_World {
         avatar = new Game_Avatar(30, ground - 25);
         // set WorldPart position
         worldPartX = 1500;
-        //add ground
-        gameObjects.add(new Game_Ground(0, setGround(0), 100, 70, new Color(100, 0, 0)));
+
         gameObjects.add(avatar);
     }
 
@@ -35,7 +34,7 @@ class Game_World extends A_World {
     //like PlaceGround but with changeable y coord. WARNING, use "higher" as desired height, not coord.!
     //prob for LVL 3
     private int placeGround(int start, int length, double higher) {
-        gameObjects.add(new Game_Ground(start, ground + higher, length, 100, new Color(108, 103, 103)));
+        gameObjects.add(new Game_Ground(start, ground - higher, length, 100, new Color(108, 103, 103)));
         return length + start;
     }
 
@@ -57,7 +56,7 @@ class Game_World extends A_World {
     private void spawnMobs(int x, int wd) {
         //wd => Walking Distance
         gameObjects.add(new Game_Mob(x, ground));
-       //TODO: walking animation
+        //TODO: walking animation
     }
 
     /**
@@ -120,6 +119,9 @@ class Game_World extends A_World {
     }
 
     private void goal(int y) {
+        //add Spawn
+        gameObjects.add(new Game_Ground(0, setGround(0), 100, 70, new Color(100, 0, 0)));
+
         placeGround(A_Const.WORLD_WIDTH - 300, A_Const.WORLD_WIDTH, y);
         gameObjects.add(new Game_Goal((int) (spawnGround + y)));
     }

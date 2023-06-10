@@ -110,12 +110,16 @@ class Game_World extends A_World {
             avatar.moveRight(diffSeconds);
             this.getPhysicsSystem().getCollisions(avatar);
         }
-        if ((userInput.keyMap.get(' ') && !avatar.isJumping) || (userInput.keyMap.get('w') && !avatar.isJumping)) {
+        if (userInput.keyMap.get(' ')) {
             /*avatar.isJumping = true;
             avatar.jump(diffSeconds);
             this.getPhysicsSystem().getCollisions(avatar);
-
              */
+            if (!isJumping && isOnGround) {
+                playerSpeedY = -12; // Springen
+                isJumping = true;
+                isOnGround = false;
+            }
 
         }
     }

@@ -5,11 +5,16 @@ import java.util.TimerTask;
 abstract class A_GameObject {
     protected double x, y;
     protected double alfa = 0;
+
+    protected double gravity;
+
+    protected static A_PhysicsSystem physicsSystem;
+    protected static A_World         world;
+
     protected double speed = 0;
-    double speedY = 0;
     protected int height, width;
     protected Color color;
-    protected boolean isLiving = true;
+    protected boolean isLiving = false;
     protected boolean isMoving = true;
 
     // destination the object shall move to,
@@ -31,11 +36,11 @@ abstract class A_GameObject {
     }
 
     //max jump height kommt später in A_Const
-    private double maxJumpHeight = y + 250;
+    double maxJumpHeight = y + 150;
 
-
-    // GameObjects sometimes call physics methods
-    protected static A_World world;
+    public void setY(double y) {
+        this.y = y;
+    }
 
     // construct GameObject
     public A_GameObject(double x_, double y_, double a_, double s_, int width_, int heigth_, Color color_) {
@@ -51,25 +56,23 @@ abstract class A_GameObject {
     }
 
     public void moveLeft(double diffSeconds) {
-        x -= 2 * speed * diffSeconds;
+        x -=  2.5*speed * diffSeconds;
     }
 
     public void moveRight(double diffSeconds) {
-        x += 2 * speed * diffSeconds;
+        x += 2.5* speed * diffSeconds;
     }
 
-    public void grav(double diffSeconds, double gravity) {
-        y +=  gravity * diffSeconds;
-    }
 
     public void jump(double diffSeconds) {
-        if (!isJumping) {
-            return;
-        }
+
+
+        maxJumpHeight = y - 250;
         // Define the control points of the Bézier curve
         double[] controlPoints = { y, maxJumpHeight, maxJumpHeight, y };
 
         class JumpHelper extends TimerTask {
+
             private double t = 0.0;
 
             @Override
@@ -77,13 +80,24 @@ abstract class A_GameObject {
                 if (t <= 1.0) {
                     // Calculate the y-coordinate using the Bézier curve formula
                     double yBezier = calculateBezierPoint(t, controlPoints);
-
                     // Update the y-coordinate
                     y = yBezier;
+                    //check collision
 
                     t += 0.01; // Increase the parameter value for each iteration
+                    A_GameObjectList collisions = physicsSystem.getCollisions(A_GameObject.this);
+                    for(int i=0; i<collisions.size(); i++)
+                    {
+                        A_GameObject obj = collisions.get(i);
+                        if(obj.type()==A_Const.TYPE_GROUND)
+                        {
+                            y += obj.y-35;
+
+                        }
+                    }
                 } else {
                     cancel();
+
                     fall(diffSeconds);
                 }
             }
@@ -125,6 +139,7 @@ abstract class A_GameObject {
             public void run() {
                 if (y < A_Const.WORLD_HEIGHT - 70 - 25 - 1) {
                     y += 2 * vSpeed * diffSeconds;
+
                 } else {
                     isJumping = false;
                     cancel();
@@ -143,5 +158,7 @@ abstract class A_GameObject {
     static void setWorld(A_World w) {
         world = w;
     }
+
+    static void setPhysicsSystem(A_PhysicsSystem ps){physicsSystem=ps;}
 
 }

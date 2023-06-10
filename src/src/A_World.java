@@ -8,7 +8,6 @@ abstract class A_World {
 
     // top left corner of the displayed pane of the world
     double worldPartX = 0;
-    double gravity = 0.5;
 
 
     // defines maximum frame rate
@@ -58,15 +57,13 @@ abstract class A_World {
 
             lastTick = currentTick;
 
-            this.getPhysicsSystem().getCollisions(avatar);
+            //this.getPhysicsSystem().getCollisions(avatar);
 
             // process User Input
             userInput = inputSystem.getUserInput();
             processUserInput(userInput, millisDiff / 1000.0);
             userInput.clear();
-
-            avatar.grav(millisDiff / 1000.0, gravity);
-
+            avatar.isLiving = false;
             // no actions if game is over
             if (gameOver) {
                 continue;

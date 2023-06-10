@@ -23,11 +23,41 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
       // check if they touch each other
       //implement touch check here
       if (obj2.type() == A_Const.TYPE_GROUND) {
+        /*
         double touchInterfaceY = obj2.y - 26;
         double touchInterfaceX1 = obj2.x;
         double touchInterfaceX2 = obj2.x + obj2.width;
         double touchInterfaceY2 = obj2.y + obj2.height;
+
+         */
+        double x1 =obj2.x;
+        double x2 =obj2.x + obj2.width;;
+        double y1 =obj2.y;
+        double y2 =obj2.y+obj2.height;
+
+        double avX1 = object.x ;
+        double avX2 = object.x + object.width;
+        double avY1 = object.y;
+        double avY2 = object.y + object.height;
+
+        if (    (avY1 >= y1 && avY1 <= y2) && (avX1 <= x2 && avX1 >= x1) ||
+                (avY1 >= y1 && avY1 <= y2) && (avX2 <= x2 && avX2 >= x1) ||
+                (avY2 >= y1 && avY2 <= y2) && (avX1 <= x2 && avX1 >= x1) ||
+                (avY2 >= y1 && avY2 <= y2) && (avX2 <= x2 && avX2 >= x1)  ){
+            result.add(obj2);
+            System.out.println("touch with ground " + obj2.y);
+            //object.y = y1 - object.height;
+            //object.setY(y1 - 10 - object.height);
+            object.isLiving = false;
+
+
+
+
+        }
+
+        /*
         if (object.y < touchInterfaceY2 && object.y >= touchInterfaceY && object.x >= touchInterfaceX1 && object.x <= touchInterfaceX2) {
+          object.y = touchInterfaceY;
           result.add(obj2);
           System.out.println("touch with ground " + obj2.y);
           object.y = touchInterfaceY;
@@ -36,6 +66,8 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
           }
 
         }
+
+         */
       }
     }
     return result;

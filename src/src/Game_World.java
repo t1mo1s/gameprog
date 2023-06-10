@@ -4,8 +4,8 @@ class Game_World extends A_World {
     int platformSTART = 100, platformEND = platformSTART;
     public int lvl = 1;
     private double groundlevel = 70;
-    private double ground = A_Const.WORLD_HEIGHT - groundlevel;
-    private double playerFeet = ground - 25;    //25 -> Player-height
+    private double ground = A_Const.WORLD_HEIGHT - groundlevel ;
+    private double playerFeet = 50 - 25;    //25 -> Player-height
 
     protected void init() {
         // set WorldPart position
@@ -103,16 +103,19 @@ class Game_World extends A_World {
 
         if (userInput.keyMap.get('a')) {
             avatar.moveLeft(diffSeconds);
-            this.getPhysicsSystem().getCollisions(avatar);
+            //this.getPhysicsSystem().getCollisions(avatar);
         }
         if (userInput.keyMap.get('d')) {
             avatar.moveRight(diffSeconds);
-            this.getPhysicsSystem().getCollisions(avatar);
+            /*this.getPhysicsSystem().getCollisions(avatar);
+
+             */
         }
         if ((userInput.keyMap.get(' ') && !avatar.isJumping) || (userInput.keyMap.get('w') && !avatar.isJumping)) {
-            avatar.isJumping = true;
+
             avatar.jump(diffSeconds);
             //this.getPhysicsSystem().getCollisions(avatar);
+
         }
     }
 

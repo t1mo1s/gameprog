@@ -45,10 +45,11 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                 (avY2 >= y1 && avY2 <= y2) && (avX1 <= x2 && avX1 >= x1) ||
                 (avY2 >= y1 && avY2 <= y2) && (avX2 <= x2 && avX2 >= x1)  ){
             result.add(obj2);
-            System.out.println("touch with ground " + obj2.y);
-            //object.y = y1 - object.height;
-            //object.setY(y1 - 10 - object.height);
-            object.isLiving = false;
+          object.y = y1 - object.height;
+          object.playerSpeedY = 0;
+          object.isJumping = false;
+          object.isOnGround = true;
+          System.out.println("touch with ground " + object.y);
 
 
 

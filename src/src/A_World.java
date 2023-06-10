@@ -5,6 +5,7 @@ abstract class A_World {
     private A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
     private A_UserInput userInput;
+    double gravity = 0.7;
 
     // top left corner of the displayed pane of the world
     double worldPartX = 0;
@@ -57,14 +58,18 @@ abstract class A_World {
 
             lastTick = currentTick;
 
+
             //this.getPhysicsSystem().getCollisions(avatar);
 
+            avatar.playerSpeedY += gravity;
+            avatar.y += avatar.playerSpeedY;
             // process User Input
             userInput = inputSystem.getUserInput();
             processUserInput(userInput, millisDiff / 1000.0);
             userInput.clear();
             avatar.isLiving = false;
             // no actions if game is over
+            this.getPhysicsSystem().getCollisions(avatar);
             if (gameOver) {
                 continue;
             }

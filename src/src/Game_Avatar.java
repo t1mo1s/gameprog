@@ -22,8 +22,11 @@ class Game_Avatar extends A_GameObject {
             A_GameObject obj = collisions.get(i);
             if(obj.type()==A_Const.TYPE_GROUND)
             {
-
-
+                this.y = obj.y ;
+                this.playerSpeedY = 0;
+                isJumping = false;
+                isOnGround = true;
+                System.out.println("touch with ground " + obj.y);
             }
         }
   }

@@ -60,16 +60,16 @@ abstract class A_GameObject {
     }
 
     public void moveLeft(double diffSeconds) {
-        x -=  3*speed * diffSeconds;
+        x -=  2*speed * diffSeconds;
     }
 
     public void moveRight(double diffSeconds) {
-        x += 3* speed * diffSeconds;
+        x += 2* speed * diffSeconds;
     }
 
 
     public void jump(double diffSeconds) {
-        y -= 8d*speed * diffSeconds;
+        y -= 6*speed * diffSeconds;
     }
 
     public void jump2(double diffSeconds, double dir) {

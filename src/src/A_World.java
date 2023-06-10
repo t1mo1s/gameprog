@@ -5,7 +5,7 @@ abstract class A_World {
     private A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
     private A_UserInput userInput;
-    double gravity = 0.7;
+    double gravity = 0.5;
 
     // top left corner of the displayed pane of the world
     double worldPartX = 0;

@@ -47,7 +47,7 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
             result.add(obj2);
             System.out.println("touch with ground " + obj2.y);
             //object.y = y1 - object.height;
-            object.setY(y1 - 10 - object.height);
+            //object.setY(y1 - 10 - object.height);
             object.isLiving = false;
 
 

@@ -16,6 +16,16 @@ class Game_Avatar extends A_GameObject {
   }
   public void jump(double diffSeconds){
       super.jump(diffSeconds);
+      A_GameObjectList collisions = physicsSystem.getCollisions(this);
+        for(int i=0; i<collisions.size(); i++)
+        {
+            A_GameObject obj = collisions.get(i);
+            if(obj.type()==A_Const.TYPE_GROUND)
+            {
+
+
+            }
+        }
   }
 
   public int type() { return A_Const.TYPE_AVATAR; }

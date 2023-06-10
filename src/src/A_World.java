@@ -57,12 +57,13 @@ abstract class A_World {
 
             lastTick = currentTick;
 
-            this.getPhysicsSystem().getCollisions(avatar);
+            //this.getPhysicsSystem().getCollisions(avatar);
 
             // process User Input
             userInput = inputSystem.getUserInput();
             processUserInput(userInput, millisDiff / 1000.0);
             userInput.clear();
+            avatar.isLiving = false;
             // no actions if game is over
             if (gameOver) {
                 continue;

@@ -14,7 +14,6 @@ class Game_World extends A_World {
         //gameObjects.add(new Gam20_Ground(0, 0, A_Const.WORLD_WIDTH, 70));
         //add ground
         gameObjects.add(new Game_Ground(0, setGround(0), 100, 70, new Color(100, 0, 0)));
-
         if (lvl == 1) {
             map1();
         }
@@ -61,7 +60,7 @@ class Game_World extends A_World {
 
     private void map1() {
         platformEND = platformSTART + 400;
-        int smallJump = 800, bigJump = smallJump + 400;
+        int smallJump = 300, bigJump = smallJump + 100;
         int holes = 0;
 
         placeGround(platformSTART, holes = platformEND);
@@ -113,7 +112,7 @@ class Game_World extends A_World {
         if ((userInput.keyMap.get(' ') && !avatar.isJumping) || (userInput.keyMap.get('w') && !avatar.isJumping)) {
             avatar.isJumping = true;
             avatar.jump(diffSeconds);
-            this.getPhysicsSystem().getCollisions(avatar);
+            //this.getPhysicsSystem().getCollisions(avatar);
         }
     }
 

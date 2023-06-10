@@ -14,6 +14,7 @@ final class A_Main
     world.setInputSystem(frame.getInputSystem());
     
     A_GameObject.setWorld(world);
+    A_GameObject.setPhysicsSystem(world.getPhysicsSystem());
     A_TextObject.setWorld(world);
     frame.getGraphicSystem().setWorld(world);
     

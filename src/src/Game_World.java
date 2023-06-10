@@ -111,9 +111,12 @@ class Game_World extends A_World {
             this.getPhysicsSystem().getCollisions(avatar);
         }
         if ((userInput.keyMap.get(' ') && !avatar.isJumping) || (userInput.keyMap.get('w') && !avatar.isJumping)) {
-            avatar.isJumping = true;
+            /*avatar.isJumping = true;
             avatar.jump(diffSeconds);
             this.getPhysicsSystem().getCollisions(avatar);
+
+             */
+
         }
     }
 

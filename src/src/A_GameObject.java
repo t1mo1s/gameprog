@@ -6,6 +6,7 @@ abstract class A_GameObject {
     protected double x, y;
     protected double alfa = 0;
     protected double speed = 0;
+    double speedY = 0;
     protected int height, width;
     protected Color color;
     protected boolean isLiving = true;
@@ -55,6 +56,10 @@ abstract class A_GameObject {
 
     public void moveRight(double diffSeconds) {
         x += 2 * speed * diffSeconds;
+    }
+
+    public void grav(double diffSeconds, double gravity) {
+        y +=  gravity * diffSeconds;
     }
 
     public void jump(double diffSeconds) {

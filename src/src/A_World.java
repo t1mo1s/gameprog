@@ -6,6 +6,7 @@ abstract class A_World {
     private A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
     private A_UserInput userInput;
+    double gravity = 0.5;
 
     abstract void map1();
 
@@ -62,8 +63,11 @@ abstract class A_World {
 
             lastTick = currentTick;
 
-            this.getPhysicsSystem().getCollisions(avatar);
 
+            //this.getPhysicsSystem().getCollisions(avatar);
+
+            avatar.playerSpeedY += gravity;
+            avatar.y += avatar.playerSpeedY;
             // process User Input
             //TODO: REMOVE FROM END GAME!!! //
             userInput = inputSystem.getUserInput();
@@ -71,6 +75,7 @@ abstract class A_World {
             if (userInput.keyMap.get('p'))
                 System.out.println("PlayPOS   X: " + (int) avatar.x + " | Y: " + (int) avatar.y);
             userInput.clear();
+
 
 
             // Check LVLs
@@ -129,9 +134,8 @@ abstract class A_World {
                 }
             }
 
-            /*****************************************************/
-
             // no actions if game is over
+            this.getPhysicsSystem().getCollisions(avatar);
             if (gameOver) {
                 continue;
             }

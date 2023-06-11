@@ -123,7 +123,6 @@ abstract class A_World {
             if (userInput.keyMap.get('r')) {
                 avatar.x = 30;
                 avatar.y = A_Const.WORLD_HEIGHT - 70;
-
             }
 
             userInput.clear();

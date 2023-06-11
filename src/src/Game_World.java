@@ -21,7 +21,6 @@ class Game_World extends A_World {
     /**
      * BUILDING METHODS!
      **/
-
     //From Spawn height adjustable | so you don't have to place it from the top, but rather from the floor itself
     public double setGround(int diff) {
         return ground - diff;

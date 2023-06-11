@@ -39,9 +39,8 @@ abstract class A_GameObject {
     }
 
     public void jump(double diffSeconds) {
-        y -= 6 * speed * 0.015;
+        y -= 5 * speed * 0.015;
     }
-
 
     abstract int type();
 
@@ -53,4 +52,3 @@ abstract class A_GameObject {
         physicsSystem = ps;
     }
 }
-

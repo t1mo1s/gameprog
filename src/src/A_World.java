@@ -106,11 +106,11 @@ abstract class A_World {
                 }
             }
 
-
             //this.getPhysicsSystem().getCollisions(avatar);
 
             avatar.playerSpeedY += A_Const.GRAVITY;
             avatar.y += avatar.playerSpeedY;
+
             // process User Input
             userInput = inputSystem.getUserInput();
             processUserInput(userInput, millisDiff / 1000.0);
@@ -149,7 +149,6 @@ abstract class A_World {
 
             /*****************************************************/
 
-
             // adjust displayed pane of the world
             this.adjustWorldPart();
 
@@ -183,7 +182,6 @@ abstract class A_World {
         }
 
         // same left
-
         else if (avatar.x < worldPartX + A_Const.SCROLL_BOUNDS) {
             worldPartX = avatar.x - A_Const.SCROLL_BOUNDS;
             if (worldPartX <= 0) {

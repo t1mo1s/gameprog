@@ -8,6 +8,8 @@ class Game_World extends A_World {
 
 
     protected void init() {
+        //add BackgroundIMG
+
         // add the Avatar
         avatar = new Game_Avatar(30, ground - 25);
         // set WorldPart position

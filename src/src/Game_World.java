@@ -139,6 +139,8 @@ class Game_World extends A_World {
 
     protected void processUserInput(A_UserInput userInput, double diffSeconds) {
         //Player kann sich nicht mehr bewegen wenn man in einem abgrund springt
+        //anstatt das player direkt wieder ins spawn TPed wird, so kann der Player im GameOver screen entscheiden
+        //ob der weiter spielt oder Rage-Quited
         if (avatar.y < A_Const.WORLD_HEIGHT + 50) {
             if (userInput.keyMap.get('a') && avatar.x >= 0) {
                 avatar.moveLeft(diffSeconds);

@@ -15,5 +15,7 @@ class Game_Avatar extends A_GameObject {
       super.jump(diffSeconds);
   }
 
-  public int type() { return A_Const.TYPE_AVATAR; }
+    public int type() {
+        return A_Const.TYPE_AVATAR;
+    }
 }

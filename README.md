@@ -1,2 +1,3 @@
 # Daring Dash
-a 2D Jump 'n Run game
+
+a platform Jump 'n Run game for everyone!

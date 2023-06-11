@@ -12,7 +12,7 @@ abstract class A_World {
 
     abstract void map3();
 
-    public int lvl = 3;
+    public int lvl = 1;
 
 
     // top left corner of the displayed pane of the world
@@ -118,7 +118,7 @@ abstract class A_World {
             if (userInput.keyMap.get('p'))
                 System.out.println("PlayPOS   X: " + (int) avatar.x + " | Y: " + (int) avatar.y);
             userInput.clear();
-            avatar.isLiving = false;
+            //avatar.isLiving = false;
             // no actions if game is over
             this.getPhysicsSystem().getCollisions(avatar);
             if (gameOver) {
@@ -129,6 +129,17 @@ abstract class A_World {
 
             int gameSize = gameObjects.size();
 
+            int num=0;
+            while(num<gameSize)
+            {
+                if(!gameObjects.get(num).isLiving)
+                { gameObjects.remove(num);
+                    gameSize--;
+                }
+                else
+                { num++;
+                }
+            }
 
             /*****************************************************/
 

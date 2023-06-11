@@ -3,6 +3,7 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
   Game_PhysicsSystem(A_World w) {
     super(w);
   }
+
   public A_GameObjectList getCollisions(A_GameObject object) {
     A_GameObjectList result = new A_GameObjectList();
 
@@ -28,21 +29,35 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
       double avX2 = object.x + object.width;
       double avY1 = object.y;
       double avY2 = object.y + object.height;
+      boolean collisionOccurred = false;
 
       //check if avatar is in ground
-      if (    (avY1 >= y1 && avY1 <= y2) && (avX1 <= x2 && avX1 >= x1) ||
-              (avY1 >= y1 && avY1 <= y2) && (avX2 <= x2 && avX2 >= x1) ||
-              (avY2 >= y1 && avY2 <= y2) && (avX1 <= x2 && avX1 >= x1) ||
-              (avY2 >= y1 && avY2 <= y2) && (avX2 <= x2 && avX2 >= x1)  ){
-        result.add(obj2);
+      if ((avY2 >= y1 && avY2 <= y2) && (avX1 < x2 && avX2 > x1)) {
+        //avatar check the bottom edge of the ground
+        object.y = y1 - object.height;
+        object.playerSpeedY = 0;
+        object.isJumping = false;
+        object.isOnGround = true;
+        collisionOccurred = true;
+      } else if ((avY1 <= y2 && avY1 >= y1) && (avX1 < x2 && avX2 > x1)) {
+        // avatar check the top edge of the ground
+        object.y = y2;
+        object.playerSpeedY = 0;
+        collisionOccurred = true;
+      } else if ((avX2 > x1 && avX2 <= x1 + 5) && (avY1 < y2 && avY2 > y1)) {
+        // avatar check the left edge of the ground
+        object.x = x1 - object.width;
+        object.playerSpeedX = 0;
+        collisionOccurred = true;
+      } else if ((avX1 < x2 && avX1 >= x2 - 5) && (avY1 < y2 && avY2 > y1)) {
+        // avatar check the right edge of the ground
+        object.x = x2;
+        object.playerSpeedX = 0;
+        collisionOccurred = true;
+      }
 
-        if (obj2.type() == A_Const.TYPE_GROUND || obj2.type() == A_Const.TYPE_MOB) {
-          //decide what happens if avatar is specific object
-          object.y = y1 - object.height;
-          object.playerSpeedY = 0;
-          object.isJumping = false;
-          object.isOnGround = true;
-        }
+      if (collisionOccurred) {
+        result.add(obj2);
       }
     }
     return result;

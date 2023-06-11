@@ -66,8 +66,9 @@ class Game_World extends A_World {
     public void map1() {
         int platformSTART = 100, platformEND;
 
+
         platformEND = placeGround(platformSTART, 400);
-        platformSTART = 175 + placeDoublePlatform(platformEND, 70);
+        platformSTART = 175 + placeDoublePlatform(platformEND - 300, 70);
 
         //TODO: 1 game_mob at x: 1475 walks 100pxl and back!
         spawnMobs(1475, 100);

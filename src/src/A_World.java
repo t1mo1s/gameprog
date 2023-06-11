@@ -115,14 +115,19 @@ abstract class A_World {
             userInput = inputSystem.getUserInput();
             processUserInput(userInput, millisDiff / 1000.0);
 
-            //TODO: REMOVE FROM END GAME!!! //
+            //TODO: Remove Player Pos Button!
             if (userInput.keyMap.get('p'))
                 System.out.println("PlayPOS   X: " + (int) avatar.x + " | Y: " + (int) avatar.y);
 
             if (userInput.keyMap.get('m')) System.out.println("MENU!!!");
+            if (userInput.keyMap.get('r')) {
+                avatar.x = 30;
+                avatar.y = A_Const.WORLD_HEIGHT - 70;
+
+            }
 
             userInput.clear();
-            avatar.isLiving = false;
+            //avatar.isLiving = false;
             // no actions if game is over
             this.getPhysicsSystem().getCollisions(avatar);
             if (gameOver) {
@@ -131,7 +136,19 @@ abstract class A_World {
 
             int gameSize = gameObjects.size();
 
-            /****************************************************/
+
+            int num = 0;
+            while (num < gameSize) {
+                if (!gameObjects.get(num).isLiving) {
+                    gameObjects.remove(num);
+                    gameSize--;
+                } else {
+                    num++;
+                }
+            }
+
+            /*****************************************************/
+
 
             // adjust displayed pane of the world
             this.adjustWorldPart();

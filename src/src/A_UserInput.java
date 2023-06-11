@@ -24,6 +24,8 @@ final class A_UserInput {
 
         //open Menu
         keyMap.put('m', false);
+        //restart game
+        keyMap.put('r', false);
 
         this.clear();
     }

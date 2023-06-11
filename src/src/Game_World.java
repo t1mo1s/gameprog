@@ -138,14 +138,17 @@ class Game_World extends A_World {
     }
 
     protected void processUserInput(A_UserInput userInput, double diffSeconds) {
-        if (userInput.keyMap.get('a') && avatar.x >= 0) {
-            avatar.moveLeft(diffSeconds);
-        }
-        if (userInput.keyMap.get('d') && avatar.x <= A_Const.WORLD_WIDTH) {
-            avatar.moveRight(diffSeconds);
-        }
-        if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
-            avatar.jump(diffSeconds);
+        //Player kann sich nicht mehr bewegen wenn man in einem abgrund springt
+        if (avatar.y < A_Const.WORLD_HEIGHT + 50) {
+            if (userInput.keyMap.get('a') && avatar.x >= 0) {
+                avatar.moveLeft(diffSeconds);
+            }
+            if (userInput.keyMap.get('d') && avatar.x <= A_Const.WORLD_WIDTH) {
+                avatar.moveRight(diffSeconds);
+            }
+            if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
+                avatar.jump(diffSeconds);
+            }
         }
     }
 }

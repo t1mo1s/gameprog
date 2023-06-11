@@ -3,26 +3,26 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 abstract class A_GameObject {
+
     protected double x, y;
     protected double alfa = 0;
     protected static A_PhysicsSystem physicsSystem;
-    protected static A_World world;
-
-    double playerSpeedX = 0; // Horizontale Geschwindigkeit des Spielers
-    double playerSpeedY = 0; // Vertikale Geschwindigkeit des Spielers
-
     protected double speed = 0;
     protected int height, width;
     protected Color color;
-    protected boolean isLiving = false;
+    protected boolean isLiving = true;
     protected boolean isMoving = true;
-    boolean isOnGround = false; // Gibt an, ob der Spieler auf dem Boden ist
-    protected boolean isJumping = false; // Gibt an, ob der Spieler gerade springt
+    public boolean isOnGround = false;
+    protected boolean isJumping = false;
+    double playerSpeedX = 0; // Horizontale Geschwindigkeit des Spielers
+    double playerSpeedY = 0; // Vertikale Geschwindigkeit des Spielers
+    protected static A_World world;
 
     // construct GameObject
     public A_GameObject(double x_, double y_, double a_, double s_, int width_, int heigth_, Color color_) {
         x = x_;
         y = y_;
+
         alfa = a_;
         speed = s_;
         width = width_;
@@ -38,10 +38,10 @@ abstract class A_GameObject {
         x += 2 * speed * diffSeconds;
     }
 
-
     public void jump(double diffSeconds) {
-        y -= 5 * speed * 0.015;//diffSeconds;
+        y -= 6 * speed * 0.015;
     }
+
 
     abstract int type();
 
@@ -52,5 +52,5 @@ abstract class A_GameObject {
     static void setPhysicsSystem(A_PhysicsSystem ps) {
         physicsSystem = ps;
     }
-
 }
+

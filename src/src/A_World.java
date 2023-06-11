@@ -12,7 +12,7 @@ abstract class A_World {
 
     abstract void map3();
 
-    public int lvl = 3;
+    public int lvl = 1;
 
 
     // top left corner of the displayed pane of the world
@@ -109,14 +109,18 @@ abstract class A_World {
 
             //this.getPhysicsSystem().getCollisions(avatar);
 
-            avatar.playerSpeedY += A_Const.GRAVITY ;
+            avatar.playerSpeedY += A_Const.GRAVITY;
             avatar.y += avatar.playerSpeedY;
             // process User Input
-            //TODO: REMOVE FROM END GAME!!! //
             userInput = inputSystem.getUserInput();
             processUserInput(userInput, millisDiff / 1000.0);
+
+            //TODO: REMOVE FROM END GAME!!! //
             if (userInput.keyMap.get('p'))
                 System.out.println("PlayPOS   X: " + (int) avatar.x + " | Y: " + (int) avatar.y);
+
+            if (userInput.keyMap.get('m')) System.out.println("MENU!!!");
+
             userInput.clear();
             avatar.isLiving = false;
             // no actions if game is over
@@ -125,13 +129,9 @@ abstract class A_World {
                 continue;
             }
 
-
-
             int gameSize = gameObjects.size();
 
-
-            /*****************************************************/
-
+            /****************************************************/
 
             // adjust displayed pane of the world
             this.adjustWorldPart();
@@ -142,7 +142,6 @@ abstract class A_World {
                 graphicSystem.draw(gameObjects.get(i));
             }
 
-
             // draw all TextObjects
             for (int i = 0; i < textObjects.size(); i++) {
                 graphicSystem.draw(textObjects.get(i));
@@ -151,13 +150,9 @@ abstract class A_World {
             // redraw everything
             graphicSystem.redraw();
         }
-
-
     }
 
-
     // adjust the displayed pane of the world according to Avatar and Bounds
-    //
     private final void adjustWorldPart() {
         final int RIGHT_END = A_Const.WORLD_WIDTH - A_Const.WORLDPART_WIDTH;
 
@@ -178,10 +173,7 @@ abstract class A_World {
                 worldPartX = 0;
             }
         }
-
-
     }
-
 
     protected void setGraphicSystem(A_GraphicSystem p) {
         graphicSystem = p;
@@ -194,7 +186,6 @@ abstract class A_World {
     protected A_PhysicsSystem getPhysicsSystem() {
         return physicsSystem;
     }
-
 
     protected abstract void init();
 

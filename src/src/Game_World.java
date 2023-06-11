@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 class Game_World extends A_World {
     final double spawnGround = 70;
@@ -119,35 +120,31 @@ class Game_World extends A_World {
         //spawnMobs(platformSTART+150, 100);
         platformSTART = 25 + placeQuadPlatform(platformEND, 65);
 
-        placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
+        placeGround(platformSTART, A_Const.WORLD_WIDTH - 400);
 
-        goal(50);
+        goal();
     }
 
     /**
      * GOAL METHODS
      **/
-    //No entry -> on ground-level
+    //No entry -> on ground-leve
     private void goal() {
-        goal(0);
-    }
-
-    private void goal(int y) {
         //add Spawn
         gameObjects.add(new Game_Ground(0, setGround(0), 100, 70, new Color(100, 0, 0)));
 
-        placeGround(A_Const.WORLD_WIDTH - 300, A_Const.WORLD_WIDTH, y);
-        gameObjects.add(new Game_Goal((int) (spawnGround + y)));
+        placeGround(A_Const.WORLD_WIDTH - 300, A_Const.WORLD_WIDTH, 0);
+        gameObjects.add(new Game_Goal((int) (spawnGround)));
     }
 
     protected void processUserInput(A_UserInput userInput, double diffSeconds) {
-        if (userInput.keyMap.get('a')) {
+        if (userInput.keyMap.get('a') && avatar.x >= 0) {
             avatar.moveLeft(diffSeconds);
         }
-        if (userInput.keyMap.get('d')) {
+        if (userInput.keyMap.get('d') && avatar.x <= A_Const.WORLD_WIDTH) {
             avatar.moveRight(diffSeconds);
         }
-        if ((userInput.keyMap.get(' '))) {
+        if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
             avatar.jump(diffSeconds);
         }
     }

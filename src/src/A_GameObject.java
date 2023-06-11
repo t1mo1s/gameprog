@@ -6,7 +6,7 @@ abstract class A_GameObject {
     protected double x, y;
     protected double alfa = 0;
     protected static A_PhysicsSystem physicsSystem;
-    protected static A_World         world;
+    protected static A_World world;
 
     double playerSpeedX = 0; // Horizontale Geschwindigkeit des Spielers
     double playerSpeedY = 0; // Vertikale Geschwindigkeit des Spielers
@@ -40,7 +40,7 @@ abstract class A_GameObject {
 
 
     public void jump(double diffSeconds) {
-        y -= 5 * speed * diffSeconds;
+        y -= 5 * speed * 0.015;//diffSeconds;
     }
 
     abstract int type();
@@ -49,6 +49,8 @@ abstract class A_GameObject {
         world = w;
     }
 
-    static void setPhysicsSystem(A_PhysicsSystem ps){physicsSystem=ps;}
+    static void setPhysicsSystem(A_PhysicsSystem ps) {
+        physicsSystem = ps;
+    }
 
 }

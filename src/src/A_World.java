@@ -6,6 +6,7 @@ abstract class A_World {
     private A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
     private A_UserInput userInput;
+    double gravity = 0.5;
 
     abstract void map1();
 
@@ -62,17 +63,6 @@ abstract class A_World {
 
             lastTick = currentTick;
 
-            this.getPhysicsSystem().getCollisions(avatar);
-
-            // process User Input
-            //TODO: REMOVE FROM END GAME!!! //
-            userInput = inputSystem.getUserInput();
-            processUserInput(userInput, millisDiff / 1000.0);
-            if (userInput.keyMap.get('p'))
-                System.out.println("PlayPOS   X: " + (int) avatar.x + " | Y: " + (int) avatar.y);
-            userInput.clear();
-
-
             // Check LVLs
             switch (lvl) {
                 case 1 -> {
@@ -118,25 +108,32 @@ abstract class A_World {
                 }
             }
 
-            int num = 0;
-            int gameSize = gameObjects.size();
-            while (num < gameSize) {
-                if (!gameObjects.get(num).isLiving) {
-                    gameObjects.remove(num);
-                    gameSize--;
-                } else {
-                    num++;
-                }
-            }
 
-            /*****************************************************/
+            //this.getPhysicsSystem().getCollisions(avatar);
 
+            avatar.playerSpeedY += gravity;
+            avatar.y += avatar.playerSpeedY;
+            // process User Input
+            //TODO: REMOVE FROM END GAME!!! //
+            userInput = inputSystem.getUserInput();
+            processUserInput(userInput, millisDiff / 1000.0);
+            if (userInput.keyMap.get('p'))
+                System.out.println("PlayPOS   X: " + (int) avatar.x + " | Y: " + (int) avatar.y);
+            userInput.clear();
+            avatar.isLiving = false;
             // no actions if game is over
+            this.getPhysicsSystem().getCollisions(avatar);
             if (gameOver) {
                 continue;
             }
 
-            //int gameSize = gameObjects.size();
+
+
+            int gameSize = gameObjects.size();
+
+
+            /*****************************************************/
+
 
             // adjust displayed pane of the world
             this.adjustWorldPart();

@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.util.ArrayList;
 
 abstract class A_World {
@@ -6,7 +5,6 @@ abstract class A_World {
     private A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
     private A_UserInput userInput;
-    double gravity = 0.5;
 
     abstract void map1();
 
@@ -30,7 +28,7 @@ abstract class A_World {
     // all objects in the game, including the Avatar
     A_GameObjectList gameObjects = new A_GameObjectList();
     A_GameObject avatar;
-    ArrayList<A_TextObject> textObjects = new ArrayList<A_TextObject>();
+    ArrayList<A_TextObject> textObjects = new ArrayList<>();
 
 
     A_World() {
@@ -111,7 +109,7 @@ abstract class A_World {
 
             //this.getPhysicsSystem().getCollisions(avatar);
 
-            avatar.playerSpeedY += gravity;
+            avatar.playerSpeedY += A_Const.GRAVITY ;
             avatar.y += avatar.playerSpeedY;
             // process User Input
             //TODO: REMOVE FROM END GAME!!! //

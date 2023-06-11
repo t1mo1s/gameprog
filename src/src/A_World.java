@@ -6,9 +6,17 @@ abstract class A_World {
     private A_InputSystem inputSystem;
     private A_UserInput userInput;
 
+    abstract void map1();
+
+    abstract void map2();
+
+    abstract void map3();
+
+    public int lvl = 3;
+
+
     // top left corner of the displayed pane of the world
     double worldPartX = 0;
-
 
     // defines maximum frame rate
     private static final int FRAME_MINIMUM_MILLIS = 10;
@@ -20,7 +28,7 @@ abstract class A_World {
     // all objects in the game, including the Avatar
     A_GameObjectList gameObjects = new A_GameObjectList();
     A_GameObject avatar;
-    ArrayList<A_TextObject> textObjects = new ArrayList<A_TextObject>();
+    ArrayList<A_TextObject> textObjects = new ArrayList<>();
 
 
     A_World() {
@@ -28,19 +36,14 @@ abstract class A_World {
     }
 
 
-    //
     // the main GAME LOOP
-    //
     final void run() {
 
         long lastTick = System.currentTimeMillis();
 
         while (true) {
 
-        //System.out.println("X: " + (int) avatar.x +" | Y: " + (int) avatar.y);
-
             // calculate elapsed time
-
             long currentTick = System.currentTimeMillis();
             long millisDiff = currentTick - lastTick;
 
@@ -49,7 +52,8 @@ abstract class A_World {
             if (millisDiff < FRAME_MINIMUM_MILLIS) {
                 try {
                     Thread.sleep(FRAME_MINIMUM_MILLIS - millisDiff);
-                } catch (Exception ex) {
+                } catch (Exception e) {
+                    e.getStackTrace();
                 }
                 currentTick = System.currentTimeMillis();
                 millisDiff = currentTick - lastTick;
@@ -57,18 +61,77 @@ abstract class A_World {
 
             lastTick = currentTick;
 
-            this.getPhysicsSystem().getCollisions(avatar);
+            // Check LVLs
+            switch (lvl) {
+                case 1 -> {
+                    map1();
+                }
+                case 2 -> {
+                    map2();
+                }
+                case 3 -> {
+                    map3();
+                }
+                default -> {
+                    lvl = 1;
+                    map1();
+                }
+                //falls mehr maps kommen
 
+            }
+
+            //System.out.println("level: " + lvl);
+
+            //CheckGoals
+            if (avatar.x >= A_Const.WORLD_WIDTH - 200) {
+
+                for (int i = 0; i < gameObjects.size(); i++) {
+
+                    if (gameObjects.get(i).type() != A_Const.TYPE_AVATAR) {
+                        gameObjects.get(i).isLiving = false;
+                    }
+                }
+
+                try {
+                    Thread.sleep(1000);
+                    lvl++;
+                    if (lvl > 3) lvl = 1;
+
+                    avatar.x = 30;
+                    avatar.y = A_Const.WORLD_HEIGHT - (70 + 25);
+
+                    System.out.println(lvl);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+
+            //this.getPhysicsSystem().getCollisions(avatar);
+
+            avatar.playerSpeedY += A_Const.GRAVITY ;
+            avatar.y += avatar.playerSpeedY;
             // process User Input
+            //TODO: REMOVE FROM END GAME!!! //
             userInput = inputSystem.getUserInput();
             processUserInput(userInput, millisDiff / 1000.0);
+            if (userInput.keyMap.get('p'))
+                System.out.println("PlayPOS   X: " + (int) avatar.x + " | Y: " + (int) avatar.y);
             userInput.clear();
+            avatar.isLiving = false;
             // no actions if game is over
+            this.getPhysicsSystem().getCollisions(avatar);
             if (gameOver) {
                 continue;
             }
 
+
+
             int gameSize = gameObjects.size();
+
+
+            /*****************************************************/
+
 
             // adjust displayed pane of the world
             this.adjustWorldPart();
@@ -88,6 +151,8 @@ abstract class A_World {
             // redraw everything
             graphicSystem.redraw();
         }
+
+
     }
 
 

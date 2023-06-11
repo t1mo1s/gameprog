@@ -7,9 +7,6 @@ class Game_Avatar extends A_GameObject {
   }
   public void moveLeft(double diffSeconds){
       super.moveLeft(diffSeconds);
-      //hier dann noch collision detections berechnen
-      //und bestimmen was passiert wenn collision
-      //z.B. moveBack();
   }
   public void moveRight(double diffSeconds){
       super.moveRight(diffSeconds);
@@ -18,5 +15,7 @@ class Game_Avatar extends A_GameObject {
       super.jump(diffSeconds);
   }
 
-  public int type() { return A_Const.TYPE_AVATAR; }
+    public int type() {
+        return A_Const.TYPE_AVATAR;
+    }
 }

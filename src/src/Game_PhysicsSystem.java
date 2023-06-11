@@ -1,15 +1,10 @@
-import java.awt.*;
+
 
 class Game_PhysicsSystem extends A_PhysicsSystem {
 
   Game_PhysicsSystem(A_World w) {
     super(w);
   }
-
-
-  //
-  // collisions for circle Objects only...
-  //
   public A_GameObjectList getCollisions(A_GameObject object) {
     A_GameObjectList result = new A_GameObjectList();
 
@@ -22,24 +17,36 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
 
       // check if they touch each other
       //implement touch check here
-      if (obj2.type() == A_Const.TYPE_GROUND) {
-        double touchInterfaceY = obj2.y - 26;
-        double touchInterfaceX1 = obj2.x;
-        double touchInterfaceX2 = obj2.x + obj2.width;
-        double touchInterfaceY2 = obj2.y + obj2.height;
-        if (object.y < touchInterfaceY2 && object.y >= touchInterfaceY && object.x >= touchInterfaceX1 && object.x <= touchInterfaceX2) {
-          result.add(obj2);
-          System.out.println("touch with ground " + obj2.y);
-          object.y = touchInterfaceY;
-          if (object.isJumping) {
-            object.isJumping = false;
-          }
+      //decide what happens if avatar is specific object
 
+        //calc edges of ground
+        double x1 =obj2.x;
+        double x2 =obj2.x + obj2.width;;
+        double y1 =obj2.y;
+        double y2 =obj2.y+obj2.height;
+
+        //calc edges of avatar
+        double avX1 = object.x ;
+        double avX2 = object.x + object.width;
+        double avY1 = object.y;
+        double avY2 = object.y + object.height;
+
+        //check if avatar is in ground
+        if (    (avY1 >= y1 && avY1 <= y2) && (avX1 <= x2 && avX1 >= x1) ||
+                (avY1 >= y1 && avY1 <= y2) && (avX2 <= x2 && avX2 >= x1) ||
+                (avY2 >= y1 && avY2 <= y2) && (avX1 <= x2 && avX1 >= x1) ||
+                (avY2 >= y1 && avY2 <= y2) && (avX2 <= x2 && avX2 >= x1)  ){
+            result.add(obj2);
+
+          if (obj2.type() == A_Const.TYPE_GROUND || obj2.type() == A_Const.TYPE_MOB) {
+            //decide what happens if avatar is specific object
+            object.y = y1 - object.height;
+            object.playerSpeedY = 0;
+            object.isJumping = false;
+            object.isOnGround = true;
+          }
         }
-      }
     }
     return result;
-
-
   }
 }

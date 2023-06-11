@@ -18,7 +18,7 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
       // check if they touch each other
       //implement touch check here
       //decide what happens if avatar is specific object
-      if (obj2.type() == A_Const.TYPE_GROUND) {
+
         //calc edges of ground
         double x1 =obj2.x;
         double x2 =obj2.x + obj2.width;;
@@ -38,14 +38,14 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                 (avY2 >= y1 && avY2 <= y2) && (avX2 <= x2 && avX2 >= x1)  ){
             result.add(obj2);
 
+          if (obj2.type() == A_Const.TYPE_GROUND || obj2.type() == A_Const.TYPE_MOB) {
             //decide what happens if avatar is specific object
             object.y = y1 - object.height;
             object.playerSpeedY = 0;
             object.isJumping = false;
             object.isOnGround = true;
-
+          }
         }
-      }
     }
     return result;
   }

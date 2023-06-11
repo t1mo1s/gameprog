@@ -1,11 +1,6 @@
 import java.awt.*;
 
 class Game_World extends A_World {
-    int platformSTART = 100, platformEND = platformSTART;
-    public int lvl = 1;
-    private double groundlevel = 70;
-    private double playerFeet = 50 - 25;    //25 -> Player-height
-
     final double spawnGround = 70;
     private final double ground = A_Const.WORLD_HEIGHT - spawnGround;
     private final int smallPlatform = 75, longPlatform = 125;
@@ -146,23 +141,14 @@ class Game_World extends A_World {
     }
 
     protected void processUserInput(A_UserInput userInput, double diffSeconds) {
-        if (userInput.keyMap.get('a') && avatar.x >= 0) avatar.moveLeft(diffSeconds);
-
         if (userInput.keyMap.get('a')) {
             avatar.moveLeft(diffSeconds);
-            //this.getPhysicsSystem().getCollisions(avatar);
         }
         if (userInput.keyMap.get('d')) {
             avatar.moveRight(diffSeconds);
-            /*this.getPhysicsSystem().getCollisions(avatar);
-
-             */
         }
-        if ((userInput.keyMap.get(' ') && !avatar.isJumping) || (userInput.keyMap.get('w') && !avatar.isJumping)) {
-
+        if ((userInput.keyMap.get(' '))) {
             avatar.jump(diffSeconds);
-            //this.getPhysicsSystem().getCollisions(avatar);
-
         }
     }
 }

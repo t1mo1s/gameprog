@@ -51,21 +51,10 @@ abstract class A_GameObject {
 
     public void moveLeft(double diffSeconds) {
         x -= 2 * speed * diffSeconds;
-        A_GameObjectList list = world.getPhysicsSystem().getCollisions(this);
-        if(list.isEmpty()){
-            fall(diffSeconds);
-        }
     }
 
     public void moveRight(double diffSeconds) {
-
         x += 2 * speed * diffSeconds;
-
-        A_GameObjectList list = world.getPhysicsSystem().getCollisions(this);
-        if(list.isEmpty()){
-            fall(diffSeconds);
-        }
-
     }
 
     public void jump(double diffSeconds) {
@@ -80,7 +69,7 @@ abstract class A_GameObject {
 
             @Override
             public void run() {
-                if (t <= 1.0001) {
+                if (t <= 1.0) {
                     // Calculate the y-coordinate using the Bézier curve formula
                     double yBezier = calculateBezierPoint(t, controlPoints);
 
@@ -90,7 +79,7 @@ abstract class A_GameObject {
                     t += 0.01; // Increase the parameter value for each iteration
                 } else {
                     cancel();
-                    //fall(diffSeconds);
+                    fall(diffSeconds);
                 }
             }
         }
@@ -129,7 +118,7 @@ abstract class A_GameObject {
 
             @Override
             public void run() {
-                if (y < A_Const.WORLD_HEIGHT) {
+                if (y < A_Const.WORLD_HEIGHT - 70 - 25 - 1) {
                     y += 2 * vSpeed * diffSeconds;
                 } else {
                     isJumping = false;
@@ -140,7 +129,7 @@ abstract class A_GameObject {
 
         Timer timer = new Timer();
         TimerTask fallTask = new FallHelper();
-        timer.schedule(fallTask, 0, 200);
+        timer.schedule(fallTask, 0, 20);
 
     }
 

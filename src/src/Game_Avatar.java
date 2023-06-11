@@ -10,11 +10,14 @@ class Game_Avatar extends A_GameObject {
   }
   public void moveLeft(double diffSeconds){
       super.moveLeft(diffSeconds);
+<<<<<<< HEAD
       checkCollision();
       //hier dann noch collision detections berechnen
       //und bestimmen was passiert wenn collision
       //z.B. moveBack(); de
 
+=======
+>>>>>>> 706296898e219b0cc3fd8b29fd96436df45a1a3e
   }
   public void moveRight(double diffSeconds){
       super.moveRight(diffSeconds);
@@ -30,6 +33,7 @@ class Game_Avatar extends A_GameObject {
       System.out.println("X: " + super.x + " Y: " + super.y);
   }
 
+<<<<<<< HEAD
   public int type() { return A_Const.TYPE_AVATAR; }
 
     public void checkCollision() {
@@ -87,6 +91,10 @@ class Game_Avatar extends A_GameObject {
                 super.y + height >= triplePlatformY3 && super.y <= triplePlatformY3 + triplePlatformHeight3) {
             System.out.println("Kollision5");
         }
+=======
+    public int type() {
+        return A_Const.TYPE_AVATAR;
+>>>>>>> 706296898e219b0cc3fd8b29fd96436df45a1a3e
     }
 }
 

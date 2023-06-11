@@ -1,37 +1,64 @@
-class Game_PhysicsSystem extends A_PhysicsSystem
-{
-	
-  Game_PhysicsSystem(A_World w)
-  { super(w);
+
+
+class Game_PhysicsSystem extends A_PhysicsSystem {
+
+  Game_PhysicsSystem(A_World w) {
+    super(w);
   }
+<<<<<<< HEAD
 
   //
   // collisions for circle Objects only...
   //
   public A_GameObjectList getCollisions(A_GameObject object)
   {
+=======
+  public A_GameObjectList getCollisions(A_GameObject object) {
+>>>>>>> 706296898e219b0cc3fd8b29fd96436df45a1a3e
     A_GameObjectList result = new A_GameObjectList();
-    
+
     int len = world.gameObjects.size();
-    for(int i=0; i<len; i++)
-    {
+    for (int i = 0; i < len; i++) {
       A_GameObject obj2 = world.gameObjects.get(i);
-      
+
       // an object doesn't collide with itself
-      if(obj2==object) continue;
-      
+      if (obj2 == object) continue;
+
       // check if they touch each other
-      double dist = object.width+obj2.width;
-      double dx   = object.x-obj2.x;
-      double dy   = object.y-obj2.y;
-      
-      if(dx*dx+dy*dy < dist*dist) {
-        result.add(obj2);
-      }
+      //implement touch check here
+      //decide what happens if avatar is specific object
+
+        //calc edges of ground
+        double x1 =obj2.x;
+        double x2 =obj2.x + obj2.width;;
+        double y1 =obj2.y;
+        double y2 =obj2.y+obj2.height;
+
+        //calc edges of avatar
+        double avX1 = object.x ;
+        double avX2 = object.x + object.width;
+        double avY1 = object.y;
+        double avY2 = object.y + object.height;
+
+        //check if avatar is in ground
+        if (    (avY1 >= y1 && avY1 <= y2) && (avX1 <= x2 && avX1 >= x1) ||
+                (avY1 >= y1 && avY1 <= y2) && (avX2 <= x2 && avX2 >= x1) ||
+                (avY2 >= y1 && avY2 <= y2) && (avX1 <= x2 && avX1 >= x1) ||
+                (avY2 >= y1 && avY2 <= y2) && (avX2 <= x2 && avX2 >= x1)  ){
+            result.add(obj2);
+
+          if (obj2.type() == A_Const.TYPE_GROUND || obj2.type() == A_Const.TYPE_MOB) {
+            //decide what happens if avatar is specific object
+            object.y = y1 - object.height;
+            object.playerSpeedY = 0;
+            object.isJumping = false;
+            object.isOnGround = true;
+          }
+        }
     }
-    
     return result;
   }
+<<<<<<< HEAD
 
   @Override
   public void checkCollision()  {
@@ -89,4 +116,6 @@ class Game_PhysicsSystem extends A_PhysicsSystem
       System.out.println("Kollision5");
     }
   }
+=======
+>>>>>>> 706296898e219b0cc3fd8b29fd96436df45a1a3e
 }

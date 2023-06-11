@@ -42,27 +42,6 @@ abstract class A_GameObject {
         y -= 6 * speed * diffSeconds;
     }
 
-    // Helper method to calculate the y-coordinate on a Bézier curve for a given parameter value t
-    private double calculateBezierPoint(double t, double[] controlPoints) {
-        int n = controlPoints.length - 1;
-        double yBezier = 0.0;
-
-        for (int i = 0; i <= n; i++) {
-            double coefficient = binomialCoefficient(n, i) * Math.pow(1 - t, n - i) * Math.pow(t, i);
-            yBezier += coefficient * controlPoints[i];
-        }
-
-        return yBezier;
-    }
-
-    // Helper method to calculate the binomial coefficient (n choose k)
-    private int binomialCoefficient(int n, int k) {
-        if (k == 0 || k == n) {
-            return 1;
-        } else {
-            return binomialCoefficient(n - 1, k - 1) + binomialCoefficient(n - 1, k);
-        }
-    }
 
     abstract int type();
 

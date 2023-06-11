@@ -56,16 +56,6 @@ class Game_World extends A_World {
         spawnMobs(x, setGround(0), wd);
     }
 
-<<<<<<< HEAD
-        //platformSTART = 100, holes = 500; Graue ebene
-        placeGround(platformSTART, holes = platformEND);
-        placeDoublePlatform(platformEND, 80);
-
-        //platformSTART = 1300, holes = 2050;
-        System.out.println("Start: " + platformSTART + " END: " + holes);
-        placeGround(platformSTART = holes + smallJump, holes = platformEND + 250);
-        placeTriplePlatform(platformEND = platformSTART + holes, 75);
-=======
     private void spawnMobs(int x, double y, int wd) {
         //wd => Walking Distance
         gameObjects.add(new Game_Mob(x, y));
@@ -75,15 +65,10 @@ class Game_World extends A_World {
     /*** MAP-Build area ***/
     public void map1() {
         int platformSTART = 100, platformEND;
->>>>>>> 706296898e219b0cc3fd8b29fd96436df45a1a3e
 
         platformEND = placeGround(platformSTART, 400);
         platformSTART = 175 + placeDoublePlatform(platformEND, 70);
 
-<<<<<<< HEAD
-        //platformSTART = 3250, holes = 2050;
-        placeGround(platformSTART = A_Const.WORLD_WIDTH - 750, A_Const.WORLD_WIDTH - 300);
-=======
         //TODO: 1 game_mob at x: 1475 walks 100pxl and back!
         spawnMobs(1475, 100);
 
@@ -93,7 +78,6 @@ class Game_World extends A_World {
         placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
         //TODO:  1 Game_mob at x: 3322, walks 150pxl and back and faster!
         spawnMobs(3322, 150);
->>>>>>> 706296898e219b0cc3fd8b29fd96436df45a1a3e
 
         goal();
     }

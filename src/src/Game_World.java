@@ -6,6 +6,13 @@ class Game_World extends A_World {
     private final double ground = A_Const.WORLD_HEIGHT - spawnGround;
     private final int smallPlatform = 75, longPlatform = 125;
 
+    private Game_LevelDisplay levelDisplay;
+    private Game_Over game_over;
+
+
+    //TODO:: ADD LVL TEXT
+    // ADD FIRST TIME HELPING TEXT (Controls)
+    // Game Over Screen
 
     protected void init() {
         //add BackgroundIMG
@@ -16,6 +23,9 @@ class Game_World extends A_World {
         worldPartX = 1500;
 
         gameObjects.add(avatar);
+
+        levelDisplay = new Game_LevelDisplay(20, 30);
+        textObjects.add(levelDisplay);
     }
 
     /**
@@ -66,6 +76,7 @@ class Game_World extends A_World {
 
     /*** MAP-Build area ***/
     public void map1() {
+
         int platformSTART = 100, platformEND;
 
         platformEND = placeGround(platformSTART, 400);
@@ -123,7 +134,7 @@ class Game_World extends A_World {
 
         placeGround(platformSTART, A_Const.WORLD_WIDTH - 400);
 
-        goal();
+        goal(50);
     }
 
     /**
@@ -132,10 +143,15 @@ class Game_World extends A_World {
     //No entry -> on ground-leve
     private void goal() {
         //add Spawn
+        goal(0);
+    }
+
+    private void goal(int y) {
+        //add Spawn
         gameObjects.add(new Game_Ground(0, setGround(0), 100, 70, new Color(100, 0, 0)));
 
-        placeGround(A_Const.WORLD_WIDTH - 300, A_Const.WORLD_WIDTH, 0);
-        gameObjects.add(new Game_Goal((int) (spawnGround)));
+        placeGround(A_Const.WORLD_WIDTH - 300, A_Const.WORLD_WIDTH, y);
+        gameObjects.add(new Game_Goal((int) (spawnGround + y)));
     }
 
     protected void processUserInput(A_UserInput userInput, double diffSeconds) {
@@ -152,6 +168,10 @@ class Game_World extends A_World {
             if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
                 avatar.jump(diffSeconds);
             }
+        } else {
+            game_over = new Game_Over(A_Const.WORLD_WIDTH / 2, A_Const.WORLD_HEIGHT / 2);
+            textObjects.add(game_over);
+            gameOver = true;
         }
     }
 }

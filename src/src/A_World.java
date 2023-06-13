@@ -1,18 +1,19 @@
+import java.awt.*;
 import java.util.ArrayList;
 
 abstract class A_World {
     private A_GraphicSystem graphicSystem;
-    private A_PhysicsSystem physicsSystem;
+    private final A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
-    private A_UserInput userInput;
+
+
+    public int lvl = 1;
 
     abstract void map1();
 
     abstract void map2();
 
     abstract void map3();
-
-    public int lvl = 1;
 
 
     // top left corner of the displayed pane of the world
@@ -30,7 +31,6 @@ abstract class A_World {
     A_GameObject avatar;
     ArrayList<A_TextObject> textObjects = new ArrayList<>();
 
-
     A_World() {
         physicsSystem = new Game_PhysicsSystem(this);
     }
@@ -46,6 +46,7 @@ abstract class A_World {
             // calculate elapsed time
             long currentTick = System.currentTimeMillis();
             long millisDiff = currentTick - lastTick;
+
 
             // don�t run faster then MINIMUM_DIFF_SECONDS per frame
             //
@@ -112,7 +113,7 @@ abstract class A_World {
             avatar.y += avatar.playerSpeedY;
 
             // process User Input
-            userInput = inputSystem.getUserInput();
+            A_UserInput userInput = inputSystem.getUserInput();
             processUserInput(userInput, millisDiff / 1000.0);
 
             //TODO: Remove Player Pos Button!
@@ -128,10 +129,12 @@ abstract class A_World {
             userInput.clear();
             //avatar.isLiving = false;
             // no actions if game is over
-            this.getPhysicsSystem().getCollisions(avatar);
             if (gameOver) {
                 continue;
             }
+
+            this.getPhysicsSystem().getCollisions(avatar);
+
 
             int gameSize = gameObjects.size();
 
@@ -159,13 +162,21 @@ abstract class A_World {
 
             // draw all TextObjects
             for (int i = 0; i < textObjects.size(); i++) {
+                //Update Level Text
+                levelTxt(lvl);
+
                 graphicSystem.draw(textObjects.get(i));
             }
 
             // redraw everything
             graphicSystem.redraw();
+
+            //END OF THE WHILE(!GAMEOVER) LOOP
         }
+
     }
+
+    /******************************** END OF GAME LOOP **********************************/
 
     // adjust the displayed pane of the world according to Avatar and Bounds
     private final void adjustWorldPart() {
@@ -187,6 +198,11 @@ abstract class A_World {
                 worldPartX = 0;
             }
         }
+    }
+
+    private void levelTxt(int lvl) {
+        Game_LevelDisplay levelDisplay = (Game_LevelDisplay) textObjects.get(0);
+        levelDisplay.setLVL(lvl);
     }
 
     protected void setGraphicSystem(A_GraphicSystem p) {

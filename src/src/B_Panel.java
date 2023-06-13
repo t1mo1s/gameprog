@@ -1,12 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import static java.awt.SystemColor.text;
 
 class B_Panel extends JPanel implements A_GraphicSystem {
     // constants
     private static final long serialVersionUID = 1L;
-    private static final Font font = new Font("Arial", Font.PLAIN, 24);
-
 
     // InputSystem is an external instance
     private B_InputSystem inputSystem = new B_InputSystem();
@@ -27,6 +29,15 @@ class B_Panel extends JPanel implements A_GraphicSystem {
         imageBuffer = graphicsConf.createCompatibleImage(this.getWidth(), this.getHeight());
 
         graphics = imageBuffer.getGraphics();
+
+
+        try {
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/DePixelKlein.ttf"));
+            GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(customFont);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+
 
         // initialize Listeners
         this.addMouseListener(inputSystem);
@@ -60,12 +71,51 @@ class B_Panel extends JPanel implements A_GraphicSystem {
         graphics.drawRect(x, y, rect.width, rect.height);
     }
 
-    public final void draw(A_TextObject text) {
+    public void draw(A_TextObject text) {
+        Font font = new Font("DePixelKlein", Font.PLAIN, text.fontSize);
+
         graphics.setFont(font);
-        graphics.setColor(Color.DARK_GRAY);
-        graphics.drawString(text.toString(), (int) text.x + 1, (int) text.y + 1);
-        graphics.setColor(text.color);
+        //strokeSettings
+        drawStroke(text.strokeColor, text.toString(), text.x, text.y);
+
+        //Text
+        graphics.setColor(text.textColor);
         graphics.drawString(text.toString(), (int) text.x, (int) text.y);
+    }
+
+    private void drawStroke(Color strokeColor, String txt, int x, int y) {
+        graphics.setColor(strokeColor);
+        int[] positions = {-2, 0, 2};
+
+        for (int offsetX : positions) {
+            for (int offsetY : positions) {
+                if (offsetX != 0 || offsetY != 0) {
+                    graphics.drawString(txt, x + offsetX, y + offsetY);
+                }
+            }
+        }
+    }
+
+    //can be deleted
+    public final void draw(A_TextObject text, int fontSize, String fontName, Color textColor, Color strokeColor) {
+
+        fontName = "Arial";
+
+        Graphics2D g2d = (Graphics2D) graphics;
+
+        g2d.setFont(new Font(fontName, Font.PLAIN, fontSize));
+
+        // Set the stroke for the outline
+        Stroke outlineStroke = new BasicStroke(2f);
+        g2d.setStroke(outlineStroke);
+
+        // Draw the outline
+        g2d.setColor(strokeColor);
+        g2d.drawString(text.toString(), (int) text.x + 1, (int) text.y + 1);
+
+        // Set the color for the text
+        g2d.setColor(textColor);
+        g2d.drawString(text.toString(), (int) text.x + 1, (int) text.y + 1);
     }
 
 

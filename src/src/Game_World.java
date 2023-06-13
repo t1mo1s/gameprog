@@ -1,24 +1,36 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 class Game_World extends A_World {
     final double spawnGround = 70;
     private final double ground = A_Const.WORLD_HEIGHT - spawnGround;
     private final int smallPlatform = 75, longPlatform = 125;
 
+    private Game_LevelDisplay levelDisplay;
+    private Game_Over game_over;
+
+
+    //TODO:: ADD LVL TEXT
+    // ADD FIRST TIME HELPING TEXT (Controls)
+    // Game Over Screen
 
     protected void init() {
+        //add BackgroundIMG
+
         // add the Avatar
         avatar = new Game_Avatar(30, ground - 25);
         // set WorldPart position
         worldPartX = 1500;
 
         gameObjects.add(avatar);
+
+        levelDisplay = new Game_LevelDisplay(20, 30);
+        textObjects.add(levelDisplay);
     }
 
     /**
      * BUILDING METHODS!
      **/
-
     //From Spawn height adjustable | so you don't have to place it from the top, but rather from the floor itself
     public double setGround(int diff) {
         return ground - diff;
@@ -64,6 +76,7 @@ class Game_World extends A_World {
 
     /*** MAP-Build area ***/
     public void map1() {
+
         int platformSTART = 100, platformEND;
 
         platformEND = placeGround(platformSTART, 400);
@@ -119,7 +132,7 @@ class Game_World extends A_World {
         //spawnMobs(platformSTART+150, 100);
         platformSTART = 25 + placeQuadPlatform(platformEND, 65);
 
-        placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
+        placeGround(platformSTART, A_Const.WORLD_WIDTH - 400);
 
         goal(50);
     }
@@ -127,8 +140,9 @@ class Game_World extends A_World {
     /**
      * GOAL METHODS
      **/
-    //No entry -> on ground-level
+    //No entry -> on ground-leve
     private void goal() {
+        //add Spawn
         goal(0);
     }
 
@@ -141,14 +155,23 @@ class Game_World extends A_World {
     }
 
     protected void processUserInput(A_UserInput userInput, double diffSeconds) {
-        if (userInput.keyMap.get('a')) {
-            avatar.moveLeft(diffSeconds);
-        }
-        if (userInput.keyMap.get('d')) {
-            avatar.moveRight(diffSeconds);
-        }
-        if ((userInput.keyMap.get(' '))) {
-            avatar.jump(diffSeconds);
+        //Player kann sich nicht mehr bewegen wenn man in einem abgrund springt
+        //anstatt das player direkt wieder ins spawn TPed wird, so kann der Player im GameOver screen entscheiden
+        //ob der weiter spielt oder Rage-Quited
+        if (avatar.y < A_Const.WORLD_HEIGHT + 50) {
+            if (userInput.keyMap.get('a') && avatar.x >= 0) {
+                avatar.moveLeft(diffSeconds);
+            }
+            if (userInput.keyMap.get('d') && avatar.x <= A_Const.WORLD_WIDTH) {
+                avatar.moveRight(diffSeconds);
+            }
+            if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
+                avatar.jump(diffSeconds);
+            }
+        } else {
+            game_over = new Game_Over(A_Const.WORLD_WIDTH / 2, A_Const.WORLD_HEIGHT / 2);
+            textObjects.add(game_over);
+            gameOver = true;
         }
     }
 }

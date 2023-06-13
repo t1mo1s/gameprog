@@ -1,18 +1,19 @@
+import java.awt.*;
 import java.util.ArrayList;
 
 abstract class A_World {
     private A_GraphicSystem graphicSystem;
-    private A_PhysicsSystem physicsSystem;
+    private final A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
-    private A_UserInput userInput;
+
+
+    public int lvl = 1;
 
     abstract void map1();
 
     abstract void map2();
 
     abstract void map3();
-
-    public int lvl = 1;
 
 
     // top left corner of the displayed pane of the world
@@ -30,7 +31,6 @@ abstract class A_World {
     A_GameObject avatar;
     ArrayList<A_TextObject> textObjects = new ArrayList<>();
 
-
     A_World() {
         physicsSystem = new Game_PhysicsSystem(this);
     }
@@ -46,6 +46,7 @@ abstract class A_World {
             // calculate elapsed time
             long currentTick = System.currentTimeMillis();
             long millisDiff = currentTick - lastTick;
+
 
             // don�t run faster then MINIMUM_DIFF_SECONDS per frame
             //
@@ -106,43 +107,49 @@ abstract class A_World {
                 }
             }
 
-
             //this.getPhysicsSystem().getCollisions(avatar);
 
-            avatar.playerSpeedY += A_Const.GRAVITY ;
+            avatar.playerSpeedY += A_Const.GRAVITY;
             avatar.y += avatar.playerSpeedY;
+
             // process User Input
-            //TODO: REMOVE FROM END GAME!!! //
-            userInput = inputSystem.getUserInput();
+            A_UserInput userInput = inputSystem.getUserInput();
             processUserInput(userInput, millisDiff / 1000.0);
+
+            //TODO: Remove Player Pos Button!
             if (userInput.keyMap.get('p'))
                 System.out.println("PlayPOS   X: " + (int) avatar.x + " | Y: " + (int) avatar.y);
+
+            if (userInput.keyMap.get('m')) System.out.println("MENU!!!");
+            if (userInput.keyMap.get('r')) {
+                avatar.x = 30;
+                avatar.y = A_Const.WORLD_HEIGHT - 70;
+            }
+
             userInput.clear();
             //avatar.isLiving = false;
             // no actions if game is over
-            this.getPhysicsSystem().getCollisions(avatar);
             if (gameOver) {
                 continue;
             }
 
+            this.getPhysicsSystem().getCollisions(avatar);
 
 
             int gameSize = gameObjects.size();
 
-            int num=0;
-            while(num<gameSize)
-            {
-                if(!gameObjects.get(num).isLiving)
-                { gameObjects.remove(num);
+
+            int num = 0;
+            while (num < gameSize) {
+                if (!gameObjects.get(num).isLiving) {
+                    gameObjects.remove(num);
                     gameSize--;
-                }
-                else
-                { num++;
+                } else {
+                    num++;
                 }
             }
 
             /*****************************************************/
-
 
             // adjust displayed pane of the world
             this.adjustWorldPart();
@@ -153,22 +160,25 @@ abstract class A_World {
                 graphicSystem.draw(gameObjects.get(i));
             }
 
-
             // draw all TextObjects
             for (int i = 0; i < textObjects.size(); i++) {
+                //Update Level Text
+                levelTxt(lvl);
+
                 graphicSystem.draw(textObjects.get(i));
             }
 
             // redraw everything
             graphicSystem.redraw();
-        }
 
+            //END OF THE WHILE(!GAMEOVER) LOOP
+        }
 
     }
 
+    /******************************** END OF GAME LOOP **********************************/
 
     // adjust the displayed pane of the world according to Avatar and Bounds
-    //
     private final void adjustWorldPart() {
         final int RIGHT_END = A_Const.WORLD_WIDTH - A_Const.WORLDPART_WIDTH;
 
@@ -182,17 +192,18 @@ abstract class A_World {
         }
 
         // same left
-
         else if (avatar.x < worldPartX + A_Const.SCROLL_BOUNDS) {
             worldPartX = avatar.x - A_Const.SCROLL_BOUNDS;
             if (worldPartX <= 0) {
                 worldPartX = 0;
             }
         }
-
-
     }
 
+    private void levelTxt(int lvl) {
+        Game_LevelDisplay levelDisplay = (Game_LevelDisplay) textObjects.get(0);
+        levelDisplay.setLVL(lvl);
+    }
 
     protected void setGraphicSystem(A_GraphicSystem p) {
         graphicSystem = p;
@@ -205,7 +216,6 @@ abstract class A_World {
     protected A_PhysicsSystem getPhysicsSystem() {
         return physicsSystem;
     }
-
 
     protected abstract void init();
 

@@ -28,11 +28,7 @@ class B_Frame extends JFrame implements A_Frame {
 
     public void displayOnScreen() {
         validate();
-      /*
-      pack();
 
-       */
-        //sets the screen into the middle
         setLocationRelativeTo(null);
         setVisible(true);
     }

@@ -36,23 +36,13 @@ class B_Panel extends JPanel implements A_GraphicSystem {
 
     public void clear() {
         graphics.setColor(Color.LIGHT_GRAY);
-        //graphics.fillRect(40, 100,A_Const.WORLDPART_WIDTH,A_Const.WORLDPART_HEIGHT);
         graphics.fillRect(0, 0, A_Const.WORLDPART_WIDTH, A_Const.WORLD_HEIGHT);
     }
 
 
     public final void draw(A_GameObject rect) {
-    /*
-	int x = (int)(dot.x-dot.radius-world.worldPartX);
-	int y = (int)(dot.y-dot.radius-world.worldPartY);
-	int d = (int)(dot.radius*2);
-	
-	graphics.setColor(dot.color);
-	graphics.fillOval(x, y, d, d);
-	graphics.setColor(Color.DARK_GRAY);
-	graphics.drawOval(x,y,d,d);
 
-     */
+        //set relative to worldPart
         int x = (int) (rect.x - world.worldPartX);
         int y = (int) rect.y;
         graphics.setColor(rect.color);

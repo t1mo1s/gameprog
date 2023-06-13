@@ -30,6 +30,7 @@ abstract class A_GameObject {
         color = color_;
     }
 
+
     public void moveLeft(double diffSeconds) {
         x -= 2 * speed * diffSeconds;
     }

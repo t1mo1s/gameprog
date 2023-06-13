@@ -129,6 +129,15 @@ abstract class A_World {
 
             int gameSize = gameObjects.size();
 
+            //let the mobs walk
+            for(int i = 0; i < gameSize; i++){
+                A_GameObject obj = gameObjects.get(i);
+                if(obj.type() == A_Const.TYPE_MOB){
+                    Game_Mob mob = (Game_Mob) obj;
+                    mob.move(millisDiff / 1000.0);
+                }
+            }
+
             int num=0;
             while(num<gameSize)
             {
@@ -140,9 +149,6 @@ abstract class A_World {
                 { num++;
                 }
             }
-
-            /*****************************************************/
-
 
             // adjust displayed pane of the world
             this.adjustWorldPart();

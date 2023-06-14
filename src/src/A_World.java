@@ -97,8 +97,7 @@ abstract class A_World {
                 }
             }
 
-            avatar.playerSpeedY += A_Const.GRAVITY;
-            avatar.y += avatar.playerSpeedY;
+            this.getPhysicsSystem().applyGravity();
 
             // process User Input
             A_UserInput userInput = inputSystem.getUserInput();

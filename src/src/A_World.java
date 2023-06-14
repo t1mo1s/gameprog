@@ -20,8 +20,6 @@ abstract class A_World {
 
     // if game is over
     protected boolean gameOver = false;
-
-
     // all objects in the game, including the Avatar
     A_GameObjectList gameObjects = new A_GameObjectList();
     A_GameObject avatar;
@@ -31,6 +29,14 @@ abstract class A_World {
         physicsSystem = new Game_PhysicsSystem(this);
     }
 
+
+    public int getLvl() {
+        return lvl;
+    }
+
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
+    }
 
     // the main GAME LOOP
     final void run() {
@@ -55,6 +61,7 @@ abstract class A_World {
 
             lastTick = currentTick;
 
+            System.out.println(avatar.isJumping);
             // Check LVLs
             switch (lvl) {
                 case 1 -> {
@@ -73,30 +80,6 @@ abstract class A_World {
                 //falls mehr maps kommen
             }
 
-            //CheckGoals
-            if (avatar.x >= A_Const.WORLD_WIDTH - 200) {
-
-                for (int i = 0; i < gameObjects.size(); i++) {
-
-                    if (gameObjects.get(i).type() != A_Const.TYPE_AVATAR) {
-                        gameObjects.get(i).isLiving = false;
-                    }
-                }
-
-                try {
-                    Thread.sleep(1000);
-                    lvl++;
-                    if (lvl > 3) lvl = 1;
-
-                    avatar.x = 30;
-                    avatar.y = A_Const.WORLD_HEIGHT - (70 + 25);
-
-                    System.out.println(lvl);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
             this.getPhysicsSystem().applyGravity();
 
             // process User Input
@@ -109,7 +92,7 @@ abstract class A_World {
 
             if (userInput.keyMap.get('m')) System.out.println("MENU!!!");
             if (userInput.keyMap.get('r')) {
-                avatar.x = 30;
+                avatar.x = 40;
                 avatar.y = A_Const.WORLD_HEIGHT - 70;
             }
 
@@ -119,7 +102,7 @@ abstract class A_World {
                 continue;
             }
 
-            this.getPhysicsSystem().getCollisions(avatar);
+            //this.getPhysicsSystem().getCollisions(avatar);
 
             int gameSize = gameObjects.size();
 

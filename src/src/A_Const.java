@@ -7,6 +7,7 @@ final class A_Const {
     static final int SCROLL_BOUNDS = 500;
     static final int TYPE_AVATAR = 1;
     static final int TYPE_GROUND = 7;
+    static final int TYPE_GOAL = 8;
     static final double GRAVITY = 0.8;
 
 }

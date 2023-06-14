@@ -12,17 +12,16 @@ abstract class A_GameObject {
     protected Color color;
     protected boolean isLiving = true;
     protected boolean isMoving = true;
-    public boolean isOnGround = false;
+    protected boolean isOnGround = false;
     protected boolean isJumping = false;
-    double playerSpeedX = 0; // Horizontale Geschwindigkeit des Spielers
-    double playerSpeedY = 0; // Vertikale Geschwindigkeit des Spielers
+    protected double playerSpeedX = 0; // Horizontale Geschwindigkeit des Spielers
+    protected double playerSpeedY = 0; // Vertikale Geschwindigkeit des Spielers
     protected static A_World world;
 
     // construct GameObject
     public A_GameObject(double x_, double y_, double a_, double s_, int width_, int heigth_, Color color_) {
         x = x_;
         y = y_;
-
         alfa = a_;
         speed = s_;
         width = width_;

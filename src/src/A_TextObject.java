@@ -6,7 +6,6 @@ abstract class A_TextObject {
 
     // yes, public :(
     protected int x, y, fontSize;
-    protected String text;
     protected Color textColor, strokeColor;
 
     //

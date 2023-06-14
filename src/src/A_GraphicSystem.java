@@ -1,4 +1,3 @@
-import java.awt.*;
 
 interface A_GraphicSystem {
     // prepare to draw a new Screen
@@ -12,7 +11,6 @@ interface A_GraphicSystem {
 
     // display the completed Screen
     void redraw();
-
 
     // set world
     void setWorld(A_World world);

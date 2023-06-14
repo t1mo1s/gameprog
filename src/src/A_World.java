@@ -1,14 +1,10 @@
-import java.awt.*;
 import java.util.ArrayList;
 
 abstract class A_World {
     private A_GraphicSystem graphicSystem;
     private final A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
-
-
-    public int lvl = 1;
-
+    private int lvl = 1;
     abstract void map1();
 
     abstract void map2();
@@ -17,13 +13,13 @@ abstract class A_World {
 
 
     // top left corner of the displayed pane of the world
-    double worldPartX = 0;
+    protected double worldPartX = 0;
 
     // defines maximum frame rate
     private static final int FRAME_MINIMUM_MILLIS = 10;
 
     // if game is over
-    boolean gameOver = false;
+    protected boolean gameOver = false;
 
 
     // all objects in the game, including the Avatar
@@ -47,9 +43,6 @@ abstract class A_World {
             long currentTick = System.currentTimeMillis();
             long millisDiff = currentTick - lastTick;
 
-
-            // don�t run faster then MINIMUM_DIFF_SECONDS per frame
-            //
             if (millisDiff < FRAME_MINIMUM_MILLIS) {
                 try {
                     Thread.sleep(FRAME_MINIMUM_MILLIS - millisDiff);
@@ -78,10 +71,7 @@ abstract class A_World {
                     map1();
                 }
                 //falls mehr maps kommen
-
             }
-
-            //System.out.println("level: " + lvl);
 
             //CheckGoals
             if (avatar.x >= A_Const.WORLD_WIDTH - 200) {
@@ -107,8 +97,6 @@ abstract class A_World {
                 }
             }
 
-            //this.getPhysicsSystem().getCollisions(avatar);
-
             avatar.playerSpeedY += A_Const.GRAVITY;
             avatar.y += avatar.playerSpeedY;
 
@@ -127,7 +115,6 @@ abstract class A_World {
             }
 
             userInput.clear();
-            //avatar.isLiving = false;
             // no actions if game is over
             if (gameOver) {
                 continue;
@@ -135,9 +122,7 @@ abstract class A_World {
 
             this.getPhysicsSystem().getCollisions(avatar);
 
-
             int gameSize = gameObjects.size();
-
 
             int num = 0;
             while (num < gameSize) {
@@ -148,8 +133,6 @@ abstract class A_World {
                     num++;
                 }
             }
-
-            /*****************************************************/
 
             // adjust displayed pane of the world
             this.adjustWorldPart();

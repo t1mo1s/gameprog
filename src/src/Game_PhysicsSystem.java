@@ -42,8 +42,28 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
             //decide what happens if avatar is specific object
             object.y = y1 - object.height;
             object.playerSpeedY = 0;
-            object.isJumping = false;
+            //object.isJumping = false;
             object.isOnGround = true;
+          } else if (obj2.type() == A_Const.TYPE_GOAL) {
+                //decide what happens if avatar touches goal
+            for (int h = 0; h < world.gameObjects.size(); h++) {
+
+                    if (world.gameObjects.get(h).type() != A_Const.TYPE_AVATAR) {
+                        world.gameObjects.get(h).isLiving = false;
+                    }
+                }
+                try {
+                    Thread.sleep(1000);
+                    world.setLvl(world.getLvl() + 1);
+                    if (world.getLvl() > 3) world.setLvl(1);
+
+                    object.x = 60;
+                    object.y = A_Const.WORLD_HEIGHT - (70 + 25);
+
+                    System.out.println(world.getLvl());
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
           }
         }
     }
@@ -56,8 +76,9 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
     for (A_GameObject obj : objects) {
       switch (obj.type()){
         case A_Const.TYPE_AVATAR -> {
-          obj.playerSpeedY += A_Const.GRAVITY;
-          obj.y += obj.playerSpeedY;
+            getCollisions(obj);
+            obj.playerSpeedY += A_Const.GRAVITY;
+            obj.y += obj.playerSpeedY;
         }
       }
     }

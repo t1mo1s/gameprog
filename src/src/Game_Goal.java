@@ -9,6 +9,6 @@ public class Game_Goal extends A_GameObject {
 
     @Override
     int type() {
-        return A_Const.TYPE_GROUND;
+        return A_Const.TYPE_GOAL;
     }
 }

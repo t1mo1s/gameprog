@@ -86,7 +86,8 @@ class Game_World extends A_World {
     /*** MAP-Build area ***/
     public void map1() {
 
-        int platformSTART = 100, platformEND;
+        int platformSTART = 100;
+        int platformEND;
 
         platformEND = placeGround(platformSTART, 400);
         platformSTART = 175 + placeDoublePlatform(platformEND, 70);
@@ -100,7 +101,6 @@ class Game_World extends A_World {
         placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
         //TODO:  1 Game_mob at x: 3322, walks 150pxl and back and faster!
         spawnMobs(3322, 150);
-
         goal();
     }
 
@@ -157,7 +157,7 @@ class Game_World extends A_World {
 
     private void goal(int y) {
         //add Spawn
-        gameObjects.add(new Game_Ground(0, setGround(0), 100, 70, new Color(100, 0, 0)));
+        gameObjects.add(new Game_Ground(0, setGround(0), 100, 70, new Color(83, 67, 175)));
 
         placeGround(A_Const.WORLD_WIDTH - 300, A_Const.WORLD_WIDTH, y);
         gameObjects.add(new Game_Goal((int) (spawnGround + y)));

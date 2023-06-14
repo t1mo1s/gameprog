@@ -39,13 +39,20 @@ abstract class A_World {
     }
 
 
+    public int getLvl() {
+        return lvl;
+    }
+
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
+    }
+
     // the main GAME LOOP
     final void run() {
         long lastTick = System.currentTimeMillis();
 
 
         while (!gameOver) {
-
             // Check LVLs
             switch (lvl) {
                 case 1 -> {
@@ -81,30 +88,6 @@ abstract class A_World {
             lastTick = currentTick;
 
 
-            //CheckGoals
-            if (avatar.x >= A_Const.WORLD_WIDTH - 200) {
-
-                for (int i = 0; i < gameObjects.size(); i++) {
-
-                    if (gameObjects.get(i).type() != A_Const.TYPE_AVATAR) {
-                        gameObjects.get(i).isLiving = false;
-                    }
-                }
-
-                try {
-                    Thread.sleep(1000);
-                    lvl++;
-                    if (lvl > 3) lvl = 1;
-
-                    avatar.x = 30;
-                    avatar.y = A_Const.WORLD_HEIGHT - (70 + 25);
-
-                    System.out.println(lvl);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
             this.getPhysicsSystem().applyGravity();
 
             // process User Input
@@ -125,7 +108,7 @@ abstract class A_World {
             }
 
             if (userInput.keyMap.get('r')) {
-                avatar.x = 30;
+                avatar.x = 40;
                 avatar.y = A_Const.WORLD_HEIGHT - 70;
             }
 
@@ -140,7 +123,7 @@ abstract class A_World {
             if (avatar.y >= A_Const.WORLD_HEIGHT) textObjects.add(gameOverText);
             else removeText(gameOverText);
 
-            this.getPhysicsSystem().getCollisions(avatar);
+            //this.getPhysicsSystem().getCollisions(avatar);
 
             int gameSize = gameObjects.size();
 

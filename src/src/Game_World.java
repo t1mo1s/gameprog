@@ -142,7 +142,6 @@ class Game_World extends A_World {
         platformSTART = 25 + placeQuadPlatform(platformEND, 65);
 
         placeGround(platformSTART, A_Const.WORLD_WIDTH - 400);
-        placeGround(50,50);
 
         goal(50);
     }

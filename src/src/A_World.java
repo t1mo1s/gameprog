@@ -53,8 +53,6 @@ abstract class A_World {
 
 
         while (!gameOver) {
-
-            System.out.println(avatar.isJumping);
             // Check LVLs
             switch (lvl) {
                 case 1 -> {

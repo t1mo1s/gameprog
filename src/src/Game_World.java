@@ -7,7 +7,7 @@ class Game_World extends A_World {
     private final int smallPlatform = 75, longPlatform = 125;
 
     private Game_LevelDisplay levelDisplay;
-    private Game_Over game_over;
+    private Game_Timer timerText;
 
 
     //TODO:: ADD LVL TEXT
@@ -24,8 +24,17 @@ class Game_World extends A_World {
 
         gameObjects.add(avatar);
 
+        createText();
+    }
+
+    private void createText() {
+
         levelDisplay = new Game_LevelDisplay(20, 30);
         textObjects.add(levelDisplay);
+        /*
+        timerText = new Game_Timer(200, 30);
+        textObjects.add(timerText);
+         */
     }
 
     /**
@@ -155,24 +164,24 @@ class Game_World extends A_World {
         gameObjects.add(new Game_Goal((int) (spawnGround + y)));
     }
 
-    protected void processUserInput(A_UserInput userInput, double diffSeconds) {
-        //Player kann sich nicht mehr bewegen wenn man in einem abgrund springt
-        //anstatt das player direkt wieder ins spawn TPed wird, so kann der Player im GameOver screen entscheiden
-        //ob der weiter spielt oder Rage-Quited
-        if (avatar.y < A_Const.WORLD_HEIGHT + 50) {
-            if (userInput.keyMap.get('a') && avatar.x >= 0) {
-                avatar.moveLeft(diffSeconds);
+    protected void processUserInput(A_UserInput userInput) {//, double diffSeconds) {
+        double diffSeconds = 0.015;
+
+
+        if (!gamePaused && !gameOver) {
+            if (avatar.y < A_Const.WORLD_HEIGHT + 50) {
+                if (userInput.keyMap.get('a') && avatar.x >= 0) {
+                    avatar.moveLeft(diffSeconds);
+                }
+                if (userInput.keyMap.get('d') && avatar.x <= A_Const.WORLD_WIDTH) {
+                    avatar.moveRight(diffSeconds);
+                }
+                if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
+                    avatar.jump(diffSeconds);
+                }
+            } else {
+                // gameOver = true;
             }
-            if (userInput.keyMap.get('d') && avatar.x <= A_Const.WORLD_WIDTH) {
-                avatar.moveRight(diffSeconds);
-            }
-            if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
-                avatar.jump(diffSeconds);
-            }
-        } else {
-            game_over = new Game_Over(A_Const.WORLD_WIDTH / 2, A_Const.WORLD_HEIGHT / 2);
-            textObjects.add(game_over);
-            gameOver = true;
         }
     }
 }

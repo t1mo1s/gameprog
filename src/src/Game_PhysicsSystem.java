@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 
 class Game_PhysicsSystem extends A_PhysicsSystem {
 
@@ -48,5 +48,18 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
         }
     }
     return result;
+  }
+
+  //apply gravity to specific objects
+  public void applyGravity(){
+    ArrayList<A_GameObject> objects = world.gameObjects;
+    for (A_GameObject obj : objects) {
+      switch (obj.type()){
+        case A_Const.TYPE_AVATAR -> {
+          obj.playerSpeedY += A_Const.GRAVITY;
+          obj.y += obj.playerSpeedY;
+        }
+      }
+    }
   }
 }

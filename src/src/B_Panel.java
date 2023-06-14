@@ -34,6 +34,9 @@ class B_Panel extends JPanel implements A_GraphicSystem {
         try {
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/DePixelKlein.ttf"));
             GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(customFont);
+
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/Retro Gaming.ttf"));
+            GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(customFont);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
@@ -72,20 +75,27 @@ class B_Panel extends JPanel implements A_GraphicSystem {
     }
 
     public void draw(A_TextObject text) {
-        Font font = new Font("DePixelKlein", Font.PLAIN, text.fontSize);
+        Font font = new Font("Retro Gaming", Font.PLAIN, text.fontSize);
 
         graphics.setFont(font);
         //strokeSettings
-        drawStroke(text.strokeColor, text.toString(), text.x, text.y);
+        drawStroke(text.strokeColor, text.toString(), text.x, text.y, text.fontSize);
 
         //Text
         graphics.setColor(text.textColor);
         graphics.drawString(text.toString(), (int) text.x, (int) text.y);
     }
 
-    private void drawStroke(Color strokeColor, String txt, int x, int y) {
+    private void drawStroke(Color strokeColor, String txt, int x, int y, int fontsize) {
         graphics.setColor(strokeColor);
-        int[] positions = {-2, 0, 2};
+        int pos;
+        if (fontsize >= 100) {
+            pos = 8;
+        } else {
+            pos = fontsize / 10;
+        }
+
+        int[] positions = {-pos, 0, pos};
 
         for (int offsetX : positions) {
             for (int offsetY : positions) {

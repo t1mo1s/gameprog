@@ -1,4 +1,3 @@
-import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 final class A_UserInput {
@@ -6,7 +5,7 @@ final class A_UserInput {
     int mousePressedX, mousePressedY, mouseMovedX, mouseMovedY, mouseButton;
     char keyPressed;
 
-    HashMap<Character, Boolean> keyMap = new HashMap<Character, Boolean>();
+    HashMap<Character, Boolean> keyMap = new HashMap<>();
 
     // if Mouse was clicked, Key was pressed or Mouse is still hold down
     boolean isMouseEvent, isKeyEvent, isMousePressed;
@@ -18,10 +17,12 @@ final class A_UserInput {
         keyMap.put('d', false);
         keyMap.put(' ', false);
         keyMap.put('w', false);
-
         //only for position testing//
         keyMap.put('p', false);
-
+        //open Menu
+        keyMap.put('m', false);
+        //restart game
+        keyMap.put('r', false);
         this.clear();
     }
 

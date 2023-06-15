@@ -5,6 +5,7 @@ abstract class A_PhysicsSystem {
     world = w;
   }
 
-  protected abstract A_GameObjectList getCollisions(A_GameObject object);
+    protected abstract A_GameObjectList getCollisions(A_GameObject object);
+    public abstract void applyGravity();
 
 }

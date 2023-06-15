@@ -1,13 +1,9 @@
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 class Game_World extends A_World {
     final double spawnGround = 70;
     private final double ground = A_Const.WORLD_HEIGHT - spawnGround;
     private final int smallPlatform = 75, longPlatform = 125;
-
-    private Game_LevelDisplay levelDisplay;
-    private Game_Timer timerText;
 
 
     //TODO:: ADD LVL TEXT
@@ -25,16 +21,42 @@ class Game_World extends A_World {
         gameObjects.add(avatar);
 
         createText();
+
+        //if (gameStart) createTextAtStart();
     }
 
     private void createText() {
 
-        levelDisplay = new Game_LevelDisplay(20, 30);
+        Game_LevelDisplay levelDisplay = new Game_LevelDisplay(20, 30);
         textObjects.add(levelDisplay);
         /*
         timerText = new Game_Timer(200, 30);
         textObjects.add(timerText);
          */
+    }
+
+    private void createTextAtStart() {
+        final Game_Title title = new Game_Title(450, A_Const.WORLD_HEIGHT / 2 - 70);
+        final Game_InfoText infoText = new Game_InfoText(10, A_Const.WORLD_HEIGHT / 2);
+
+        A_UserInput userInput = getInputSystem().getUserInput();
+
+        textObjects.add(title);
+        textObjects.add(infoText);
+
+
+        try {
+            Thread.sleep(1000);
+
+        } catch (Exception ignore) {
+
+        }
+        textObjects.remove(title);
+        textObjects.remove(infoText);
+
+        //}
+
+        gameStart = false;
     }
 
     /**
@@ -178,8 +200,6 @@ class Game_World extends A_World {
                 if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
                     avatar.jump(diffSeconds);
                 }
-            } else {
-                // gameOver = true;
             }
         }
     }

@@ -30,9 +30,10 @@ abstract class A_World {
     A_GameObject avatar;
     ArrayList<A_TextObject> textObjects = new ArrayList<>();
 
-    private Game_Over gameOverText = new Game_Over(450, A_Const.WORLD_HEIGHT / 2 - 90);
-    private Game_Title gameMenuTitle = new Game_Title(450, A_Const.WORLD_HEIGHT / 2 - 70);
-    private Game_InfoText infoText = new Game_InfoText(10, A_Const.WORLD_HEIGHT / 2);
+    private final Game_Over gameOverText = new Game_Over(450, A_Const.WORLD_HEIGHT / 2 - 90);
+    private final Game_Title gameMenuTitle = new Game_Title(450, A_Const.WORLD_HEIGHT / 2 - 70);
+    private final Game_InfoText infoText = new Game_InfoText(10, A_Const.WORLD_HEIGHT / 2);
+    private final Game_GameOver_InfoText gameOverInfoText = new Game_GameOver_InfoText(600, A_Const.WORLD_HEIGHT / 2);
 
     A_World() {
         physicsSystem = new Game_PhysicsSystem(this);
@@ -120,8 +121,14 @@ abstract class A_World {
             }*/
 
 
-            if (avatar.y >= A_Const.WORLD_HEIGHT) textObjects.add(gameOverText);
-            else removeText(gameOverText);
+            if (avatar.y >= A_Const.WORLD_HEIGHT){
+                textObjects.add(gameOverText);
+                textObjects.add(gameOverInfoText);
+            }
+            else{
+                removeText(gameOverInfoText);
+                removeText(gameOverText);
+            }
 
             //this.getPhysicsSystem().getCollisions(avatar);
 

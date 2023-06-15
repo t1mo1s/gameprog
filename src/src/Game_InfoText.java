@@ -10,5 +10,4 @@ class Game_InfoText extends A_TextObject {
     public String toString() {
         return "A/D for Movement | W/Space to Jump | R to Restart | M to Open/Close the Menu ";
     }
-
 }

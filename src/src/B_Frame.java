@@ -12,7 +12,7 @@ class B_Frame extends JFrame implements A_Frame {
 
         this.setTitle("DaringDash");
 
-        ImageIcon icon = new ImageIcon("src/img/LOGO.png");
+        ImageIcon icon = new ImageIcon("src/assets/img/LOGO.png");
         this.setIconImage(icon.getImage());
 
         this.setResizable(false);
@@ -39,5 +39,10 @@ class B_Frame extends JFrame implements A_Frame {
 
     public A_InputSystem getInputSystem() {
         return panel.getInputSystem();
+    }
+
+    //geht net
+    public void closeWindow() {
+        dispose();
     }
 }

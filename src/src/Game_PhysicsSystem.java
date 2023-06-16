@@ -40,43 +40,43 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                     (avY2 >= y1 && avY2 <= y2) && (avX2 <= x2 && avX2 >= x1)  ){
                 result.add(obj2);
 
-                if (avX2 >= x1 && avX1 <= x2 && avY2 >= y1 && avY1 <= y2) {
-                    // check avatar with object
-                    collisionOccurred = true;
 
-                    double overlapX = Math.min(avX2 - x1, x2 - avX1);
-                    double overlapY = Math.min(avY2 - y1, y2 - avY1);
+                if (obj2.type() == A_Const.TYPE_GROUND || obj2.type() == A_Const.TYPE_MOB) {
+                    if (avX2 >= x1 && avX1 <= x2 && avY2 >= y1 && avY1 <= y2) {
+                        // check avatar with object
+                        collisionOccurred = true;
 
-                    if (overlapX < overlapY) {
-                        // check an der horzintal axis
-                        if (avX2 - x1 < x2 - avX1) {
-                            // check collide left
-                            object.x = x1 - object.width;
+                        double overlapX = Math.min(avX2 - x1, x2 - avX1);
+                        double overlapY = Math.min(avY2 - y1, y2 - avY1);
+
+                        if (overlapX < overlapY) {
+                            // check an der horzintal axis
+                            if (avX2 - x1 < x2 - avX1) {
+                                // check collide left
+                                object.x = x1 - object.width;
+                            } else {
+                                // check collide right
+                                object.x = x2;
+                            }
+
+                            object.playerSpeedX = 0;
                         } else {
-                            // check collide right
-                            object.x = x2;
-                        }
-
-                        object.playerSpeedX = 0;
-                    } else {
-                        // check an der vertical axis
-                        if (avY2 - y1 < y2 - avY1) {
-                            // check collide top
-                            object.y = y1 - object.height;
-                            object.playerSpeedY = 0;
-                            object.isJumping = false;
-                            object.isOnGround = true;
-                        } else {
-                            // check collide button
-                            object.y = y2;
-                            object.playerSpeedY = 0;
+                            // check an der vertical axis
+                            if (avY2 - y1 < y2 - avY1) {
+                                // check collide top
+                                object.y = y1 - object.height;
+                                object.playerSpeedY = 0;
+                                object.isJumping = false;
+                                object.isOnGround = true;
+                            } else {
+                                // check collide button
+                                object.y = y2;
+                                object.playerSpeedY = 0;
+                            }
                         }
                     }
-                }
-
-                if (collisionOccurred) {
-                    result.add(obj2);
                 } else if (obj2.type() == A_Const.TYPE_GOAL) {
+                    System.out.println("Goal reached");
                     //decide what happens if avatar touches goal
                     for (int h = 0; h < world.gameObjects.size(); h++) {
 
@@ -89,14 +89,19 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                         world.setLvl(world.getLvl() + 1);
                         if (world.getLvl() > 3) world.setLvl(1);
 
-                    object.x = 60;
-                    object.y = A_Const.WORLD_HEIGHT - (70 + 25);
-                    world.loadMap();
-                    System.out.println(world.getLvl());
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                        object.x = 60;
+                        object.y = A_Const.WORLD_HEIGHT - (70 + 25);
+                        world.loadMap();
+                        System.out.println(world.getLvl());
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-          }
+
+                if (collisionOccurred) {
+                    result.add(obj2);
+                }
+
         }
     }
     return result;

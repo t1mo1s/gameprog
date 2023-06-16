@@ -22,8 +22,6 @@ abstract class A_World {
     // if game is over
     protected boolean gameOver = false;
     protected boolean gamePaused = false;
-    protected boolean gameStart = false;
-
 
     // all objects in the game, including the Avatar
     A_GameObjectList gameObjects = new A_GameObjectList();
@@ -34,11 +32,11 @@ abstract class A_World {
     private final Game_GameOver_InfoText gameOverInfoText = new Game_GameOver_InfoText(600, A_Const.WORLD_HEIGHT / 2);
     private final Game_Title gameMenuTitle = new Game_Title(450, A_Const.WORLD_HEIGHT / 2 - 70);
     private final Game_InfoText infoText = new Game_InfoText(10, A_Const.WORLD_HEIGHT / 2);
+    long seconds, milliseconds, storeSeconds = seconds, storeMilliseconds = milliseconds;
 
     A_World() {
         physicsSystem = new Game_PhysicsSystem(this);
     }
-
 
     public int getLvl() {
         return lvl;
@@ -51,30 +49,10 @@ abstract class A_World {
     // the main GAME LOOP
     final void run() {
         long lastTick = System.currentTimeMillis();
+        long startTime = lastTick;
 
 
         while (true) {
-            // Check LVLs
-            /*
-            switch (lvl) {
-                case 1 -> {
-                    map1();
-                }
-                case 2 -> {
-                    map2();
-                }
-                case 3 -> {
-                    map3();
-                }
-                default -> {
-                    lvl = 1;
-                    map1();
-                }
-            }
-
-             */
-
-
             // calculate elapsed time
             long currentTick = System.currentTimeMillis();
             long millisDiff = currentTick - lastTick;
@@ -98,12 +76,11 @@ abstract class A_World {
             A_UserInput userInput = inputSystem.getUserInput();
             processUserInput(userInput); //, millisDiff / 1000.0);
 
-            //TODO: Remove Player Pos Button!
-
-
             if (userInput.keyMap.get('m') && !gamePaused) {
                 textObjects.add(gameMenuTitle);
                 textObjects.add(infoText);
+                //TODO: Pause Timer
+
                 gamePaused = true;
             } else if (userInput.keyMap.get('m') && gamePaused) {
                 removeText(gameMenuTitle);
@@ -114,43 +91,44 @@ abstract class A_World {
             if (userInput.keyMap.get('r')) {
                 avatar.x = 40;
                 avatar.y = A_Const.WORLD_HEIGHT - 70;
+
+                gameOver = false;
+                removeText(gameOverInfoText);
+                removeText(gameOverText);
+
+                gamePaused = false;
+                removeText(gameMenuTitle);
+                removeText(infoText);
+
+                startTime = System.currentTimeMillis();
             }
 
             userInput.clear();
 
-            // no actions if game is over
-           /* if (gameOver) {
-                continue;
-            }*/
-
-
-            if (avatar.y >= A_Const.WORLD_HEIGHT) {
+            if (avatar.y >= A_Const.WORLD_HEIGHT) gameOver = true;
+            if (gameOver) {
                 textObjects.add(gameOverText);
                 textObjects.add(gameOverInfoText);
-                gameOver = true;
             } else {
-                gameOver = false;
                 removeText(gameOverInfoText);
                 removeText(gameOverText);
             }
-
-            //this.getPhysicsSystem().getCollisions(avatar);
 
             int gameSize = gameObjects.size();
 
             //get collisions if goal -> load new map
             A_GameObjectList collisions = physicsSystem.getCollisions(avatar);
-            for(int i = 0; i < collisions.size(); i++){
-                if(collisions.get(i).type() == A_Const.TYPE_GOAL){
+            for (A_GameObject collision : collisions) {
+                if (collision.type() == A_Const.TYPE_GOAL) {
                     loadMap();
                     break;
                 }
             }
 
             //let mobs walk
-            for(int i = 0; i < gameSize; i++){
+            for (int i = 0; i < gameSize; i++) {
                 A_GameObject obj = gameObjects.get(i);
-                if(obj.type() == A_Const.TYPE_MOB){
+                if (obj.type() == A_Const.TYPE_MOB) {
                     Game_Mob mob = (Game_Mob) obj;
                     mob.move(millisDiff / 1000.0);
                 }
@@ -166,7 +144,6 @@ abstract class A_World {
                 }
             }
 
-
             // adjust displayed pane of the world
             this.adjustWorldPart();
 
@@ -177,27 +154,24 @@ abstract class A_World {
             }
 
             // draw all TextObjects
-            for (int i = 0; i < textObjects.size(); i++) {
+            for (A_TextObject textObject : textObjects) {
                 //Update Level Text
                 levelTxt(lvl);
+                getTimer(startTime);
+                if (gameOver) getHighScore();
 
-                //getTimer(millisDiff);
-                graphicSystem.draw(textObjects.get(i));
+                graphicSystem.draw(textObject);
             }
 
             // redraw everything
             graphicSystem.redraw();
-
-
-            //END OF THE WHILE(!GAMEOVER) LOOP
         }
-
     }
 
     /******************************** END OF GAME LOOP **********************************/
 
     // adjust the displayed pane of the world according to Avatar and Bounds
-    private final void adjustWorldPart() {
+    private void adjustWorldPart() {
         final int RIGHT_END = A_Const.WORLD_WIDTH - A_Const.WORLDPART_WIDTH;
 
         // if avatar is too much right in display ...
@@ -223,15 +197,30 @@ abstract class A_World {
         levelDisplay.setLVL(lvl);
     }
 
-/* DOESN'T WORK AS INTENDED xD
-    private void getTimer(long elapsedTime) {
-        // Calculate seconds and milliseconds
-        long seconds = elapsedTime / 1000;
-        long milliseconds = elapsedTime % 1000;
+    private void getTimer(long startTime) {
         Game_Timer timer = (Game_Timer) textObjects.get(1);
-        timer.setTimer(seconds, milliseconds);
+
+        long currentTime = System.currentTimeMillis();
+        long elapsedTime = (currentTime - startTime);
+        // Calculate seconds and milliseconds
+        seconds = elapsedTime / 1000;
+        milliseconds = elapsedTime % 1000;
+
+        if (!gameOver || !gamePaused) {
+            timer.setTimer(seconds, milliseconds);
+        }
     }
- */
+
+    private void getHighScore() {
+        Game_HighScore hs = (Game_HighScore) textObjects.get(2);
+
+        if (seconds >= storeSeconds)
+            storeMilliseconds = milliseconds;
+
+
+        storeSeconds = Math.max(storeSeconds, seconds);
+        hs.setHS(storeSeconds, storeMilliseconds);
+    }
 
     private void removeText(A_TextObject txtObj) {
         textObjects.remove(txtObj);
@@ -239,10 +228,6 @@ abstract class A_World {
 
     protected void setGraphicSystem(A_GraphicSystem p) {
         graphicSystem = p;
-    }
-
-    protected A_InputSystem getInputSystem() {
-        return inputSystem;
     }
 
     protected void setInputSystem(A_InputSystem p) {
@@ -253,7 +238,7 @@ abstract class A_World {
         return physicsSystem;
     }
 
-    protected void loadMap(){
+    protected void loadMap() {
         switch (lvl) {
             case 1 -> map1();
             case 2 -> map2();

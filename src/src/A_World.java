@@ -4,7 +4,7 @@ abstract class A_World {
     private A_GraphicSystem graphicSystem;
     private final A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
-    private int lvl = 3;
+    private int lvl = 1;
 
     abstract void map1();
 

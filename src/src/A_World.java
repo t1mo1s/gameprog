@@ -22,7 +22,7 @@ abstract class A_World {
     // if game is over
     protected boolean gameOver = false;
     protected boolean gamePaused = false;
-    protected boolean QUIT = false;
+    protected boolean gameStart = false;
 
 
     // all objects in the game, including the Avatar
@@ -30,9 +30,10 @@ abstract class A_World {
     A_GameObject avatar;
     ArrayList<A_TextObject> textObjects = new ArrayList<>();
 
-    private Game_Over gameOverText = new Game_Over(450, A_Const.WORLD_HEIGHT / 2 - 90);
-    private Game_Title gameMenuTitle = new Game_Title(450, A_Const.WORLD_HEIGHT / 2 - 70);
-    private Game_InfoText infoText = new Game_InfoText(10, A_Const.WORLD_HEIGHT / 2);
+    private final Game_Over gameOverText = new Game_Over(450, A_Const.WORLD_HEIGHT / 2 - 90);
+    private final Game_GameOver_InfoText gameOverInfoText = new Game_GameOver_InfoText(600, A_Const.WORLD_HEIGHT / 2);
+    private final Game_Title gameMenuTitle = new Game_Title(450, A_Const.WORLD_HEIGHT / 2 - 70);
+    private final Game_InfoText infoText = new Game_InfoText(10, A_Const.WORLD_HEIGHT / 2);
 
     A_World() {
         physicsSystem = new Game_PhysicsSystem(this);
@@ -52,7 +53,7 @@ abstract class A_World {
         long lastTick = System.currentTimeMillis();
 
 
-        while (!gameOver) {
+        while (true) {
             // Check LVLs
             /*
             switch (lvl) {
@@ -123,8 +124,15 @@ abstract class A_World {
             }*/
 
 
-            if (avatar.y >= A_Const.WORLD_HEIGHT) textObjects.add(gameOverText);
-            else removeText(gameOverText);
+            if (avatar.y >= A_Const.WORLD_HEIGHT) {
+                textObjects.add(gameOverText);
+                textObjects.add(gameOverInfoText);
+                gameOver = true;
+            } else {
+                gameOver = false;
+                removeText(gameOverInfoText);
+                removeText(gameOverText);
+            }
 
             //this.getPhysicsSystem().getCollisions(avatar);
 
@@ -158,6 +166,7 @@ abstract class A_World {
                 }
             }
 
+
             // adjust displayed pane of the world
             this.adjustWorldPart();
 
@@ -179,12 +188,9 @@ abstract class A_World {
             // redraw everything
             graphicSystem.redraw();
 
+
             //END OF THE WHILE(!GAMEOVER) LOOP
         }
-
-        avatar.x = 30;
-        avatar.y = A_Const.WORLD_HEIGHT - 70;
-
 
     }
 
@@ -233,6 +239,10 @@ abstract class A_World {
 
     protected void setGraphicSystem(A_GraphicSystem p) {
         graphicSystem = p;
+    }
+
+    protected A_InputSystem getInputSystem() {
+        return inputSystem;
     }
 
     protected void setInputSystem(A_InputSystem p) {

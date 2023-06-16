@@ -7,7 +7,7 @@ public class Game_Mob extends A_GameObject {
     boolean movingLeft = true;
 
     public Game_Mob(double x, double y, double wd) {
-        super(x, y - 20, 0, 20, 15, 20, new Color(164, 109, 12));
+        super(x, y - 20, 0, 40, 15, 20, new Color(164, 109, 12));
         walkingDist = wd;
         startPosX = x;
     }

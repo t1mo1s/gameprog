@@ -5,6 +5,7 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
   Game_PhysicsSystem(A_World w) {
     super(w);
   }
+
   public A_GameObjectList getCollisions(A_GameObject object) {
     A_GameObjectList result = new A_GameObjectList();
 
@@ -59,11 +60,12 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
 
                     object.x = 60;
                     object.y = A_Const.WORLD_HEIGHT - (70 + 25);
-
+                    world.loadMap();
                     System.out.println(world.getLvl());
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+                //world.loadMap();
           }
         }
     }

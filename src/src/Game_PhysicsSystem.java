@@ -40,7 +40,6 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                     (avY2 >= y1 && avY2 <= y2) && (avX2 <= x2 && avX2 >= x1)  ){
                 result.add(obj2);
 
-
                 if (obj2.type() == A_Const.TYPE_GROUND || obj2.type() == A_Const.TYPE_MOB) {
                     if (avX2 >= x1 && avX1 <= x2 && avY2 >= y1 && avY1 <= y2) {
                         // check avatar with object
@@ -75,7 +74,15 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                             }
                         }
                     }
-                } else if (obj2.type() == A_Const.TYPE_GOAL) {
+
+                    if( obj2.type() == A_Const.TYPE_MOB){
+                        //decide what happens if avatar touches mob
+
+                        //GAME OVER
+                        System.out.println("GAME OVER");
+                    }
+                }
+                else if (obj2.type() == A_Const.TYPE_GOAL) {
                     System.out.println("Goal reached");
                     //decide what happens if avatar touches goal
                     for (int h = 0; h < world.gameObjects.size(); h++) {

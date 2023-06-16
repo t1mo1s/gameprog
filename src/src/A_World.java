@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 abstract class A_World {
     private A_GraphicSystem graphicSystem;
-    private A_PhysicsSystem physicsSystem;
+    private final A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
-    private A_UserInput userInput;
+    private int lvl = 1;
 
     abstract void map1();
 
@@ -12,17 +12,17 @@ abstract class A_World {
 
     abstract void map3();
 
-    public int lvl = 1;
-
 
     // top left corner of the displayed pane of the world
-    double worldPartX = 0;
+    protected double worldPartX = 0;
 
     // defines maximum frame rate
     private static final int FRAME_MINIMUM_MILLIS = 10;
 
     // if game is over
-    boolean gameOver = false;
+    protected boolean gameOver = false;
+    protected boolean gamePaused = false;
+    protected boolean QUIT = false;
 
 
     // all objects in the game, including the Avatar
@@ -30,37 +30,29 @@ abstract class A_World {
     A_GameObject avatar;
     ArrayList<A_TextObject> textObjects = new ArrayList<>();
 
+    private Game_Over gameOverText = new Game_Over(450, A_Const.WORLD_HEIGHT / 2 - 90);
+    private Game_Title gameMenuTitle = new Game_Title(450, A_Const.WORLD_HEIGHT / 2 - 70);
+    private Game_InfoText infoText = new Game_InfoText(10, A_Const.WORLD_HEIGHT / 2);
 
     A_World() {
         physicsSystem = new Game_PhysicsSystem(this);
     }
 
 
+    public int getLvl() {
+        return lvl;
+    }
+
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
+    }
+
     // the main GAME LOOP
     final void run() {
-
         long lastTick = System.currentTimeMillis();
 
-        while (true) {
 
-            // calculate elapsed time
-            long currentTick = System.currentTimeMillis();
-            long millisDiff = currentTick - lastTick;
-
-            // don�t run faster then MINIMUM_DIFF_SECONDS per frame
-            //
-            if (millisDiff < FRAME_MINIMUM_MILLIS) {
-                try {
-                    Thread.sleep(FRAME_MINIMUM_MILLIS - millisDiff);
-                } catch (Exception e) {
-                    e.getStackTrace();
-                }
-                currentTick = System.currentTimeMillis();
-                millisDiff = currentTick - lastTick;
-            }
-
-            lastTick = currentTick;
-
+        while (!gameOver) {
             // Check LVLs
             switch (lvl) {
                 case 1 -> {
@@ -76,73 +68,83 @@ abstract class A_World {
                     lvl = 1;
                     map1();
                 }
-                //falls mehr maps kommen
-
             }
 
-            //System.out.println("level: " + lvl);
 
-            //CheckGoals
-            if (avatar.x >= A_Const.WORLD_WIDTH - 200) {
+            // calculate elapsed time
+            long currentTick = System.currentTimeMillis();
+            long millisDiff = currentTick - lastTick;
 
-                for (int i = 0; i < gameObjects.size(); i++) {
-
-                    if (gameObjects.get(i).type() != A_Const.TYPE_AVATAR) {
-                        gameObjects.get(i).isLiving = false;
-                    }
-                }
-
+            if (millisDiff < FRAME_MINIMUM_MILLIS) {
                 try {
-                    Thread.sleep(1000);
-                    lvl++;
-                    if (lvl > 3) lvl = 1;
-
-                    avatar.x = 30;
-                    avatar.y = A_Const.WORLD_HEIGHT - (70 + 25);
-
-                    System.out.println(lvl);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    Thread.sleep(FRAME_MINIMUM_MILLIS - millisDiff);
+                } catch (Exception e) {
+                    e.getStackTrace();
                 }
+                currentTick = System.currentTimeMillis();
+                millisDiff = currentTick - lastTick;
             }
 
+            lastTick = currentTick;
+
+
+            this.getPhysicsSystem().applyGravity();
+
+            // process User Input
+            A_UserInput userInput = inputSystem.getUserInput();
+            processUserInput(userInput); //, millisDiff / 1000.0);
+
+            //TODO: Remove Player Pos Button!
+
+
+            if (userInput.keyMap.get('m') && !gamePaused) {
+                textObjects.add(gameMenuTitle);
+                textObjects.add(infoText);
+                gamePaused = true;
+            } else if (userInput.keyMap.get('m') && gamePaused) {
+                removeText(gameMenuTitle);
+                removeText(infoText);
+                gamePaused = false;
+            }
+
+            if (userInput.keyMap.get('r')) {
+                avatar.x = 40;
+                avatar.y = A_Const.WORLD_HEIGHT - 70;
+            }
+
+            userInput.clear();
+
+            // no actions if game is over
+           /* if (gameOver) {
+                continue;
+            }*/
+
+
+            if (avatar.y >= A_Const.WORLD_HEIGHT) textObjects.add(gameOverText);
+            else removeText(gameOverText);
 
             //this.getPhysicsSystem().getCollisions(avatar);
 
-            avatar.playerSpeedY += A_Const.GRAVITY ;
-            avatar.y += avatar.playerSpeedY;
-            // process User Input
-            //TODO: REMOVE FROM END GAME!!! //
-            userInput = inputSystem.getUserInput();
-            processUserInput(userInput, millisDiff / 1000.0);
-            if (userInput.keyMap.get('p'))
-                System.out.println("PlayPOS   X: " + (int) avatar.x + " | Y: " + (int) avatar.y);
-            userInput.clear();
-            //avatar.isLiving = false;
-            // no actions if game is over
-            this.getPhysicsSystem().getCollisions(avatar);
-            if (gameOver) {
-                continue;
-            }
-
-
-
             int gameSize = gameObjects.size();
 
-            int num=0;
-            while(num<gameSize)
-            {
-                if(!gameObjects.get(num).isLiving)
-                { gameObjects.remove(num);
-                    gameSize--;
-                }
-                else
-                { num++;
+            //let mobs walk
+            for(int i = 0; i < gameSize; i++){
+                A_GameObject obj = gameObjects.get(i);
+                if(obj.type() == A_Const.TYPE_MOB && obj.x <= avatar.x + A_Const.SCROLL_BOUNDS){
+                    Game_Mob mob = (Game_Mob) obj;
+                    mob.move(millisDiff / 1000.0);
                 }
             }
 
-            /*****************************************************/
-
+            int num = 0;
+            while (num < gameSize) {
+                if (!gameObjects.get(num).isLiving) {
+                    gameObjects.remove(num);
+                    gameSize--;
+                } else {
+                    num++;
+                }
+            }
 
             // adjust displayed pane of the world
             this.adjustWorldPart();
@@ -153,22 +155,30 @@ abstract class A_World {
                 graphicSystem.draw(gameObjects.get(i));
             }
 
-
             // draw all TextObjects
             for (int i = 0; i < textObjects.size(); i++) {
+                //Update Level Text
+                levelTxt(lvl);
+
+                //getTimer(millisDiff);
                 graphicSystem.draw(textObjects.get(i));
             }
 
             // redraw everything
             graphicSystem.redraw();
+
+            //END OF THE WHILE(!GAMEOVER) LOOP
         }
+
+        avatar.x = 30;
+        avatar.y = A_Const.WORLD_HEIGHT - 70;
 
 
     }
 
+    /******************************** END OF GAME LOOP **********************************/
 
     // adjust the displayed pane of the world according to Avatar and Bounds
-    //
     private final void adjustWorldPart() {
         final int RIGHT_END = A_Const.WORLD_WIDTH - A_Const.WORLDPART_WIDTH;
 
@@ -182,17 +192,32 @@ abstract class A_World {
         }
 
         // same left
-
         else if (avatar.x < worldPartX + A_Const.SCROLL_BOUNDS) {
             worldPartX = avatar.x - A_Const.SCROLL_BOUNDS;
             if (worldPartX <= 0) {
                 worldPartX = 0;
             }
         }
-
-
     }
 
+    private void levelTxt(int lvl) {
+        Game_LevelDisplay levelDisplay = (Game_LevelDisplay) textObjects.get(0);
+        levelDisplay.setLVL(lvl);
+    }
+
+/* DOESN'T WORK AS INTENDED xD
+    private void getTimer(long elapsedTime) {
+        // Calculate seconds and milliseconds
+        long seconds = elapsedTime / 1000;
+        long milliseconds = elapsedTime % 1000;
+        Game_Timer timer = (Game_Timer) textObjects.get(1);
+        timer.setTimer(seconds, milliseconds);
+    }
+ */
+
+    private void removeText(A_TextObject txtObj) {
+        textObjects.remove(txtObj);
+    }
 
     protected void setGraphicSystem(A_GraphicSystem p) {
         graphicSystem = p;
@@ -206,8 +231,7 @@ abstract class A_World {
         return physicsSystem;
     }
 
-
     protected abstract void init();
 
-    protected abstract void processUserInput(A_UserInput input, double diffSec);
+    protected abstract void processUserInput(A_UserInput input); //, double diffSec);
 }

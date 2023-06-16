@@ -19,8 +19,8 @@ class Game_World extends A_World {
 
         // add the Avatar
         avatar = new Game_Avatar(30, ground - 25);
-        // set WorldPart position
-        worldPartX = 1500;
+        // set WorldPart position (top left corner of part which is shown)
+        worldPartX = 0;
 
         gameObjects.add(avatar);
 
@@ -96,11 +96,13 @@ class Game_World extends A_World {
         //TODO: 1 game_mob at x: 1475 walks 100pxl and back!
         spawnMobs(1475, 100);
 
+
         platformEND = placeGround(platformSTART, 650);
         platformSTART = 150 + placeQuadPlatform(platformEND, 65);
         //System.out.println(platformSTART);
         placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
         //TODO:  1 Game_mob at x: 3322, walks 150pxl and back and faster!
+
         spawnMobs(3322, 150);
         goal();
     }

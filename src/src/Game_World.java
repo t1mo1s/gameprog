@@ -89,9 +89,8 @@ class Game_World extends A_World {
         int platformSTART = 100;
         int platformEND;
 
-
         platformEND = placeGround(platformSTART, 400);
-        platformSTART = 175 + placeDoublePlatform(platformEND - 300, 70);
+        platformSTART = 175 + placeDoublePlatform(platformEND - 200, 70);
 
         //TODO: 1 game_mob at x: 1475 walks 100pxl and back!
         spawnMobs(1475, 100);

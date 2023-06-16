@@ -5,6 +5,7 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
     Game_PhysicsSystem(A_World w) {
         super(w);
     }
+
     public A_GameObjectList getCollisions(A_GameObject object) {
         A_GameObjectList result = new A_GameObjectList();
 
@@ -39,29 +40,38 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                     (avY2 >= y1 && avY2 <= y2) && (avX2 <= x2 && avX2 >= x1)  ){
                 result.add(obj2);
 
-                //check if avatar is in ground
-                if ((avY2 >= y1 && avY2 <= y2) && (avX1 < x2 && avX2 > x1)) {
-                    //avatar check the bottom edge of the ground
-                    object.y = y1 - object.height;
-                    object.playerSpeedY = 0;
-                    object.isJumping = false;
-                    object.isOnGround = true;
+                if (avX2 >= x1 && avX1 <= x2 && avY2 >= y1 && avY1 <= y2) {
+                    // check avatar with object
                     collisionOccurred = true;
-                } else if ((avY1 <= y2 && avY1 >= y1) && (avX1 < x2 && avX2 > x1)) {
-                    // avatar check the top edge of the ground
-                    object.y = y2;
-                    object.playerSpeedY = 0;
-                    collisionOccurred = true;
-                } else if ((avX2 > x1 && avX2 <= x1 + 5) && (avY1 < y2 && avY2 > y1)) {
-                    // avatar check the left edge of the ground
-                    object.x = x1 - object.width;
-                    object.playerSpeedX = 0;
-                    collisionOccurred = true;
-                } else if ((avX1 < x2 && avX1 >= x2 - 5) && (avY1 < y2 && avY2 > y1)) {
-                    // avatar check the right edge of the ground
-                    object.x = x2;
-                    object.playerSpeedX = 0;
-                    collisionOccurred = true;
+
+                    double overlapX = Math.min(avX2 - x1, x2 - avX1);
+                    double overlapY = Math.min(avY2 - y1, y2 - avY1);
+
+                    if (overlapX < overlapY) {
+                        // check an der horzintal axis
+                        if (avX2 - x1 < x2 - avX1) {
+                            // check collide left
+                            object.x = x1 - object.width;
+                        } else {
+                            // check collide right
+                            object.x = x2;
+                        }
+
+                        object.playerSpeedX = 0;
+                    } else {
+                        // check an der vertical axis
+                        if (avY2 - y1 < y2 - avY1) {
+                            // check collide top
+                            object.y = y1 - object.height;
+                            object.playerSpeedY = 0;
+                            object.isJumping = false;
+                            object.isOnGround = true;
+                        } else {
+                            // check collide button
+                            object.y = y2;
+                            object.playerSpeedY = 0;
+                        }
+                    }
                 }
 
                 if (collisionOccurred) {
@@ -91,6 +101,7 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
         }
         return result;
     }
+
 
     //apply gravity to specific objects
     public void applyGravity(){

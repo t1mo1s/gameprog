@@ -2,9 +2,11 @@ import java.util.ArrayList;
 
 class Game_PhysicsSystem extends A_PhysicsSystem {
 
+
     Game_PhysicsSystem(A_World w) {
         super(w);
     }
+
 
     public A_GameObjectList getCollisions(A_GameObject object) {
         A_GameObjectList result = new A_GameObjectList();
@@ -21,23 +23,21 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
             //decide what happens if avatar is specific object
 
             //calc edges of ground
-            double x1 =obj2.x;
-            double x2 =obj2.x + obj2.width;;
-            double y1 =obj2.y;
-            double y2 =obj2.y+obj2.height;
+            double x1 = obj2.x;
+            double x2 = obj2.x + obj2.width;
+
+            double y1 = obj2.y;
+            double y2 = obj2.y + obj2.height;
 
             //calc edges of avatar
-            double avX1 = object.x ;
+            double avX1 = object.x;
             double avX2 = object.x + object.width;
             double avY1 = object.y;
             double avY2 = object.y + object.height;
             boolean collisionOccurred = false;
 
             //check if avatar is in ground
-            if (    (avY1 >= y1 && avY1 <= y2) && (avX1 <= x2 && avX1 >= x1) ||
-                    (avY1 >= y1 && avY1 <= y2) && (avX2 <= x2 && avX2 >= x1) ||
-                    (avY2 >= y1 && avY2 <= y2) && (avX1 <= x2 && avX1 >= x1) ||
-                    (avY2 >= y1 && avY2 <= y2) && (avX2 <= x2 && avX2 >= x1)  ){
+            if ((avY1 >= y1 && avY1 <= y2) && (avX1 <= x2 && avX1 >= x1) || (avY1 >= y1 && avY1 <= y2) && (avX2 <= x2 && avX2 >= x1) || (avY2 >= y1 && avY2 <= y2) && (avX1 <= x2 && avX1 >= x1) || (avY2 >= y1 && avY2 <= y2) && (avX2 <= x2 && avX2 >= x1)) {
                 result.add(obj2);
 
                 if (obj2.type() == A_Const.TYPE_GROUND || obj2.type() == A_Const.TYPE_MOB) {
@@ -49,7 +49,7 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                         double overlapY = Math.min(avY2 - y1, y2 - avY1);
 
                         if (overlapX < overlapY) {
-                            // check an der horzintal axis
+                            // check an der horizontal axis
                             if (avX2 - x1 < x2 - avX1) {
                                 // check collide left
                                 object.x = x1 - object.width;
@@ -75,15 +75,16 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                         }
                     }
 
-                    if( obj2.type() == A_Const.TYPE_MOB){
-                        //decide what happens if avatar touches mob
-
+                    if (obj2.type() == A_Const.TYPE_MOB) {
                         //GAME OVER
-                        System.out.println("GAME OVER");
+                        world.gameOver = true;
+                        double posY = world.avatar.y;
+                        for (double j = posY; j >= posY - 60; j -= 0.0001) {
+                            world.avatar.y = j;
+                        }
                     }
-                }
-                else if (obj2.type() == A_Const.TYPE_GOAL) {
-                    System.out.println("Goal reached");
+                } else if (obj2.type() == A_Const.TYPE_GOAL) {
+                    //System.out.println("Goal reached");
                     //decide what happens if avatar touches goal
                     for (int h = 0; h < world.gameObjects.size(); h++) {
 
@@ -99,7 +100,7 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                         object.x = 60;
                         object.y = A_Const.WORLD_HEIGHT - (70 + 25);
                         world.loadMap();
-                        System.out.println(world.getLvl());
+                        //System.out.println(world.getLvl());
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -109,22 +110,20 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                     result.add(obj2);
                 }
 
+            }
         }
+        return result;
     }
-    return result;
-  }
 
 
     //apply gravity to specific objects
-    public void applyGravity(){
+    public void applyGravity() {
         ArrayList<A_GameObject> objects = world.gameObjects;
         for (A_GameObject obj : objects) {
-            switch (obj.type()){
-                case A_Const.TYPE_AVATAR -> {
-                    getCollisions(obj);
-                    obj.playerSpeedY += A_Const.GRAVITY;
-                    obj.y += obj.playerSpeedY;
-                }
+            if (obj.type() == A_Const.TYPE_AVATAR) {
+                getCollisions(obj);
+                obj.playerSpeedY += A_Const.GRAVITY;
+                obj.y += obj.playerSpeedY;
             }
         }
     }

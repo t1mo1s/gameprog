@@ -26,37 +26,13 @@ class Game_World extends A_World {
     }
 
     private void createText() {
-
         Game_LevelDisplay levelDisplay = new Game_LevelDisplay(20, 30);
         textObjects.add(levelDisplay);
-        /*
-        timerText = new Game_Timer(200, 30);
+        Game_Timer timerText = new Game_Timer(200, 30);
         textObjects.add(timerText);
-         */
-    }
 
-    private void createTextAtStart() {
-        final Game_Title title = new Game_Title(450, A_Const.WORLD_HEIGHT / 2 - 70);
-        final Game_InfoText infoText = new Game_InfoText(10, A_Const.WORLD_HEIGHT / 2);
-
-        A_UserInput userInput = getInputSystem().getUserInput();
-
-        textObjects.add(title);
-        textObjects.add(infoText);
-
-
-        try {
-            Thread.sleep(1000);
-
-        } catch (Exception ignore) {
-
-        }
-        textObjects.remove(title);
-        textObjects.remove(infoText);
-
-        //}
-
-        gameStart = false;
+        Game_HighScore hs = new Game_HighScore(1200, 30);
+        textObjects.add(hs);
     }
 
     /**
@@ -101,9 +77,7 @@ class Game_World extends A_World {
 
     private void spawnMobs(int x, double y, int wd) {
         //wd => Walking Distance
-
-        gameObjects.add(new Game_Mob(x,y,wd));
-
+        gameObjects.add(new Game_Mob(x, y, wd));
     }
 
     /*** MAP-Build area ***/
@@ -115,7 +89,6 @@ class Game_World extends A_World {
         platformEND = placeGround(platformSTART, 400);
         platformSTART = 175 + placeDoublePlatform(platformEND, 70);
 
-        //TODO: 1 game_mob at x: 1475 walks 100pxl and back!
         spawnMobs(1475, 100);
 
 
@@ -123,7 +96,6 @@ class Game_World extends A_World {
         platformSTART = 150 + placeQuadPlatform(platformEND, 65);
         //System.out.println(platformSTART);
         placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
-        //TODO:  1 Game_mob at x: 3322, walks 150pxl and back and faster!
 
         spawnMobs(3322, 150);
         goal();
@@ -135,7 +107,6 @@ class Game_World extends A_World {
         platformEND = placeGround(platformSTART, 300);
         platformSTART = 150 + placeQuadPlatform(platformEND, 70);
 
-        //TODO: 1 Game_mob at x = 1790, walks 100pxl
         spawnMobs(1790, 200);
 
         platformEND = placeGround(platformSTART, 700);
@@ -154,16 +125,14 @@ class Game_World extends A_World {
         platformSTART = 150 + placeQuadPlatform(platformEND, 70);
         gameObjects.add(new Game_Platform(platformSTART, setGround(70 + 115), longPlatform * 3));
 
-        //TODO: 1 Game_mob at x = 1790, walks 500pxl
-        //spawnMobs(platformSTART + 50, setGround(70 + 115), 250);
         spawnMobs(platformSTART + 150, setGround(70 + 115), 150);
 
         platformSTART += longPlatform * 3;
 
-        platformEND = placeGround(platformSTART += 150, 700);
+        platformEND = placeGround(platformSTART += 150, 700, -20);
 
-        spawnMobs(platformSTART + 150, 150);
-        spawnMobs(platformEND - 150, 100);
+        spawnMobs(platformSTART + 150, setGround(-20), 150);
+        spawnMobs(platformEND - 150, setGround(-20), 100);
         //spawnMobs(platformSTART+150, 100);
         platformSTART = 25 + placeQuadPlatform(platformEND, 65);
 
@@ -191,7 +160,6 @@ class Game_World extends A_World {
 
     protected void processUserInput(A_UserInput userInput) {//, double diffSeconds) {
         double diffSeconds = 0.015;
-
 
         if (!gamePaused && !gameOver) {
             if (avatar.y < A_Const.WORLD_HEIGHT + 50) {

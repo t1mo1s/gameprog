@@ -54,6 +54,7 @@ abstract class A_World {
 
         while (!gameOver) {
             // Check LVLs
+            /*
             switch (lvl) {
                 case 1 -> {
                     map1();
@@ -69,6 +70,8 @@ abstract class A_World {
                     map1();
                 }
             }
+
+             */
 
 
             // calculate elapsed time
@@ -126,6 +129,24 @@ abstract class A_World {
             //this.getPhysicsSystem().getCollisions(avatar);
 
             int gameSize = gameObjects.size();
+
+            //get collisions if goal -> load new map
+            A_GameObjectList collisions = physicsSystem.getCollisions(avatar);
+            for(int i = 0; i < collisions.size(); i++){
+                if(collisions.get(i).type() == A_Const.TYPE_GOAL){
+                    loadMap();
+                    break;
+                }
+            }
+
+            //let mobs walk
+            for(int i = 0; i < gameSize; i++){
+                A_GameObject obj = gameObjects.get(i);
+                if(obj.type() == A_Const.TYPE_MOB){
+                    Game_Mob mob = (Game_Mob) obj;
+                    mob.move(millisDiff / 1000.0);
+                }
+            }
 
             int num = 0;
             while (num < gameSize) {
@@ -220,6 +241,14 @@ abstract class A_World {
 
     protected A_PhysicsSystem getPhysicsSystem() {
         return physicsSystem;
+    }
+
+    protected void loadMap(){
+        switch (lvl) {
+            case 1 -> map1();
+            case 2 -> map2();
+            case 3 -> map3();
+        }
     }
 
     protected abstract void init();

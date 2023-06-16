@@ -89,18 +89,18 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                         world.setLvl(world.getLvl() + 1);
                         if (world.getLvl() > 3) world.setLvl(1);
 
-                        object.x = 60;
-                        object.y = A_Const.WORLD_HEIGHT - (70 + 25);
-
-                        System.out.println(world.getLvl());
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    object.x = 60;
+                    object.y = A_Const.WORLD_HEIGHT - (70 + 25);
+                    world.loadMap();
+                    System.out.println(world.getLvl());
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
-            }
+          }
         }
-        return result;
     }
+    return result;
+  }
 
 
     //apply gravity to specific objects

@@ -19,10 +19,10 @@ class Game_World extends A_World {
 
         // add the Avatar
         avatar = new Game_Avatar(30, ground - 25);
-        // set WorldPart position
-        worldPartX = 1500;
-
+        // set WorldPart position (top left corner of part which is shown)
+        worldPartX = 0;
         gameObjects.add(avatar);
+        loadMap();
 
         createText();
     }
@@ -79,8 +79,9 @@ class Game_World extends A_World {
 
     private void spawnMobs(int x, double y, int wd) {
         //wd => Walking Distance
-        gameObjects.add(new Game_Mob(x, y));
-        //TODO: walking animation
+
+        gameObjects.add(new Game_Mob(x,y,wd));
+
     }
 
     /*** MAP-Build area ***/
@@ -95,11 +96,13 @@ class Game_World extends A_World {
         //TODO: 1 game_mob at x: 1475 walks 100pxl and back!
         spawnMobs(1475, 100);
 
+
         platformEND = placeGround(platformSTART, 650);
         platformSTART = 150 + placeQuadPlatform(platformEND, 65);
         //System.out.println(platformSTART);
         placeGround(platformSTART, A_Const.WORLD_WIDTH - 300);
         //TODO:  1 Game_mob at x: 3322, walks 150pxl and back and faster!
+
         spawnMobs(3322, 150);
         goal();
     }
@@ -111,7 +114,7 @@ class Game_World extends A_World {
         platformSTART = 150 + placeQuadPlatform(platformEND, 70);
 
         //TODO: 1 Game_mob at x = 1790, walks 100pxl
-        spawnMobs(1790, 100);
+        spawnMobs(1790, 200);
 
         platformEND = placeGround(platformSTART, 700);
         platformSTART = 25 + placeQuadPlatform(platformEND, 65);
@@ -130,14 +133,15 @@ class Game_World extends A_World {
         gameObjects.add(new Game_Platform(platformSTART, setGround(70 + 115), longPlatform * 3));
 
         //TODO: 1 Game_mob at x = 1790, walks 500pxl
-        spawnMobs(platformSTART + 50, setGround(70 + 115), 250);
-        spawnMobs(platformSTART + 300, setGround(70 + 115), -250);
+        //spawnMobs(platformSTART + 50, setGround(70 + 115), 250);
+        spawnMobs(platformSTART + 150, setGround(70 + 115), 150);
 
         platformSTART += longPlatform * 3;
 
         platformEND = placeGround(platformSTART += 150, 700);
 
-        spawnMobs(platformSTART + 150, 500);
+        spawnMobs(platformSTART + 150, 150);
+        spawnMobs(platformEND - 150, 100);
         //spawnMobs(platformSTART+150, 100);
         platformSTART = 25 + placeQuadPlatform(platformEND, 65);
 

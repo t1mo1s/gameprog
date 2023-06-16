@@ -4,7 +4,7 @@ interface A_GraphicSystem {
     void clear();
 
     // draw ONE GameObject on the Screen
-    void draw(A_GameObject dot);
+    void draw(A_GameObject rect);
 
     // draw ONE TextObject on the Screen
     void draw(A_TextObject obj);

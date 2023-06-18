@@ -157,7 +157,8 @@ abstract class A_World {
             for (A_TextObject textObject : textObjects) {
                 //Update Level Text
                 levelTxt(lvl);
-                getTimer(startTime);
+                if (!gameOver)
+                {getTimer(startTime);}
                 if (gameOver) getHighScore();
 
                 graphicSystem.draw(textObject);
@@ -208,6 +209,8 @@ abstract class A_World {
 
         if (!gameOver || !gamePaused) {
             timer.setTimer(seconds, milliseconds);
+        } else {
+            timer.setTimer(storeSeconds, storeMilliseconds);
         }
     }
 

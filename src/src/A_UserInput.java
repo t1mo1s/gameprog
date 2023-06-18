@@ -26,7 +26,7 @@ final class A_UserInput {
         this.clear();
     }
 
-    final void clear() {
+    void clear() {
         isMouseEvent = false;
         isKeyEvent = false;
     }

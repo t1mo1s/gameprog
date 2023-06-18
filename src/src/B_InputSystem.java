@@ -3,7 +3,7 @@ import java.awt.event.*;
 class B_InputSystem implements A_InputSystem, KeyListener, MouseListener, MouseMotionListener {
 
     // UserInput variables
-    private A_UserInput userInput = new A_UserInput();
+    private final A_UserInput userInput = new A_UserInput();
 
     public void mousePressed(MouseEvent evt) {
         // an input Event occurs

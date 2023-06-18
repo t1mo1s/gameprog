@@ -3,29 +3,26 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serial;
 
-import static java.awt.SystemColor.text;
 
 class B_Panel extends JPanel implements A_GraphicSystem {
     // constants
+    @Serial
     private static final long serialVersionUID = 1L;
 
     // InputSystem is an external instance
-    private B_InputSystem inputSystem = new B_InputSystem();
+    private final B_InputSystem inputSystem = new B_InputSystem();
     private A_World world = null;
-
-
-    // GraphicsSystem variables
-    //
-    private GraphicsConfiguration graphicsConf = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
     private BufferedImage imageBuffer;
     private Graphics graphics;
 
     public B_Panel() {
 
-        //this.setSize(A_Const.WORLDPART_WIDTH,A_Const.WORLDPART_HEIGHT);
         this.setSize(A_Const.WORLDPART_WIDTH, A_Const.WORLD_HEIGHT);
 
+        // GraphicsSystem variables
+        GraphicsConfiguration graphicsConf = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
         imageBuffer = graphicsConf.createCompatibleImage(this.getWidth(), this.getHeight());
 
         graphics = imageBuffer.getGraphics();
@@ -73,7 +70,7 @@ class B_Panel extends JPanel implements A_GraphicSystem {
 
         //Text
         graphics.setColor(text.textColor);
-        graphics.drawString(text.toString(), (int) text.x, (int) text.y);
+        graphics.drawString(text.toString(), text.x, text.y);
     }
 
     private void drawStroke(Color strokeColor, String txt, int x, int y, int fontsize) {
@@ -94,28 +91,6 @@ class B_Panel extends JPanel implements A_GraphicSystem {
                 }
             }
         }
-    }
-
-    //can be deleted
-    public final void draw(A_TextObject text, int fontSize, String fontName, Color textColor, Color strokeColor) {
-
-        fontName = "Arial";
-
-        Graphics2D g2d = (Graphics2D) graphics;
-
-        g2d.setFont(new Font(fontName, Font.PLAIN, fontSize));
-
-        // Set the stroke for the outline
-        Stroke outlineStroke = new BasicStroke(2f);
-        g2d.setStroke(outlineStroke);
-
-        // Draw the outline
-        g2d.setColor(strokeColor);
-        g2d.drawString(text.toString(), (int) text.x + 1, (int) text.y + 1);
-
-        // Set the color for the text
-        g2d.setColor(textColor);
-        g2d.drawString(text.toString(), (int) text.x + 1, (int) text.y + 1);
     }
 
 

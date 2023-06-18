@@ -1,13 +1,11 @@
 import java.awt.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 abstract class A_GameObject {
 
     protected double x, y;
-    protected double alfa = 0;
+    protected double alfa;
     protected static A_PhysicsSystem physicsSystem;
-    protected double speed = 0;
+    protected double speed;
     protected int height, width;
     protected Color color;
     protected boolean isLiving = true;
@@ -28,7 +26,6 @@ abstract class A_GameObject {
         height = heigth_;
         color = color_;
     }
-
 
     public void moveLeft(double diffSeconds) {
         x -= 2 * speed * diffSeconds;

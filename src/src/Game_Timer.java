@@ -1,8 +1,7 @@
 import java.awt.*;
 
 class Game_Timer extends A_TextObject {
-    private long s;
-    private long ms;
+    private long s, ms;
 
     public Game_Timer(int x, int y) {
         super(x, y, 20, Color.WHITE, Color.BLACK);

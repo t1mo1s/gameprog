@@ -12,20 +12,19 @@ public class Game_Mob extends A_GameObject {
         startPosX = x;
     }
 
-    public void move(double diffSeconds){
-        if(movingLeft && x > startPosX - walkingDist){
+    public void move(double diffSeconds) {
+        if (movingLeft && x > startPosX - walkingDist) {
             super.moveLeft(diffSeconds);
 
-        }else if(movingLeft && x <= startPosX - walkingDist){
-           movingLeft = false;
+        } else if (movingLeft && x <= startPosX - walkingDist) {
+            movingLeft = false;
         }
 
-        if(!movingLeft && x < startPosX + walkingDist){
+        if (!movingLeft && x < startPosX + walkingDist) {
             super.moveRight(diffSeconds);
-        }else if(!movingLeft && x >= startPosX + walkingDist){
+        } else if (!movingLeft && x >= startPosX + walkingDist) {
             movingLeft = true;
         }
-
     }
 
     @Override

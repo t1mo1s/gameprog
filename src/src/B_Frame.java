@@ -1,10 +1,12 @@
 import javax.swing.*;
+import java.io.Serial;
 
 class B_Frame extends JFrame implements A_Frame {
     // ...ok...
+    @Serial
     private static final long serialVersionUID = 2L;
 
-    private B_Panel panel = null;
+    private B_Panel panel;
 
     public B_Frame() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

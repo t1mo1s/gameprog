@@ -157,8 +157,9 @@ abstract class A_World {
             for (A_TextObject textObject : textObjects) {
                 //Update Level Text
                 levelTxt(lvl);
-                if (!gameOver)
-                {getTimer(startTime);}
+                if (!gameOver) {
+                    getTimer(startTime);
+                }
                 if (gameOver) getHighScore();
 
                 graphicSystem.draw(textObject);
@@ -217,9 +218,11 @@ abstract class A_World {
     private void getHighScore() {
         Game_HighScore hs = (Game_HighScore) textObjects.get(2);
 
-        if (seconds >= storeSeconds)
+        if (seconds == storeSeconds) {
+            storeMilliseconds = Math.max(storeMilliseconds, milliseconds);
+        } else if (seconds > storeSeconds) {
             storeMilliseconds = milliseconds;
-
+        }
 
         storeSeconds = Math.max(storeSeconds, seconds);
         hs.setHS(storeSeconds, storeMilliseconds);

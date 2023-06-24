@@ -40,7 +40,7 @@ class Game_World extends A_World {
      * BUILDING METHODS!
      **/
     //From Spawn height adjustable | so you don't have to place it from the top, but rather from the floor itself
-    public double setGround(int diff) {
+    public double setGround(double diff) {
         return ground - diff;
     }
 
@@ -58,27 +58,30 @@ class Game_World extends A_World {
     }
 
     private int placeTubes(int s, double h) {
-        h = ground - h;
-        int l = 50, base = 100;
+        s = drawPipe(s, h) - 30;
+        s = drawPipe(s, h + 10) + 30;
+        s = drawPipe(s, h + 20);
+        s = drawPipe(s, h);
+
+        return s;
+    }
+
+    private int drawPipe(int s, double h) {
+        h = setGround(h);
+        int w = 50;
 
         Color green = new Color(82, 203, 50);
-        Color HeadGreen = new Color(34, 86, 20);
+        Color seperatorLine = new Color(34, 86, 20);
 
-        //Tube Base and Heads
 
-        gameObjects.add(new Game_Ground(s, h, l - 20, base, green));
-        gameObjects.add(new Game_Platform(s - 10, h, l, 20, HeadGreen));
+        //The Head
+        gameObjects.add(new Game_Platform(s - 10, h, w, 20, green));
+        //The Base
+        gameObjects.add(new Game_Ground(s, h, w - 20, 100, green));
+        //The Line
+        gameObjects.add(new Game_Ground(s - 8, h + 18, w - 4, 2, seperatorLine));
 
-        gameObjects.add(new Game_Ground(s += l + 130, h - 10, l - 20, base, green));
-        gameObjects.add(new Game_Platform(s - 10, h - 10, l, 20, HeadGreen));
-
-        gameObjects.add(new Game_Ground(s += l + 150, h - 30, l - 20, 100, green));
-        gameObjects.add(new Game_Platform(s - 10, h - 30, l, 20, HeadGreen));
-
-        gameObjects.add(new Game_Ground(s += l + 150, h, l - 20, 100, green));
-        gameObjects.add(new Game_Platform(s - 10, h, l, 20, HeadGreen));
-
-        return l + s;
+        return s + w + 150;
     }
 
     private int placeDoublePlatform(int x, int y) {
@@ -187,7 +190,7 @@ class Game_World extends A_World {
         platformSTART = 150 + placeTrippleBackPlatform(platformEND + 100, 175);
         platformEND = 100 + placeGround(platformSTART, 350);
 
-        gameObjects.add(new Game_Mob(2632, setGround(60), 0, new Color(197, 18, 132)));
+        gameObjects.add(new Game_FlowerMob(platformEND + 207, setGround(60)));
         platformSTART = 175 + placeTubes(platformEND + 45, 30);
 
 

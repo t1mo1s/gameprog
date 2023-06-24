@@ -109,12 +109,12 @@ class Game_World extends A_World {
 
     /****MOBS*****/
     private void spawnMobs(int x, int wd) {
-        spawnMobs(x, setGround(0), wd);
+        spawnMobs(x, 0, wd);
     }
 
     private void spawnMobs(int x, double y, int wd) {
         //wd => Walking Distance
-        gameObjects.add(new Game_Mob(x, y, wd));
+        gameObjects.add(new Game_Mob(x, setGround(y), wd));
     }
 
     /*** MAP-Build area ***/
@@ -163,14 +163,14 @@ class Game_World extends A_World {
         //the fifth and longest platform of te jump
         gameObjects.add(new Game_Platform(platformSTART, setGround(70 + 115), longPlatform * 3));
         //spawns mobs on the longer platform
-        spawnMobs(platformSTART + 150, setGround(70 + 115), 150);
+        spawnMobs(platformSTART + 150, 70 + 115, 150);
         //takes longer platform in account
         platformSTART += longPlatform * 3;
 
         platformEND = placeGround(platformSTART += 150, 700, -20);
 
-        spawnMobs(platformSTART + 150, setGround(-20), 150);
-        spawnMobs(platformEND - 150, setGround(-20), 100);
+        spawnMobs(platformSTART + 150, -20, 150);
+        spawnMobs(platformEND - 150, -20, 100);
         //spawnMobs(platformSTART+150, 100);
         platformSTART = 25 + placeQuadPlatform(platformEND, 65);
 
@@ -190,11 +190,12 @@ class Game_World extends A_World {
         platformSTART = 150 + placeTrippleBackPlatform(platformEND + 100, 175);
         platformEND = 100 + placeGround(platformSTART, 350);
 
-        gameObjects.add(new Game_FlowerMob(platformEND + 207, setGround(60)));
-        platformSTART = 175 + placeTubes(platformEND + 45, 30);
+        gameObjects.add(new Game_FlowerMob(platformEND + 452, setGround(80)));
+        platformSTART = placeTubes(platformEND + 45, 30);
 
 
-        placeGround(platformSTART, A_Const.WORLD_WIDTH - 400);
+        spawnMobs(platformSTART + 200, 50);
+        placeGround(platformSTART, 460);
 
         goal(25);
     }

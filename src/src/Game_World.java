@@ -1,4 +1,8 @@
 import java.awt.*;
+import javax.imageio.ImageIO;
+import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
 
 class Game_World extends A_World {
     final double spawnGround = 70;
@@ -12,6 +16,7 @@ class Game_World extends A_World {
 
     protected void init() {
         //add BackgroundIMG
+        // createBackground();
 
         // add the Avatar
         avatar = new Game_Avatar(spawnX, ground - 25);
@@ -24,6 +29,22 @@ class Game_World extends A_World {
 
         //if (gameStart) createTextAtStart();
     }
+/*
+    private void createBackground() {
+        try {
+            File file = new File("src/assets/img/Background.png");
+            Image img = null;
+            img = ImageIO.read(file);
+
+            int x = 0, y = 0, width = A_Const.WORLD_WIDTH, height = A_Const.WORLD_HEIGHT;
+            ImageObserver observer = null;
+            getGraphicSystem().drawImage(img, x, y, width, height, observer);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+ */
 
     private void createText() {
 
@@ -71,7 +92,7 @@ class Game_World extends A_World {
         int w = 50, thickness = 20;
 
         Color green = new Color(82, 203, 50);
-        Color seperatorLine = new Color(34, 86, 20);
+        Color shadowLine = new Color(34, 86, 20);
 
 
         //The Head
@@ -79,7 +100,7 @@ class Game_World extends A_World {
         //The Base
         gameObjects.add(new Game_Ground(s, h + thickness, w - 20, A_Const.WORLD_HEIGHT, green));
         //The Line
-        gameObjects.add(new Game_Ground(s - 8, h + thickness - 1, w - 4, 2, seperatorLine));
+        gameObjects.add(new Game_Ground(s - 8, h + thickness - 1, w - 4, 2, shadowLine));
 
         return s + w + 150;
     }
@@ -190,7 +211,7 @@ class Game_World extends A_World {
         platformSTART = 150 + placeTrippleBackPlatform(platformEND + 100, 175);
         platformEND = 100 + placeGround(platformSTART, 350);
 
-        gameObjects.add(new Game_FlowerMob(platformEND + 452, setGround(80)));
+        gameObjects.add(new Game_Mob_Flower(platformEND + 452, setGround(80)));
         platformSTART = placeTubes(platformEND + 45, 30);
 
 

@@ -109,7 +109,6 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                 if (collisionOccurred) {
                     result.add(obj2);
                 }
-
             }
         }
         return result;

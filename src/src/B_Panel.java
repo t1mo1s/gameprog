@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serial;
@@ -47,7 +48,6 @@ class B_Panel extends JPanel implements A_GraphicSystem {
         graphics.setColor(Color.LIGHT_GRAY);
         graphics.fillRect(0, 0, A_Const.WORLDPART_WIDTH, A_Const.WORLD_HEIGHT);
     }
-
 
     public final void draw(A_GameObject rect) {
         //set relative to worldPart
@@ -100,6 +100,10 @@ class B_Panel extends JPanel implements A_GraphicSystem {
         }
     }
 
+    public void drawImage(Image img, int x, int y, int width, int height, ImageObserver observer) {
+        graphics.drawImage(img, x, y, width, height, observer);
+
+    }
 
     public void redraw() {
         this.getGraphics().drawImage(imageBuffer, 0, 0, this);

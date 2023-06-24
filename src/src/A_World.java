@@ -133,7 +133,9 @@ abstract class A_World {
                 A_GameObject obj = gameObjects.get(i);
                 if (obj.type() == A_Const.TYPE_MOB) {
                     Game_Mob mob = (Game_Mob) obj;
+                    // Game_Mob_Flower flower = (Game_Mob_Flower) obj;
                     mob.move(millisDiff / 1000.0);
+                    // flower.move(millisDiff / 1000.0);
                 }
             }
 
@@ -237,6 +239,10 @@ abstract class A_World {
 
     protected void setGraphicSystem(A_GraphicSystem p) {
         graphicSystem = p;
+    }
+
+    protected A_GraphicSystem getGraphicSystem() {
+        return graphicSystem;
     }
 
     protected void setInputSystem(A_InputSystem p) {

@@ -95,7 +95,7 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                     try {
                         Thread.sleep(1000);
                         world.setLvl(world.getLvl() + 1);
-                        if (world.getLvl() > 3) world.setLvl(1);
+                        if (world.getLvl() > world.maxLvl) world.setLvl(1);
 
                         object.x = 60;
                         object.y = A_Const.WORLD_HEIGHT - (70 + 25);
@@ -109,7 +109,6 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                 if (collisionOccurred) {
                     result.add(obj2);
                 }
-
             }
         }
         return result;

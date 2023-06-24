@@ -1,4 +1,8 @@
 import java.awt.*;
+import javax.imageio.ImageIO;
+import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
 
 class Game_World extends A_World {
     final double spawnGround = 70;
@@ -12,9 +16,10 @@ class Game_World extends A_World {
 
     protected void init() {
         //add BackgroundIMG
+        // createBackground();
 
         // add the Avatar
-        avatar = new Game_Avatar(30, ground - 25);
+        avatar = new Game_Avatar(spawnX, ground - 25);
         // set WorldPart position (top left corner of part which is shown)
         worldPartX = 0;
         gameObjects.add(avatar);
@@ -24,8 +29,25 @@ class Game_World extends A_World {
 
         //if (gameStart) createTextAtStart();
     }
+/*
+    private void createBackground() {
+        try {
+            File file = new File("src/assets/img/Background.png");
+            Image img = null;
+            img = ImageIO.read(file);
+
+            int x = 0, y = 0, width = A_Const.WORLD_WIDTH, height = A_Const.WORLD_HEIGHT;
+            ImageObserver observer = null;
+            getGraphicSystem().drawImage(img, x, y, width, height, observer);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+ */
 
     private void createText() {
+
         Game_LevelDisplay levelDisplay = new Game_LevelDisplay(20, 30);
         textObjects.add(levelDisplay);
         Game_Timer timerText = new Game_Timer(200, 30);
@@ -39,21 +61,48 @@ class Game_World extends A_World {
      * BUILDING METHODS!
      **/
     //From Spawn height adjustable | so you don't have to place it from the top, but rather from the floor itself
-    public double setGround(int diff) {
+    public double setGround(double diff) {
         return ground - diff;
     }
 
     //PlaceGround takes startX Coord and the desired length, e.g. start = 100, length = 200 => ground with the total length of 300
     private int placeGround(int start, int length) {
-        gameObjects.add(new Game_Ground(start, ground, length, 100, new Color(108, 103, 103)));
+        gameObjects.add(new Game_Ground(start, ground, length, 100));
         return length + start;
     }
 
     //like PlaceGround but with changeable y coord. WARNING, use "higher" as desired height, not coord.!
     //prob for LVL 3
     private int placeGround(int start, int length, double higher) {
-        gameObjects.add(new Game_Ground(start, ground - higher, length, 100, new Color(108, 103, 103)));
+        gameObjects.add(new Game_Ground(start, ground - higher, length, 100));
         return length + start;
+    }
+
+    private int placeTubes(int s, double h) {
+        s = drawPipe(s, h) - 30;
+        s = drawPipe(s, h + 10) + 30;
+        s = drawPipe(s, h + 20);
+        s = drawPipe(s, h);
+
+        return s;
+    }
+
+    private int drawPipe(int s, double h) {
+        h = setGround(h);
+        int w = 50, thickness = 20;
+
+        Color green = new Color(82, 203, 50);
+        Color shadowLine = new Color(34, 86, 20);
+
+
+        //The Head
+        gameObjects.add(new Game_Platform(s - 10, h, w, thickness, green));
+        //The Base
+        gameObjects.add(new Game_Ground(s, h + thickness, w - 20, A_Const.WORLD_HEIGHT, green));
+        //The Line
+        gameObjects.add(new Game_Ground(s - 8, h + thickness - 1, w - 4, 2, shadowLine));
+
+        return s + w + 150;
     }
 
     private int placeDoublePlatform(int x, int y) {
@@ -70,14 +119,23 @@ class Game_World extends A_World {
         return x + longPlatform;
     }
 
+    private int placeTrippleBackPlatform(int x, int y) {
+        gameObjects.add(new Game_Platform(x, setGround(y), longPlatform));
+        gameObjects.add(new Game_Platform(x - 225, setGround(y += 120), smallPlatform + 7));
+        gameObjects.add(new Game_Platform(x += 25, setGround(y += 60), longPlatform * 2));
+
+        return x + longPlatform * 2 + 125;
+    }
+
+
     /****MOBS*****/
     private void spawnMobs(int x, int wd) {
-        spawnMobs(x, setGround(0), wd);
+        spawnMobs(x, 0, wd);
     }
 
     private void spawnMobs(int x, double y, int wd) {
         //wd => Walking Distance
-        gameObjects.add(new Game_Mob(x, y, wd));
+        gameObjects.add(new Game_Mob(x, setGround(y), wd));
     }
 
     /*** MAP-Build area ***/
@@ -123,22 +181,44 @@ class Game_World extends A_World {
 
         platformEND = placeGround(platformSTART, 100);
         platformSTART = 150 + placeQuadPlatform(platformEND, 70);
+        //the fifth and longest platform of te jump
         gameObjects.add(new Game_Platform(platformSTART, setGround(70 + 115), longPlatform * 3));
-
-        spawnMobs(platformSTART + 150, setGround(70 + 115), 150);
-
+        //spawns mobs on the longer platform
+        spawnMobs(platformSTART + 150, 70 + 115, 150);
+        //takes longer platform in account
         platformSTART += longPlatform * 3;
 
         platformEND = placeGround(platformSTART += 150, 700, -20);
 
-        spawnMobs(platformSTART + 150, setGround(-20), 150);
-        spawnMobs(platformEND - 150, setGround(-20), 100);
+        spawnMobs(platformSTART + 150, -20, 150);
+        spawnMobs(platformEND - 150, -20, 100);
         //spawnMobs(platformSTART+150, 100);
         platformSTART = 25 + placeQuadPlatform(platformEND, 65);
 
         placeGround(platformSTART, A_Const.WORLD_WIDTH - 400);
 
         goal(50);
+    }
+
+    public void map4() {
+        spawnX = 1800;
+
+        int platformSTART = 100, platformEND;
+
+        platformEND = placeGround(platformSTART, 600);
+        platformEND = placeDoublePlatform(platformSTART = platformEND, 50);
+
+        platformSTART = 150 + placeTrippleBackPlatform(platformEND + 100, 175);
+        platformEND = 100 + placeGround(platformSTART, 350);
+
+        gameObjects.add(new Game_Mob_Flower(platformEND + 452, setGround(80)));
+        platformSTART = placeTubes(platformEND + 45, 30);
+
+
+        spawnMobs(platformSTART + 200, 50);
+        placeGround(platformSTART, 460);
+
+        goal(25);
     }
 
     /**
@@ -153,7 +233,7 @@ class Game_World extends A_World {
     private void goal(int y) {
         //add Spawn
         gameObjects.add(new Game_Ground(0, setGround(0), 100, 70, new Color(83, 67, 175)));
-
+        //draw & Create Goal
         placeGround(A_Const.WORLD_WIDTH - 300, A_Const.WORLD_WIDTH, y);
         gameObjects.add(new Game_Goal((int) (spawnGround + y)));
     }

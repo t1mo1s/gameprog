@@ -12,6 +12,12 @@ public class Game_Mob extends A_GameObject {
         startPosX = x;
     }
 
+    public Game_Mob(double x, double y, double wd, Color color) {
+        super(x, y - 20, 0, 40, 15, 20, color);
+        walkingDist = wd;
+        startPosX = x;
+    }
+
     public void move(double diffSeconds) {
         if (movingLeft && x > startPosX - walkingDist) {
             super.moveLeft(diffSeconds);

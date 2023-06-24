@@ -68,18 +68,18 @@ class Game_World extends A_World {
 
     private int drawPipe(int s, double h) {
         h = setGround(h);
-        int w = 50;
+        int w = 50, thickness = 20;
 
         Color green = new Color(82, 203, 50);
         Color seperatorLine = new Color(34, 86, 20);
 
 
         //The Head
-        gameObjects.add(new Game_Platform(s - 10, h, w, 20, green));
+        gameObjects.add(new Game_Platform(s - 10, h, w, thickness, green));
         //The Base
-        gameObjects.add(new Game_Ground(s, h, w - 20, 100, green));
+        gameObjects.add(new Game_Ground(s, h + thickness, w - 20, A_Const.WORLD_HEIGHT, green));
         //The Line
-        gameObjects.add(new Game_Ground(s - 8, h + 18, w - 4, 2, seperatorLine));
+        gameObjects.add(new Game_Ground(s - 8, h + thickness - 1, w - 4, 2, seperatorLine));
 
         return s + w + 150;
     }

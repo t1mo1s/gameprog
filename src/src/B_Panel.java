@@ -27,7 +27,6 @@ class B_Panel extends JPanel implements A_GraphicSystem {
 
         graphics = imageBuffer.getGraphics();
 
-
         try {
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/DePixelKlein.ttf"));
             GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(customFont);
@@ -37,7 +36,6 @@ class B_Panel extends JPanel implements A_GraphicSystem {
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
-
 
         // initialize Listeners
         this.addMouseListener(inputSystem);
@@ -52,13 +50,22 @@ class B_Panel extends JPanel implements A_GraphicSystem {
 
 
     public final void draw(A_GameObject rect) {
-
         //set relative to worldPart
         int x = (int) (rect.x - world.worldPartX);
         int y = (int) rect.y;
+
+        drawObjBorder(x, y, rect.width, rect.height);
+
         graphics.setColor(rect.color);
         graphics.fillRect(x, y, rect.width, rect.height);
         graphics.drawRect(x, y, rect.width, rect.height);
+    }
+
+    private void drawObjBorder(int x, int y, int width, int height) {
+        graphics.setColor(Color.BLACK);
+
+        int border = 2;
+        graphics.drawRect(x - border / 2, y - border / 2, width + border, height + border);
     }
 
     public void draw(A_TextObject text) {

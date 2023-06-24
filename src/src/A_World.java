@@ -5,8 +5,8 @@ abstract class A_World {
     private final A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
 
-     int spawnX = 40;
-    private int lvl =4;
+    int spawnX = 40;
+    private int lvl = 4;
 
     int maxLvl = 4;
 
@@ -17,7 +17,6 @@ abstract class A_World {
     abstract void map3();
 
     abstract void map4();
-
 
     // top left corner of the displayed pane of the world
     protected double worldPartX = 0;
@@ -54,9 +53,7 @@ abstract class A_World {
 
     // the main GAME LOOP
     final void run() {
-        long lastTick = System.currentTimeMillis();
-        long startTime = lastTick;
-
+        long lastTick = System.currentTimeMillis(), startTime = lastTick;
 
         while (true) {
             // calculate elapsed time

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serial;
@@ -27,7 +28,6 @@ class B_Panel extends JPanel implements A_GraphicSystem {
 
         graphics = imageBuffer.getGraphics();
 
-
         try {
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/fonts/DePixelKlein.ttf"));
             GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(customFont);
@@ -37,7 +37,6 @@ class B_Panel extends JPanel implements A_GraphicSystem {
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
-
 
         // initialize Listeners
         this.addMouseListener(inputSystem);
@@ -50,15 +49,23 @@ class B_Panel extends JPanel implements A_GraphicSystem {
         graphics.fillRect(0, 0, A_Const.WORLDPART_WIDTH, A_Const.WORLD_HEIGHT);
     }
 
-
     public final void draw(A_GameObject rect) {
-
         //set relative to worldPart
         int x = (int) (rect.x - world.worldPartX);
         int y = (int) rect.y;
+
+        drawObjBorder(x, y, rect.width, rect.height);
+
         graphics.setColor(rect.color);
         graphics.fillRect(x, y, rect.width, rect.height);
         graphics.drawRect(x, y, rect.width, rect.height);
+    }
+
+    private void drawObjBorder(int x, int y, int width, int height) {
+        graphics.setColor(Color.BLACK);
+
+        int border = 2;
+        graphics.drawRect(x - border / 2, y - border / 2, width + border, height + border);
     }
 
     public void draw(A_TextObject text) {
@@ -93,6 +100,10 @@ class B_Panel extends JPanel implements A_GraphicSystem {
         }
     }
 
+    public void drawImage(Image img, int x, int y, int width, int height, ImageObserver observer) {
+        graphics.drawImage(img, x, y, width, height, observer);
+
+    }
 
     public void redraw() {
         this.getGraphics().drawImage(imageBuffer, 0, 0, this);

@@ -1,3 +1,5 @@
+import java.awt.*;
+import java.awt.image.ImageObserver;
 
 interface A_GraphicSystem {
     // prepare to draw a new Screen
@@ -8,6 +10,8 @@ interface A_GraphicSystem {
 
     // draw ONE TextObject on the Screen
     void draw(A_TextObject obj);
+
+    void drawImage(Image img, int x, int y, int width, int height, ImageObserver observer);
 
     // display the completed Screen
     void redraw();

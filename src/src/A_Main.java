@@ -1,5 +1,6 @@
 final class A_Main {
 
+
     public A_Main() {
         A_Frame frame = new B_Frame();
         frame.displayOnScreen();

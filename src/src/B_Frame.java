@@ -43,8 +43,4 @@ class B_Frame extends JFrame implements A_Frame {
         return panel.getInputSystem();
     }
 
-    //geht net
-    public void closeWindow() {
-        dispose();
-    }
 }

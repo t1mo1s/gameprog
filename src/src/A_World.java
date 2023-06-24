@@ -4,7 +4,11 @@ abstract class A_World {
     private A_GraphicSystem graphicSystem;
     private final A_PhysicsSystem physicsSystem;
     private A_InputSystem inputSystem;
-    private int lvl = 1;
+
+    int spawnX = 40;
+    private int lvl = 4;
+
+    int maxLvl = 4;
 
     abstract void map1();
 
@@ -12,6 +16,7 @@ abstract class A_World {
 
     abstract void map3();
 
+    abstract void map4();
 
     // top left corner of the displayed pane of the world
     protected double worldPartX = 0;
@@ -48,9 +53,7 @@ abstract class A_World {
 
     // the main GAME LOOP
     final void run() {
-        long lastTick = System.currentTimeMillis();
-        long startTime = lastTick;
-
+        long lastTick = System.currentTimeMillis(), startTime = lastTick;
 
         while (true) {
             // calculate elapsed time
@@ -89,7 +92,7 @@ abstract class A_World {
             }
 
             if (userInput.keyMap.get('r')) {
-                avatar.x = 40;
+                avatar.x = spawnX;
                 avatar.y = A_Const.WORLD_HEIGHT - 70;
 
                 gameOver = false;
@@ -130,7 +133,9 @@ abstract class A_World {
                 A_GameObject obj = gameObjects.get(i);
                 if (obj.type() == A_Const.TYPE_MOB) {
                     Game_Mob mob = (Game_Mob) obj;
+                    // Game_Mob_Flower flower = (Game_Mob_Flower) obj;
                     mob.move(millisDiff / 1000.0);
+                    // flower.move(millisDiff / 1000.0);
                 }
             }
 
@@ -236,6 +241,10 @@ abstract class A_World {
         graphicSystem = p;
     }
 
+    protected A_GraphicSystem getGraphicSystem() {
+        return graphicSystem;
+    }
+
     protected void setInputSystem(A_InputSystem p) {
         inputSystem = p;
     }
@@ -249,6 +258,7 @@ abstract class A_World {
             case 1 -> map1();
             case 2 -> map2();
             case 3 -> map3();
+            case 4 -> map4();
         }
     }
 

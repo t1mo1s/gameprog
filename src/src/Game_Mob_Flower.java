@@ -28,26 +28,17 @@ public class Game_Mob_Flower extends A_GameObject {
                 movingDown = false;
             }
         }else if(!movingDown && y > startPosY - height){
+            long last = System.currentTimeMillis();
             y -= 20 * diffSeconds;
             if(y <= startPosY - height){
+                long current = System.currentTimeMillis();
+                while(current - last < 500){
+                    current = System.currentTimeMillis();
+                }
                 movingDown = true;
             }
         }
-        /*
-        if (movingDown && y > startPosY - spawnDist) {
-            super.moveLeft(diffSeconds);
 
-        } else if (movingDown && y <= startPosY - spawnDist) {
-            movingDown = false;
-        }
-
-        if (!movingDown && y < startPosY + spawnDist) {
-            super.moveRight(diffSeconds);
-        } else if (!movingDown && y >= startPosY + spawnDist) {
-            movingDown = true;
-        }
-
-         */
     }
 
 

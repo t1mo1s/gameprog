@@ -8,6 +8,7 @@ abstract class A_GameObject {
     protected double speed;
     protected int height, width;
     protected Color color;
+    protected Color borderColor;
     protected boolean isLiving = true;
     protected boolean isMoving = true;
     protected boolean isOnGround = false;
@@ -17,7 +18,7 @@ abstract class A_GameObject {
     protected static A_World world;
 
     // construct GameObject
-    public A_GameObject(double x_, double y_, double a_, double s_, int width_, int heigth_, Color color_) {
+    public A_GameObject(double x_, double y_, double a_, double s_, int width_, int heigth_, Color color_, Color borderColor) {
         x = x_;
         y = y_;
         alfa = a_;
@@ -25,6 +26,7 @@ abstract class A_GameObject {
         width = width_;
         height = heigth_;
         color = color_;
+        this.borderColor = borderColor;
     }
 
     public void moveLeft(double diffSeconds) {

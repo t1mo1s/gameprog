@@ -1,18 +1,9 @@
 import java.awt.*;
-import javax.imageio.ImageIO;
-import java.awt.image.ImageObserver;
-import java.io.File;
-import java.io.IOException;
 
 class Game_World extends A_World {
     final double spawnGround = 70;
     private final double ground = A_Const.WORLD_HEIGHT - spawnGround;
     private final int smallPlatform = 75, longPlatform = 125;
-
-
-    //TODO:: ADD LVL TEXT
-    // ADD FIRST TIME HELPING TEXT (Controls)
-    // Game Over Screen
 
     protected void init() {
         //add BackgroundIMG
@@ -26,25 +17,7 @@ class Game_World extends A_World {
         loadMap();
 
         createText();
-
-        //if (gameStart) createTextAtStart();
     }
-/*
-    private void createBackground() {
-        try {
-            File file = new File("src/assets/img/Background.png");
-            Image img = null;
-            img = ImageIO.read(file);
-
-            int x = 0, y = 0, width = A_Const.WORLD_WIDTH, height = A_Const.WORLD_HEIGHT;
-            ImageObserver observer = null;
-            getGraphicSystem().drawImage(img, x, y, width, height, observer);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
- */
 
     private void createText() {
 
@@ -100,7 +73,8 @@ class Game_World extends A_World {
         //The Base
         gameObjects.add(new Game_Ground(s, h + thickness, w - 20, A_Const.WORLD_HEIGHT, green));
         //The Line
-        gameObjects.add(new Game_Ground(s - 8, h + thickness - 1, w - 4, 2, shadowLine));
+        gameObjects.add(new Game_Ground(s - 9, h + thickness - 2, w - 2, 2, shadowLine, green));
+
 
         return s + w + 150;
     }
@@ -119,10 +93,10 @@ class Game_World extends A_World {
         return x + longPlatform;
     }
 
-    private int placeTrippleBackPlatform(int x, int y) {
+    private int placeTripleBackPlatform(int x, int y) {
         gameObjects.add(new Game_Platform(x, setGround(y), longPlatform));
         gameObjects.add(new Game_Platform(x - 225, setGround(y += 120), smallPlatform + 7));
-        gameObjects.add(new Game_Platform(x += 25, setGround(y += 60), longPlatform * 2));
+        gameObjects.add(new Game_Platform(x += 25, setGround(y + 60), longPlatform * 2));
 
         return x + longPlatform * 2 + 125;
     }
@@ -201,17 +175,16 @@ class Game_World extends A_World {
     }
 
     public void map4() {
-        spawnX = 1800;
+        //spawnX = 1800;
 
         int platformSTART = 100, platformEND;
 
         platformEND = placeGround(platformSTART, 600);
-        platformEND = placeDoublePlatform(platformSTART = platformEND, 50);
+        platformEND = placeDoublePlatform(platformEND, 50);
 
-        platformSTART = 150 + placeTrippleBackPlatform(platformEND + 100, 175);
+        platformSTART = 150 + placeTripleBackPlatform(platformEND + 100, 175);
         platformEND = 100 + placeGround(platformSTART, 350);
-
-        gameObjects.add(new Game_Mob_Flower(platformEND + 452, setGround(80)));
+        gameObjects.add(new Game_Mob_Flower(platformEND + 452, setGround(50)));
         platformSTART = placeTubes(platformEND + 45, 30);
 
 

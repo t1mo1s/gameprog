@@ -6,7 +6,7 @@ abstract class A_World {
     private A_InputSystem inputSystem;
 
     int spawnX = 40;
-    private int lvl = 4;
+    private int lvl = 1;
 
     int maxLvl = 4;
 
@@ -79,6 +79,8 @@ abstract class A_World {
             A_UserInput userInput = inputSystem.getUserInput();
             processUserInput(userInput); //, millisDiff / 1000.0);
 
+
+
             if (userInput.keyMap.get('m') && !gamePaused) {
                 textObjects.add(gameMenuTitle);
                 textObjects.add(infoText);
@@ -136,6 +138,9 @@ abstract class A_World {
                     // Game_Mob_Flower flower = (Game_Mob_Flower) obj;
                     mob.move(millisDiff / 1000.0);
                     // flower.move(millisDiff / 1000.0);
+                }else if(obj.type() == A_Const.TYPE_FLOWERMOB){
+                    Game_Mob_Flower flower = (Game_Mob_Flower) obj;
+                    flower.move(millisDiff / 1000.0);
                 }
             }
 
@@ -151,6 +156,7 @@ abstract class A_World {
 
             // adjust displayed pane of the world
             this.adjustWorldPart();
+
 
             // draw all Objects
             graphicSystem.clear();

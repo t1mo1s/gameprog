@@ -40,10 +40,9 @@ public class Game_Mob_Flower extends A_GameObject {
 
     }
 
-
     @Override
     int type() {
-        return A_Const.TYPE_FLOWERMOB;//A_Const.TYPE_MOB;
+        return A_Const.TYPE_FLOWERMOB;
     }
 
 }

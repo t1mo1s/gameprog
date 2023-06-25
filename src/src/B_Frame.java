@@ -6,7 +6,7 @@ class B_Frame extends JFrame implements A_Frame {
     @Serial
     private static final long serialVersionUID = 2L;
 
-    private B_Panel panel;
+    private final B_Panel panel = new B_Panel();
 
     public B_Frame() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -19,7 +19,6 @@ class B_Frame extends JFrame implements A_Frame {
 
         this.setResizable(false);
 
-        panel = new B_Panel();
 
         // needed for Keyboard input !!!
         panel.setFocusable(true);

@@ -15,8 +15,8 @@ class B_Panel extends JPanel implements A_GraphicSystem {
     // InputSystem is an external instance
     private final B_InputSystem inputSystem = new B_InputSystem();
     private A_World world = null;
-    private BufferedImage imageBuffer;
-    private Graphics graphics;
+    private final BufferedImage imageBuffer;
+    private final Graphics graphics;
 
     public B_Panel() {
 

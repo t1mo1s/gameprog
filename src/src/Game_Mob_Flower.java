@@ -16,10 +16,24 @@ public class Game_Mob_Flower extends A_GameObject {
 
     public Game_Mob_Flower(double x, double y) {
         super(x, y - 20, 0, 40, 15, 20, new Color(241, 6, 6));
+        startPosY = y;
     }
 
 
     public void move(double diffSeconds) {
+        if(movingDown && y < startPosY + height){
+            //height = (int) (height - 4 * diffSeconds);
+            y += 10 * diffSeconds;
+            if(y >= startPosY + height){
+                movingDown = false;
+            }
+        }else if(!movingDown && y > startPosY - height){
+            y -= 20 * diffSeconds;
+            if(y <= startPosY - height){
+                movingDown = true;
+            }
+        }
+        /*
         if (movingDown && y > startPosY - spawnDist) {
             super.moveLeft(diffSeconds);
 
@@ -32,12 +46,14 @@ public class Game_Mob_Flower extends A_GameObject {
         } else if (!movingDown && y >= startPosY + spawnDist) {
             movingDown = true;
         }
+
+         */
     }
 
 
     @Override
     int type() {
-        return 1;//A_Const.TYPE_MOB;
+        return A_Const.TYPE_FLOWERMOB;//A_Const.TYPE_MOB;
     }
 
 }

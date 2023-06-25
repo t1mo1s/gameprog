@@ -210,8 +210,7 @@ class Game_World extends A_World {
 
         platformSTART = 150 + placeTrippleBackPlatform(platformEND + 100, 175);
         platformEND = 100 + placeGround(platformSTART, 350);
-
-        gameObjects.add(new Game_Mob_Flower(platformEND + 452, setGround(80)));
+        gameObjects.add(new Game_Mob_Flower(platformEND + 452, setGround(50)));
         platformSTART = placeTubes(platformEND + 45, 30);
 
 

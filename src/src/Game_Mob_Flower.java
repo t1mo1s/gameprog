@@ -15,23 +15,24 @@ public class Game_Mob_Flower extends A_GameObject {
     boolean movingDown = true;
 
     public Game_Mob_Flower(double x, double y) {
-        super(x, y - 20, 0, 40, 15, 20, new Color(241, 6, 6), Color.black);
+        super(x, y - 20, 0, 40, 15, 20, new Color(241, 6, 6), Color.BLACK);
+        startPosY = y;
     }
 
 
     public void move(double diffSeconds) {
-        if(movingDown && y < startPosY + height){
+        if (movingDown && y < startPosY + height) {
             //height = (int) (height - 4 * diffSeconds);
             y += 10 * diffSeconds;
-            if(y >= startPosY + height){
+            if (y >= startPosY + height) {
                 movingDown = false;
             }
-        }else if(!movingDown && y > startPosY - height){
+        } else if (!movingDown && y > startPosY - height) {
             long last = System.currentTimeMillis();
             y -= 20 * diffSeconds;
-            if(y <= startPosY - height){
+            if (y <= startPosY - height) {
                 long current = System.currentTimeMillis();
-                while(current - last < 500){
+                while (current - last < 500) {
                     current = System.currentTimeMillis();
                 }
                 movingDown = true;
@@ -42,7 +43,7 @@ public class Game_Mob_Flower extends A_GameObject {
 
     @Override
     int type() {
-        return A_Const.TYPE_FLOWERMOB;
+        return A_Const.TYPE_FLOWERMOB;//A_Const.TYPE_MOB;
     }
 
 }

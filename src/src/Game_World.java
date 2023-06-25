@@ -5,11 +5,6 @@ class Game_World extends A_World {
     private final double ground = A_Const.WORLD_HEIGHT - spawnGround;
     private final int smallPlatform = 75, longPlatform = 125;
 
-
-    //TODO:: ADD LVL TEXT
-    // ADD FIRST TIME HELPING TEXT (Controls)
-    // Game Over Screen
-
     protected void init() {
         //add BackgroundIMG
         // createBackground();
@@ -22,8 +17,6 @@ class Game_World extends A_World {
         loadMap();
 
         createText();
-
-        //if (gameStart) createTextAtStart();
     }
 
     private void createText() {
@@ -182,7 +175,7 @@ class Game_World extends A_World {
     }
 
     public void map4() {
-        spawnX = 1800;
+        //spawnX = 1800;
 
         int platformSTART = 100, platformEND;
 

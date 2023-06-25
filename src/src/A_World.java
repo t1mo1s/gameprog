@@ -6,7 +6,7 @@ abstract class A_World {
     private A_InputSystem inputSystem;
 
     int spawnX = 40;
-    private int lvl = 4;
+    private int lvl = 1;
 
     int maxLvl = 4;
 

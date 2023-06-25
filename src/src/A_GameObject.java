@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 abstract class A_GameObject {
 
@@ -15,6 +16,7 @@ abstract class A_GameObject {
     protected double playerSpeedX = 0; // Horizontale Geschwindigkeit des Spielers
     protected double playerSpeedY = 0; // Vertikale Geschwindigkeit des Spielers
     protected static A_World world;
+    protected BufferedImage image;
 
     // construct GameObject
     public A_GameObject(double x_, double y_, double a_, double s_, int width_, int heigth_, Color color_) {
@@ -25,6 +27,10 @@ abstract class A_GameObject {
         width = width_;
         height = heigth_;
         color = color_;
+    }
+
+    public void setImage(BufferedImage img) {
+        this.image = img;
     }
 
     public void moveLeft(double diffSeconds) {

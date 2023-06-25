@@ -1,13 +1,16 @@
-import java.awt.*;
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+
 
 class Game_World extends A_World {
     final double spawnGround = 70;
     private final double ground = A_Const.WORLD_HEIGHT - spawnGround;
     private final int smallPlatform = 75, longPlatform = 125;
+    private BufferedImage backgroundImage;
 
 
     //TODO:: ADD LVL TEXT
@@ -15,8 +18,27 @@ class Game_World extends A_World {
     // Game Over Screen
 
     protected void init() {
-        //add BackgroundIMG
-        // createBackground();
+
+        try {
+            backgroundImage = ImageIO.read(new File("C:\\Users\\Alper\\IdeaProjects\\gameprog7\\src\\assets\\img\\Unbenannt.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        A_GameObjectList gameObjects = getGameObjects();
+
+        A_GameObject background = new A_GameObject(0, 0, 0, 0, A_Const.WORLD_WIDTH, A_Const.WORLD_HEIGHT, Color.YELLOW) {
+            @Override
+            int type() {
+                return 0;
+            }
+        };
+
+        background.setImage(backgroundImage);
+
+        gameObjects.add(background);
+
+        gameObjects.add(background);
 
         // add the Avatar
         avatar = new Game_Avatar(spawnX, ground - 25);
@@ -29,22 +51,11 @@ class Game_World extends A_World {
 
         //if (gameStart) createTextAtStart();
     }
-/*
-    private void createBackground() {
-        try {
-            File file = new File("src/assets/img/Background.png");
-            Image img = null;
-            img = ImageIO.read(file);
 
-            int x = 0, y = 0, width = A_Const.WORLD_WIDTH, height = A_Const.WORLD_HEIGHT;
-            ImageObserver observer = null;
-            getGraphicSystem().drawImage(img, x, y, width, height, observer);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private A_GameObjectList getGameObjects() {
+        return gameObjects;
     }
 
- */
 
     private void createText() {
 

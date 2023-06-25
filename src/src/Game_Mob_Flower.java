@@ -20,24 +20,30 @@ public class Game_Mob_Flower extends A_GameObject {
 
 
     public void move(double diffSeconds) {
-        if (movingDown && y > startPosY - spawnDist) {
-            super.moveLeft(diffSeconds);
-
-        } else if (movingDown && y <= startPosY - spawnDist) {
-            movingDown = false;
+        if(movingDown && y < startPosY + height){
+            //height = (int) (height - 4 * diffSeconds);
+            y += 10 * diffSeconds;
+            if(y >= startPosY + height){
+                movingDown = false;
+            }
+        }else if(!movingDown && y > startPosY - height){
+            long last = System.currentTimeMillis();
+            y -= 20 * diffSeconds;
+            if(y <= startPosY - height){
+                long current = System.currentTimeMillis();
+                while(current - last < 500){
+                    current = System.currentTimeMillis();
+                }
+                movingDown = true;
+            }
         }
 
-        if (!movingDown && y < startPosY + spawnDist) {
-            super.moveRight(diffSeconds);
-        } else if (!movingDown && y >= startPosY + spawnDist) {
-            movingDown = true;
-        }
     }
 
 
     @Override
     int type() {
-        return 1;//A_Const.TYPE_MOB;
+        return A_Const.TYPE_FLOWERMOB;//A_Const.TYPE_MOB;
     }
 
 }

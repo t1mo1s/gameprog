@@ -1,4 +1,6 @@
+import javax.sound.sampled.*;
 import java.awt.*;
+import java.io.File;
 
 class Game_World extends A_World {
     final double spawnGround = 70;
@@ -211,7 +213,7 @@ class Game_World extends A_World {
         gameObjects.add(new Game_Goal((int) (spawnGround + y)));
     }
 
-    protected void processUserInput(A_UserInput userInput) {//, double diffSeconds) {
+    protected void processUserInput(A_UserInput userInput) {
         double diffSeconds = 0.015;
 
         if (!gamePaused && !gameOver) {
@@ -224,8 +226,23 @@ class Game_World extends A_World {
                 }
                 if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
                     avatar.jump(diffSeconds);
+                    playSound("src/assets/sfx/jump.wav");
                 }
             }
+        }
+    }
+
+    public void playSound(String filePath) {
+
+        //TODO: Make sound not play million times all at once!
+        try {
+            File soundFile = new File(filePath);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -1,5 +1,6 @@
 final class A_Const {
     public static final int TYPE_MOB = 3;
+    public static final int TYPE_FLOWERMOB = 2;
     // size of the world
     static final int WORLD_WIDTH = 4000;
     static final int WORLD_HEIGHT = 500;

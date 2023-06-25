@@ -40,7 +40,7 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
             if ((avY1 >= y1 && avY1 <= y2) && (avX1 <= x2 && avX1 >= x1) || (avY1 >= y1 && avY1 <= y2) && (avX2 <= x2 && avX2 >= x1) || (avY2 >= y1 && avY2 <= y2) && (avX1 <= x2 && avX1 >= x1) || (avY2 >= y1 && avY2 <= y2) && (avX2 <= x2 && avX2 >= x1)) {
                 result.add(obj2);
 
-                if (obj2.type() == A_Const.TYPE_GROUND || obj2.type() == A_Const.TYPE_MOB) {
+                if (obj2.type() == A_Const.TYPE_GROUND || obj2.type() == A_Const.TYPE_MOB || obj2.type() == A_Const.TYPE_FLOWERMOB) {
                     if (avX2 >= x1 && avX1 <= x2 && avY2 >= y1 && avY1 <= y2) {
                         // check avatar with object
                         collisionOccurred = true;
@@ -75,7 +75,7 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                         }
                     }
 
-                    if (obj2.type() == A_Const.TYPE_MOB) {
+                    if (obj2.type() == A_Const.TYPE_MOB|| obj2.type() == A_Const.TYPE_FLOWERMOB) {
                         //GAME OVER
                         world.gameOver = true;
                         double posY = world.avatar.y;

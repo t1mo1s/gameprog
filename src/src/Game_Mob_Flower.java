@@ -15,7 +15,7 @@ public class Game_Mob_Flower extends A_GameObject {
     boolean movingDown = true;
 
     public Game_Mob_Flower(double x, double y) {
-        super(x, y - 20, 0, 40, 15, 20, new Color(241, 6, 6));
+        super(x, y - 20, 0, 40, 15, 20, new Color(241, 6, 6), Color.black);
     }
 
 

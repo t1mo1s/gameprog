@@ -54,15 +54,15 @@ class B_Panel extends JPanel implements A_GraphicSystem {
         int x = (int) (rect.x - world.worldPartX);
         int y = (int) rect.y;
 
-        drawObjBorder(x, y, rect.width, rect.height);
+        drawObjBorder(rect, x, y, rect.width, rect.height);
 
         graphics.setColor(rect.color);
         graphics.fillRect(x, y, rect.width, rect.height);
         graphics.drawRect(x, y, rect.width, rect.height);
     }
 
-    private void drawObjBorder(int x, int y, int width, int height) {
-        graphics.setColor(Color.BLACK);
+    private void drawObjBorder(A_GameObject rect, int x, int y, int width, int height) {
+        graphics.setColor(rect.borderColor);
 
         int border = 2;
         graphics.drawRect(x - border / 2, y - border / 2, width + border, height + border);

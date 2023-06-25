@@ -2,7 +2,7 @@ import java.awt.*;
 
 class Game_Avatar extends A_GameObject {
     public Game_Avatar(double x, double y) {
-        super(x, y, 0, 200, 15, 25, new Color(96, 96, 255));
+        super(x, y, 0, 200, 15, 25, new Color(96, 96, 255), Color.BLACK);
         this.isMoving = false;
     }
 

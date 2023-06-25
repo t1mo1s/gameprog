@@ -100,7 +100,8 @@ class Game_World extends A_World {
         //The Base
         gameObjects.add(new Game_Ground(s, h + thickness, w - 20, A_Const.WORLD_HEIGHT, green));
         //The Line
-        gameObjects.add(new Game_Ground(s - 8, h + thickness - 1, w - 4, 2, shadowLine));
+        gameObjects.add(new Game_Ground(s - 9, h + thickness - 2, w - 2, 2, shadowLine, green));
+
 
         return s + w + 150;
     }

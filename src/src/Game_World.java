@@ -8,6 +8,10 @@ class Game_World extends A_World {
     private final int smallPlatform = 75, longPlatform = 125;
 
     protected void init() {
+        //BackGround Theme Sound
+        Game_Sound gs = new Game_Sound();
+        gs.theme();
+
         //add BackgroundIMG
         // createBackground();
 
@@ -217,32 +221,15 @@ class Game_World extends A_World {
         double diffSeconds = 0.015;
 
         if (!gamePaused && !gameOver) {
-            if (avatar.y < A_Const.WORLD_HEIGHT + 50) {
-                if (userInput.keyMap.get('a') && avatar.x >= 0) {
-                    avatar.moveLeft(diffSeconds);
-                }
-                if (userInput.keyMap.get('d') && avatar.x <= A_Const.WORLD_WIDTH) {
-                    avatar.moveRight(diffSeconds);
-                }
-                if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
-                    avatar.jump(diffSeconds);
-                    playSound("src/assets/sfx/jump.wav");
-                }
+            if (userInput.keyMap.get('a') && avatar.x >= 0) {
+                avatar.moveLeft(diffSeconds);
             }
-        }
-    }
-
-    public void playSound(String filePath) {
-
-        //TODO: Make sound not play million times all at once!
-        try {
-            File soundFile = new File(filePath);
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioIn);
-            clip.start();
-        } catch (Exception e) {
-            e.printStackTrace();
+            if (userInput.keyMap.get('d') && avatar.x <= A_Const.WORLD_WIDTH) {
+                avatar.moveRight(diffSeconds);
+            }
+            if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
+                avatar.jump(diffSeconds);
+            }
         }
     }
 }

@@ -177,7 +177,7 @@ class Game_World extends A_World {
     }
 
     public void map4() {
-        //spawnX = 1800;
+        //spawnX = 3300;
 
         int platformSTART = 100, platformEND;
 
@@ -226,7 +226,7 @@ class Game_World extends A_World {
                 }
                 if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
                     avatar.jump(diffSeconds);
-                    playSound("src/assets/sfx/jump.wav");
+                    //playSound("src/assets/sfx/jump.wav");
                 }
             }
         }

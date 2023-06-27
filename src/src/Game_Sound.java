@@ -56,7 +56,7 @@ public class Game_Sound {
         int randNum = random.nextInt(10);
 
         if (randNum <= 3) playSound("src/assets/sfx/death.wav", false, 6.0f);
-        else playSound("src/assets/sfx/woah.wav", true, 10f);
+        else playSound("src/assets/sfx/woah.wav", false, 10f);
     }
 
     public void restart() {

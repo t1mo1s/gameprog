@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 class Game_PhysicsSystem extends A_PhysicsSystem {
 
+    Game_Sound gs = new Game_Sound();
 
     Game_PhysicsSystem(A_World w) {
         super(w);
@@ -75,7 +76,8 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                         }
                     }
 
-                    if (obj2.type() == A_Const.TYPE_MOB|| obj2.type() == A_Const.TYPE_FLOWERMOB) {
+                    if (obj2.type() == A_Const.TYPE_MOB || obj2.type() == A_Const.TYPE_FLOWERMOB) {
+                        gs.death();
                         //GAME OVER
                         world.gameOver = true;
                         double posY = world.avatar.y;
@@ -84,6 +86,8 @@ class Game_PhysicsSystem extends A_PhysicsSystem {
                         }
                     }
                 } else if (obj2.type() == A_Const.TYPE_GOAL) {
+
+                    gs.win();
                     //System.out.println("Goal reached");
                     //decide what happens if avatar touches goal
                     for (int h = 0; h < world.gameObjects.size(); h++) {

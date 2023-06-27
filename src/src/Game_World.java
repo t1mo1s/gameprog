@@ -1,4 +1,6 @@
+import javax.sound.sampled.*;
 import java.awt.*;
+import java.io.File;
 
 class Game_World extends A_World {
     final double spawnGround = 70;
@@ -6,6 +8,10 @@ class Game_World extends A_World {
     private final int smallPlatform = 75, longPlatform = 125;
 
     protected void init() {
+        //BackGround Theme Sound
+        Game_Sound gs = new Game_Sound();
+        gs.theme();
+
         //add BackgroundIMG
         // createBackground();
 
@@ -211,20 +217,18 @@ class Game_World extends A_World {
         gameObjects.add(new Game_Goal((int) (spawnGround + y)));
     }
 
-    protected void processUserInput(A_UserInput userInput) {//, double diffSeconds) {
+    protected void processUserInput(A_UserInput userInput) {
         double diffSeconds = 0.015;
 
         if (!gamePaused && !gameOver) {
-            if (avatar.y < A_Const.WORLD_HEIGHT + 50) {
-                if (userInput.keyMap.get('a') && avatar.x >= 0) {
-                    avatar.moveLeft(diffSeconds);
-                }
-                if (userInput.keyMap.get('d') && avatar.x <= A_Const.WORLD_WIDTH) {
-                    avatar.moveRight(diffSeconds);
-                }
-                if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
-                    avatar.jump(diffSeconds);
-                }
+            if (userInput.keyMap.get('a') && avatar.x >= 0) {
+                avatar.moveLeft(diffSeconds);
+            }
+            if (userInput.keyMap.get('d') && avatar.x <= A_Const.WORLD_WIDTH) {
+                avatar.moveRight(diffSeconds);
+            }
+            if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
+                avatar.jump(diffSeconds);
             }
         }
     }

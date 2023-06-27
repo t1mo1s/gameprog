@@ -25,8 +25,7 @@ abstract class A_World {
     private static final int FRAME_MINIMUM_MILLIS = 10;
 
     // if game is over
-    protected boolean gameOver = false;
-    protected boolean gamePaused = false;
+    protected boolean gameOver = false, gamePaused = false;
 
     // all objects in the game, including the Avatar
     A_GameObjectList gameObjects = new A_GameObjectList();
@@ -37,6 +36,7 @@ abstract class A_World {
     private final Game_GameOver_InfoText gameOverInfoText = new Game_GameOver_InfoText(600, A_Const.WORLD_HEIGHT / 2);
     private final Game_Title gameMenuTitle = new Game_Title(450, A_Const.WORLD_HEIGHT / 2 - 70);
     private final Game_InfoText infoText = new Game_InfoText(10, A_Const.WORLD_HEIGHT / 2);
+    private final Game_Sound gameSound = new Game_Sound();
     long seconds, milliseconds, storeSeconds = seconds, storeMilliseconds = milliseconds;
 
     A_World() {
@@ -80,12 +80,9 @@ abstract class A_World {
             processUserInput(userInput); //, millisDiff / 1000.0);
 
 
-
             if (userInput.keyMap.get('m') && !gamePaused) {
                 textObjects.add(gameMenuTitle);
                 textObjects.add(infoText);
-                //TODO: Pause Timer
-
                 gamePaused = true;
             } else if (userInput.keyMap.get('m') && gamePaused) {
                 removeText(gameMenuTitle);
@@ -94,6 +91,8 @@ abstract class A_World {
             }
 
             if (userInput.keyMap.get('r')) {
+                gameSound.restart();
+
                 avatar.x = spawnX;
                 avatar.y = A_Const.WORLD_HEIGHT - 70;
 
@@ -114,6 +113,8 @@ abstract class A_World {
             if (gameOver) {
                 textObjects.add(gameOverText);
                 textObjects.add(gameOverInfoText);
+                removeText(gameMenuTitle);
+                removeText(infoText);
             } else {
                 removeText(gameOverInfoText);
                 removeText(gameOverText);
@@ -138,7 +139,7 @@ abstract class A_World {
                     // Game_Mob_Flower flower = (Game_Mob_Flower) obj;
                     mob.move(millisDiff / 1000.0);
                     // flower.move(millisDiff / 1000.0);
-                }else if(obj.type() == A_Const.TYPE_FLOWERMOB){
+                } else if (obj.type() == A_Const.TYPE_FLOWERMOB) {
                     Game_Mob_Flower flower = (Game_Mob_Flower) obj;
                     flower.move(millisDiff / 1000.0);
                 }

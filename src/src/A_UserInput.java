@@ -17,8 +17,6 @@ final class A_UserInput {
         keyMap.put('d', false);
         keyMap.put(' ', false);
         keyMap.put('w', false);
-        //only for position testing//
-        keyMap.put('p', false);
         //open Menu
         keyMap.put('m', false);
         //restart game

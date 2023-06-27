@@ -83,7 +83,6 @@ abstract class A_World {
             if (userInput.keyMap.get('m') && !gamePaused) {
                 textObjects.add(gameMenuTitle);
                 textObjects.add(infoText);
-                //TODO: Pause Timer
                 gamePaused = true;
             } else if (userInput.keyMap.get('m') && gamePaused) {
                 removeText(gameMenuTitle);
@@ -114,6 +113,8 @@ abstract class A_World {
             if (gameOver) {
                 textObjects.add(gameOverText);
                 textObjects.add(gameOverInfoText);
+                removeText(gameMenuTitle);
+                removeText(infoText);
             } else {
                 removeText(gameOverInfoText);
                 removeText(gameOverText);

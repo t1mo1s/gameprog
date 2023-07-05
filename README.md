@@ -1,3 +1,3 @@
-# Daring Dash
+# Daring-Dash
 
-a platform Jump 'n Run game for everyone!
+Daring-Dash takes you on an exhilarating 2D jump and run adventure reminiscent of the beloved retro classics. Immerse yourself in meticulously crafted levels filled with thrilling challenges, cunning enemies, and hidden secrets. Test your skills as you race against the clock, aiming to complete each level in the fastest time possible. Explore vibrant worlds, collect power-ups, and uncover hidden paths to discover valuable treasures. With its nostalgic pixel art visuals, atmospheric audio, and polished gameplay, Daring-Dash offers an immersive and addictive experience that will keep you coming back for more.

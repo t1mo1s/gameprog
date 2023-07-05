@@ -220,16 +220,17 @@ class Game_World extends A_World {
     protected void processUserInput(A_UserInput userInput) {
         double diffSeconds = 0.015;
 
-        if (!gamePaused && !gameOver) {
-            if (userInput.keyMap.get('a') && avatar.x >= 0) {
-                avatar.moveLeft(diffSeconds);
-            }
-            if (userInput.keyMap.get('d') && avatar.x <= A_Const.WORLD_WIDTH) {
-                avatar.moveRight(diffSeconds);
-            }
-            if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
-                avatar.jump(diffSeconds);
-            }
+        if (gamePaused || gameOver) return;
+
+        if (userInput.keyMap.get('a') && avatar.x >= 0) {
+            avatar.moveLeft(diffSeconds);
         }
+        if (userInput.keyMap.get('d') && avatar.x <= A_Const.WORLD_WIDTH) {
+            avatar.moveRight(diffSeconds);
+        }
+        if (userInput.keyMap.get(' ') || userInput.keyMap.get('w')) {
+            avatar.jump(diffSeconds);
+        }
+
     }
 }

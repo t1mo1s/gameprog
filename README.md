@@ -1,3 +1,4 @@
 # Daring Dash
 
-a platform Jump 'n Run game for everyone!
+This is a Game implemented in Java for the course game programming. 
+JavaFX is utilized as render engine.
